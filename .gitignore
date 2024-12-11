@@ -1,2 +1,8 @@
-.env
 .idea/
+*.yml
+dependency-reduced-pom.xml
+.log
+.classpath
+.factorypath
+.project
+.settings/
