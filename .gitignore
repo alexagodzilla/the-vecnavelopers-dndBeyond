@@ -6,4 +6,4 @@ dependency-reduced-pom.xml
 .factorypath
 .project
 .settings/
-*target*
+target/

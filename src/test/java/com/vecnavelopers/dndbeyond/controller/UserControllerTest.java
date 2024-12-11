@@ -41,7 +41,6 @@ class UserControllerTest {
         when(authentication.getPrincipal()).thenReturn(mockUser);
         when(securityContext.getAuthentication()).thenReturn(authentication);
         SecurityContextHolder.setContext(securityContext);
-
         when(userRepository.findUserByUsername("test@example.com")).thenReturn(Optional.empty());
         when(userRepository.save(any(User.class))).thenReturn(new User("test@example.com"));
 
