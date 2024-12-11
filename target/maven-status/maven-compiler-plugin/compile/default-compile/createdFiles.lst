@@ -3,4 +3,5 @@ com/vecnavelopers/dndbeyond/config/SecurityConfiguration.class
 com/vecnavelopers/dndbeyond/config/SecurityConfiguration$1.class
 com/vecnavelopers/dndbeyond/repository/UserRepository.class
 com/vecnavelopers/dndbeyond/Application.class
+com/vecnavelopers/dndbeyond/service/AuthService.class
 com/vecnavelopers/dndbeyond/controller/UserController.class

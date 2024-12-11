@@ -3,10 +3,14 @@ package com.vecnavelopers.dndbeyond.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.sql.Timestamp;
 
 @Data
+@Getter
+@Setter
 @Entity
 @Table(name = "users")
 public class User {
@@ -52,6 +56,8 @@ public class User {
         this.username = username;
         this.enabled = true;
     }
+
+    public Long getId() { return id; }
 
     public void setAuth0Id(String auth0Id) {
         this.auth0Id = auth0Id;
