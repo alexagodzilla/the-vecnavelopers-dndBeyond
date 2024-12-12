@@ -2,6 +2,8 @@ package com.vecnavelopers.dndbeyond.model;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
+import java.util.List;
+
 public class ClassDetails {
     private String className;
     private int hitDie;
@@ -10,7 +12,7 @@ public class ClassDetails {
     private String spellcastingAbility;
     private JsonNode spells; // A list of spells
     private JsonNode proficiencyChoices;
-    private JsonNode proficiencies;
+    private List<Proficiency> proficiencies;
     private JsonNode savingThrows;
     private JsonNode subclasses;
 
@@ -71,11 +73,11 @@ public class ClassDetails {
         this.proficiencyChoices = proficiencyChoices;
     }
 
-    public JsonNode getProficiencies() {
+    public List<Proficiency> getProficiencies() {
         return proficiencies;
     }
 
-    public void setProficiencies(JsonNode proficiencies) {
+    public void setProficiencies(List<Proficiency> proficiencies) {
         this.proficiencies = proficiencies;
     }
 

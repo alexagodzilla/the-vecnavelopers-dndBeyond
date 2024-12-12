@@ -23,6 +23,14 @@
       <li th:if="${#lists.isEmpty(classDetails.spellcasting.info)}">No spellcasting details available.</li>
       </ul>
     </div>
+    <div class="section-title">Proficiencies</div>
+    <div class="section-content">
+      <ul>
+        <li th:each="proficiency : ${classDetails.proficiencies}">
+          <span th:text="${proficiency.name}"></span><br>
+        </li>
+      </ul>
+    </div>
   </body>
 </html>
 

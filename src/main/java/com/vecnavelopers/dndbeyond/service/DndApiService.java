@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vecnavelopers.dndbeyond.model.ClassDetails;
 import com.vecnavelopers.dndbeyond.model.Spellcasting;
+import com.vecnavelopers.dndbeyond.model.Proficiency;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -69,7 +70,10 @@ public class DndApiService {
             classDetails.setSpellcastingAbility(classData.path("spellcasting_ability").asText());
             classDetails.setSpells(classData.path("spells"));
             classDetails.setProficiencyChoices(classData.path("proficiency_choices"));
-            classDetails.setProficiencies(classData.path("proficiencies"));
+
+            // Parse proficiencies
+            classDetails.setProficiencies(parseProficiencies(classData.path("proficiencies")));
+
             classDetails.setSavingThrows(classData.path("saving_throws"));
             classDetails.setSubclasses(classData.path("subclasses"));
         }
@@ -91,6 +95,21 @@ public class DndApiService {
             spellcasting.setInfo(info);
         }
         return spellcasting;
+    }
+
+
+    public List<Proficiency> parseProficiencies(JsonNode proficienciesNode) {
+        List<Proficiency> proficiencies = new ArrayList<>();
+        if (proficienciesNode != null && proficienciesNode.isArray()) {
+            for (JsonNode proficiencyNode : proficienciesNode) {
+                Proficiency proficiency = new Proficiency();
+                proficiency.setIndex(proficiencyNode.path("index").asText());
+                proficiency.setName(proficiencyNode.path("name").asText());
+                proficiency.setUrl(proficiencyNode.path("url").asText());
+                proficiencies.add(proficiency);
+            }
+        }
+        return proficiencies;
     }
 
     // Helper method to parse JSON string into JsonNode
