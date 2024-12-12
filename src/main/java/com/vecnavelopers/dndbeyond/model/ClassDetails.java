@@ -6,7 +6,7 @@ public class ClassDetails {
     private String className;
     private int hitDie;
     private JsonNode classLevels; // Can be a List or Map, depending on your needs
-    private JsonNode spellcasting;
+    private Spellcasting spellcasting;
     private String spellcastingAbility;
     private JsonNode spells; // A list of spells
     private JsonNode proficiencyChoices;
@@ -39,15 +39,15 @@ public class ClassDetails {
         this.classLevels = classLevels;
     }
 
-    public JsonNode getSpellcasting() {
-        return spellcasting;
-    }
-
-    public void setSpellcasting(JsonNode spellcasting) {
+    public void setSpellcasting(Spellcasting spellcasting) {
         this.spellcasting = spellcasting;
     }
 
-    public String getSpellcastingAbility() {
+    public Spellcasting getSpellcasting() {
+        return spellcasting;
+    }
+
+        public String getSpellcastingAbility() {
         return spellcastingAbility;
     }
 

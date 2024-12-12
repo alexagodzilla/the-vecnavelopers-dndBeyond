@@ -4,90 +4,24 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Class Details</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 20px;
-    }
-    h1 {
-      text-align: center;
-      color: #4CAF50;
-    }
-    .section-title {
-      font-size: 1.2em;
-      font-weight: bold;
-      margin-top: 20px;
-    }
-    .section-content {
-      margin-left: 20px;
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 10px;
-    }
-    table, th, td {
-      border: 1px solid black;
-    }
-    th, td {
-      padding: 10px;
-      text-align: left;
-    }
-  </style>
 </head>
 <body>
-<h1>Cleric Class Details</h1>
+<h1><span th:text="${classDetails.className}"></span></h1>
 
 <p><strong>Class Name:</strong> <span th:text="${classDetails.className}"></span></p>
 <p><strong>Hit Die:</strong> <span th:text="${classDetails.hitDie}"></span></p>
 
 <div class="section-title">Spellcasting</div>
-<div class="section-content">
-  <p><strong>Spellcasting Ability:</strong> <span th:text="${classDetails.spellcastingAbility}"></span></p>
-  <p><strong>Spellcasting Level:</strong> <span th:text="${classDetails.spellcasting.level}"></span></p>
+<div class="section-content" th:if="${classDetails.spellcasting != null}">
+  <p><strong>Spellcasting Ability:</strong> <span th:text="${classDetails.spellcasting.ability}"></span></p>
 
   <h3>Spellcasting Info:</h3>
   <ul>
-    <li><strong>Cantrips:</strong> <span th:text="${classDetails.spellcasting.info[0].desc[0]}"></span></li>
-    <li><strong>Preparing and Casting Spells:</strong> <span th:text="${classDetails.spellcasting.info[1].desc[0]}"></span></li>
-    <li><strong>Spellcasting Ability Details:</strong> <span th:text="${classDetails.spellcasting.info[2].desc[0]}"></span></li>
-    <li><strong>Ritual Casting:</strong> <span th:text="${classDetails.spellcasting.info[3].desc[0]}"></span></li>
-    <li><strong>Spellcasting Focus:</strong> <span th:text="${classDetails.spellcasting.info[4].desc[0]}"></span></li>
+    <li th:each="detail : ${classDetails.spellcasting.info}" th:unless="${#lists.isEmpty(classDetails.spellcasting.info)}">
+      <span th:text="${detail}"></span>
+    </li>
+    <li th:if="${#lists.isEmpty(classDetails.spellcasting.info)}">No spellcasting details available.</li>
   </ul>
-</div>
-
-<div class="section-title">Proficiencies</div>
-<div class="section-content">
-  <table>
-    <thead>
-    <tr>
-      <th>Proficiency</th>
-      <th>URL</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="proficiency : ${classDetails.proficiencies}">
-      <td th:text="${proficiency.name}"></td>
-      <td th:text="${proficiency.url}"></td>
-    </tr>
-    </tbody>
-  </table>
-</div>
-
-<div class="section-title">Saving Throws</div>
-<div class="section-content">
-  <ul>
-    <li th:text="'Wisdom: ' + ${classDetails.savingThrows[0].name}"></li>
-    <li th:text="'Charisma: ' + ${classDetails.savingThrows[1].name}"></li>
-  </ul>
-</div>
-
-<div class="section-title">Subclasses</div>
-<div class="section-content">
-  <ul>
-    <li th:text="${classDetails.subclasses[0].name}"></li>
-  </ul>
-</div>
 
 </body>
 </html>

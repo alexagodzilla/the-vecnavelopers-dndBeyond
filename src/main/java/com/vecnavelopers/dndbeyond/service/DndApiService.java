@@ -3,11 +3,14 @@ package com.vecnavelopers.dndbeyond.service;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vecnavelopers.dndbeyond.model.ClassDetails;
+import com.vecnavelopers.dndbeyond.model.Spellcasting;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import org.springframework.stereotype.Service;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class DndApiService {
@@ -56,7 +59,13 @@ public class DndApiService {
             classDetails.setClassName(classData.path("name").asText());
             classDetails.setHitDie(classData.path("hit_die").asInt());
             classDetails.setClassLevels(classData.path("class_levels"));
-            classDetails.setSpellcasting(classData.path("spellcasting"));
+
+            // Parse spellcasting using the new method
+            JsonNode spellcastingNode = classData.path("spellcasting");
+            Spellcasting spellcasting = parseSpellcasting(spellcastingNode);
+            classDetails.setSpellcasting(spellcasting);
+
+
             classDetails.setSpellcastingAbility(classData.path("spellcasting_ability").asText());
             classDetails.setSpells(classData.path("spells"));
             classDetails.setProficiencyChoices(classData.path("proficiency_choices"));
@@ -66,6 +75,22 @@ public class DndApiService {
         }
 
         return classDetails;
+    }
+
+    // Helper method to parse spellcasting
+    public Spellcasting parseSpellcasting(JsonNode spellcastingNode) {
+        Spellcasting spellcasting = new Spellcasting();
+        if (spellcastingNode != null) {
+            JsonNode abilityNode = spellcastingNode.path("spellcasting_ability");
+            spellcasting.setAbility(abilityNode.path("name").asText("None"));
+
+            List<String> info = new ArrayList<>();
+            for (JsonNode infoNode : spellcastingNode.path("info")) {
+                info.add(infoNode.path("desc").asText());
+            }
+            spellcasting.setInfo(info);
+        }
+        return spellcasting;
     }
 
     // Helper method to parse JSON string into JsonNode

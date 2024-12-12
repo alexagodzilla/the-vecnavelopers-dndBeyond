@@ -4,6 +4,7 @@
 /Users/mattrowellmakers/Java/Engineering_Project_3/vecnavelopers-dndbeyond/src/main/java/com/vecnavelopers/dndbeyond/controller/DndApiController.java
 /Users/mattrowellmakers/Java/Engineering_Project_3/vecnavelopers-dndbeyond/src/main/java/com/vecnavelopers/dndbeyond/controller/UserController.java
 /Users/mattrowellmakers/Java/Engineering_Project_3/vecnavelopers-dndbeyond/src/main/java/com/vecnavelopers/dndbeyond/model/ClassDetails.java
+/Users/mattrowellmakers/Java/Engineering_Project_3/vecnavelopers-dndbeyond/src/main/java/com/vecnavelopers/dndbeyond/model/Spellcasting.java
 /Users/mattrowellmakers/Java/Engineering_Project_3/vecnavelopers-dndbeyond/src/main/java/com/vecnavelopers/dndbeyond/model/User.java
 /Users/mattrowellmakers/Java/Engineering_Project_3/vecnavelopers-dndbeyond/src/main/java/com/vecnavelopers/dndbeyond/repository/UserRepository.java
 /Users/mattrowellmakers/Java/Engineering_Project_3/vecnavelopers-dndbeyond/src/main/java/com/vecnavelopers/dndbeyond/service/AuthService.java
