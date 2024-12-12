@@ -1,11 +1,13 @@
-/Users/mattrowellmakers/Java/Engineering_Project_3/vecnavelopers-dndbeyond/src/main/java/com/vecnavelopers/dndbeyond/Application.java
-/Users/mattrowellmakers/Java/Engineering_Project_3/vecnavelopers-dndbeyond/src/main/java/com/vecnavelopers/dndbeyond/config/SecurityConfiguration.java
-/Users/mattrowellmakers/Java/Engineering_Project_3/vecnavelopers-dndbeyond/src/main/java/com/vecnavelopers/dndbeyond/controller/CharacterController.java
-/Users/mattrowellmakers/Java/Engineering_Project_3/vecnavelopers-dndbeyond/src/main/java/com/vecnavelopers/dndbeyond/controller/DndApiController.java
-/Users/mattrowellmakers/Java/Engineering_Project_3/vecnavelopers-dndbeyond/src/main/java/com/vecnavelopers/dndbeyond/controller/UserController.java
-/Users/mattrowellmakers/Java/Engineering_Project_3/vecnavelopers-dndbeyond/src/main/java/com/vecnavelopers/dndbeyond/model/ClassDetails.java
-/Users/mattrowellmakers/Java/Engineering_Project_3/vecnavelopers-dndbeyond/src/main/java/com/vecnavelopers/dndbeyond/model/Spellcasting.java
-/Users/mattrowellmakers/Java/Engineering_Project_3/vecnavelopers-dndbeyond/src/main/java/com/vecnavelopers/dndbeyond/model/User.java
-/Users/mattrowellmakers/Java/Engineering_Project_3/vecnavelopers-dndbeyond/src/main/java/com/vecnavelopers/dndbeyond/repository/UserRepository.java
-/Users/mattrowellmakers/Java/Engineering_Project_3/vecnavelopers-dndbeyond/src/main/java/com/vecnavelopers/dndbeyond/service/AuthService.java
-/Users/mattrowellmakers/Java/Engineering_Project_3/vecnavelopers-dndbeyond/src/main/java/com/vecnavelopers/dndbeyond/service/DndApiService.java
+/Users/alessandroagozzino/MakersCode/Bootcamp Apple 2024 SD & CE/Engineering Project 3/the-vecnavelopers-dndbeyond/src/main/java/com/vecnavelopers/dndbeyond/Application.java
+/Users/alessandroagozzino/MakersCode/Bootcamp Apple 2024 SD & CE/Engineering Project 3/the-vecnavelopers-dndbeyond/src/main/java/com/vecnavelopers/dndbeyond/config/SecurityConfiguration.java
+/Users/alessandroagozzino/MakersCode/Bootcamp Apple 2024 SD & CE/Engineering Project 3/the-vecnavelopers-dndbeyond/src/main/java/com/vecnavelopers/dndbeyond/controller/CharacterController.java
+/Users/alessandroagozzino/MakersCode/Bootcamp Apple 2024 SD & CE/Engineering Project 3/the-vecnavelopers-dndbeyond/src/main/java/com/vecnavelopers/dndbeyond/controller/DndApiController.java
+/Users/alessandroagozzino/MakersCode/Bootcamp Apple 2024 SD & CE/Engineering Project 3/the-vecnavelopers-dndbeyond/src/main/java/com/vecnavelopers/dndbeyond/controller/UserController.java
+/Users/alessandroagozzino/MakersCode/Bootcamp Apple 2024 SD & CE/Engineering Project 3/the-vecnavelopers-dndbeyond/src/main/java/com/vecnavelopers/dndbeyond/model/Character.java
+/Users/alessandroagozzino/MakersCode/Bootcamp Apple 2024 SD & CE/Engineering Project 3/the-vecnavelopers-dndbeyond/src/main/java/com/vecnavelopers/dndbeyond/model/ClassDetails.java
+/Users/alessandroagozzino/MakersCode/Bootcamp Apple 2024 SD & CE/Engineering Project 3/the-vecnavelopers-dndbeyond/src/main/java/com/vecnavelopers/dndbeyond/model/Spellcasting.java
+/Users/alessandroagozzino/MakersCode/Bootcamp Apple 2024 SD & CE/Engineering Project 3/the-vecnavelopers-dndbeyond/src/main/java/com/vecnavelopers/dndbeyond/model/User.java
+/Users/alessandroagozzino/MakersCode/Bootcamp Apple 2024 SD & CE/Engineering Project 3/the-vecnavelopers-dndbeyond/src/main/java/com/vecnavelopers/dndbeyond/repository/CharacterRepository.java
+/Users/alessandroagozzino/MakersCode/Bootcamp Apple 2024 SD & CE/Engineering Project 3/the-vecnavelopers-dndbeyond/src/main/java/com/vecnavelopers/dndbeyond/repository/UserRepository.java
+/Users/alessandroagozzino/MakersCode/Bootcamp Apple 2024 SD & CE/Engineering Project 3/the-vecnavelopers-dndbeyond/src/main/java/com/vecnavelopers/dndbeyond/service/AuthService.java
+/Users/alessandroagozzino/MakersCode/Bootcamp Apple 2024 SD & CE/Engineering Project 3/the-vecnavelopers-dndbeyond/src/main/java/com/vecnavelopers/dndbeyond/service/DndApiService.java
