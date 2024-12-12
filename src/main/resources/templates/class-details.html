@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Class Details</title>
+</head>
+<body>
+  <h1><span th:text="${classDetails.className}"></span></h1>
+
+    <p><strong>Class Name:</strong> <span th:text="${classDetails.className}"></span></p>
+    <p><strong>Hit Die:</strong> <span th:text="${classDetails.hitDie}"></span></p>
+
+    <div class="section-title">Spellcasting</div>
+    <div class="section-content" th:if="${classDetails.spellcasting != null}">
+      <p><strong>Spellcasting Ability:</strong> <span th:text="${classDetails.spellcasting.ability}"></span></p>
+
+      <h3>Spellcasting Info:</h3>
+      <ul>
+        <li th:each="detail : ${classDetails.spellcasting.info}" th:unless="${#lists.isEmpty(classDetails.spellcasting.info)}">
+        <span th:text="${detail}"></span>
+        </li>
+      <li th:if="${#lists.isEmpty(classDetails.spellcasting.info)}">No spellcasting details available.</li>
+      </ul>
+    </div>
+  </body>
+</html>
+
