@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="class.css">
+  <title>Class Selection</title>
+</head>
+<body>
+<h1>Choose Your Class</h1>
+<div>
+  <th:block th:each="class : ${characterClass}">
+    <form th:action="@{/classes/{className}(className=${class})}" method="get">
+      <button type="submit" th:text="${class}"></button>
+    </form>
+  </th:block>
+</div>
+</body>
+</html>
