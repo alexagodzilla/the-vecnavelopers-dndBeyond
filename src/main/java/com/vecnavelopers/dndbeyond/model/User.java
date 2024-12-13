@@ -56,14 +56,15 @@ public class User {
         this.username = username;
         this.enabled = true;
     }
+//
+//    public Long getId() { return id; }
+//
+//    public void setAuth0Id(String auth0Id) {
+//        this.auth0Id = auth0Id;
+//    }
+//
+//    public void setUsername(String username) {
+//        this.username = username;
+//    }
 
-    public Long getId() { return id; }
-
-    public void setAuth0Id(String auth0Id) {
-        this.auth0Id = auth0Id;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
 }
