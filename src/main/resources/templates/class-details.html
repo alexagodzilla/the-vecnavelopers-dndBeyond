@@ -6,31 +6,60 @@
   <title>Class Details</title>
 </head>
 <body>
-  <h1><span th:text="${classDetails.className}"></span></h1>
+<h1><span th:text="${classDetails.className}"></span></h1>
 
-    <p><strong>Class Name:</strong> <span th:text="${classDetails.className}"></span></p>
-    <p><strong>Hit Die:</strong> <span th:text="${classDetails.hitDie}"></span></p>
+<p><strong>Class Name:</strong> <span th:text="${classDetails.className}"></span></p>
+<p><strong>Hit Die:</strong> <span th:text="${classDetails.hitDie}"></span></p>
 
-    <div class="section-title">Spellcasting</div>
-    <div class="section-content" th:if="${classDetails.spellcasting != null}">
-      <p><strong>Spellcasting Ability:</strong> <span th:text="${classDetails.spellcasting.ability}"></span></p>
+<!-- Spellcasting Section -->
+<div class="section-title">Spellcasting</div>
+<div class="section-content" th:if="${classDetails.spellcasting != null}">
+  <p><strong>Spellcasting Ability:</strong> <span th:text="${classDetails.spellcasting.ability}"></span></p>
 
-      <h3>Spellcasting Info:</h3>
-      <ul>
-        <li th:each="detail : ${classDetails.spellcasting.info}" th:unless="${#lists.isEmpty(classDetails.spellcasting.info)}">
-        <span th:text="${detail}"></span>
-        </li>
-      <li th:if="${#lists.isEmpty(classDetails.spellcasting.info)}">No spellcasting details available.</li>
-      </ul>
-    </div>
-    <div class="section-title">Proficiencies</div>
-    <div class="section-content">
-      <ul>
-        <li th:each="proficiency : ${classDetails.proficiencies}">
-          <span th:text="${proficiency.name}"></span><br>
-        </li>
-      </ul>
-    </div>
-  </body>
+  <h3>Spellcasting Info:</h3>
+  <ul>
+    <li th:each="detail : ${classDetails.spellcasting.info}" th:unless="${#lists.isEmpty(classDetails.spellcasting.info)}">
+      <span th:text="${detail}"></span>
+    </li>
+    <li th:if="${#lists.isEmpty(classDetails.spellcasting.info)}">No spellcasting details available.</li>
+  </ul>
+</div>
+
+<!-- Saving Throws Section -->
+<div class="section-title">Saving Throws</div>
+<div class="section-content" th:if="${classDetails.savingThrows != null}">
+  <ul>
+    <li th:each="savingThrow : ${classDetails.savingThrows}">
+      <span th:text="${savingThrow.name}"></span><br>
+    </li>
+    <li th:if="${#lists.isEmpty(classDetails.savingThrows)}">No saving throws available.</li>
+  </ul>
+</div>
+
+<!-- Proficiencies Section -->
+<div class="section-title">Proficiencies</div>
+<div class="section-content" th:if="${classDetails.proficiencies != null}">
+  <ul>
+    <li th:each="proficiency : ${classDetails.proficiencies}">
+      <span th:text="${proficiency.name}"></span><br>
+    </li>
+    <li th:if="${#lists.isEmpty(classDetails.proficiencies)}">No proficiencies available.</li>
+  </ul>
+</div>
+
+<!-- Starting Equipment Section -->
+<div class="section-title">Starting Equipment</div>
+<div class="section-content" th:if="${classDetails.startingEquipment != null}">
+  <ul>
+    <li th:each="equipment : ${classDetails.startingEquipment}">
+      <span th:text="${equipment.quantity}"></span>
+      x
+      <a th:text="${equipment.name}"></a>
+    </li>
+    <li th:if="${#lists.isEmpty(classDetails.startingEquipment)}">No starting equipment available.</li>
+  </ul>
+</div>
+
+</body>
 </html>
 

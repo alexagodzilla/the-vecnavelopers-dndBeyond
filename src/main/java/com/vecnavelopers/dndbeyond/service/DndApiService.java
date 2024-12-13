@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vecnavelopers.dndbeyond.model.ClassDetails;
 import com.vecnavelopers.dndbeyond.model.Spellcasting;
 import com.vecnavelopers.dndbeyond.model.Proficiency;
+import com.vecnavelopers.dndbeyond.model.StartingEquipment;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -60,8 +61,9 @@ public class DndApiService {
             classDetails.setClassName(classData.path("name").asText());
             classDetails.setHitDie(classData.path("hit_die").asInt());
             classDetails.setClassLevels(classData.path("class_levels"));
+            classDetails.setSubclasses(classData.path("subclasses"));
 
-            // Parse spellcasting using the new method
+            // Parse Spellcasting
             JsonNode spellcastingNode = classData.path("spellcasting");
             Spellcasting spellcasting = parseSpellcasting(spellcastingNode);
             classDetails.setSpellcasting(spellcasting);
@@ -71,11 +73,12 @@ public class DndApiService {
             classDetails.setSpells(classData.path("spells"));
             classDetails.setProficiencyChoices(classData.path("proficiency_choices"));
 
-            // Parse proficiencies
-            classDetails.setProficiencies(parseProficiencies(classData.path("proficiencies")));
+            // Parse Proficiencies (and Saving Throws)
+            parseProficienciesAndSavingThrows(classData, classDetails);
 
-            classDetails.setSavingThrows(classData.path("saving_throws"));
-            classDetails.setSubclasses(classData.path("subclasses"));
+            // Parse Starting Equipment
+            List<StartingEquipment> startingEquipmentList = parseStartingEquipment(classData.path("starting_equipment"));
+            classDetails.setStartingEquipment(startingEquipmentList);
         }
 
         return classDetails;
@@ -97,19 +100,45 @@ public class DndApiService {
         return spellcasting;
     }
 
+    // Helper method to parse and set Proficiencies and Saving Throws
+    public void parseProficienciesAndSavingThrows(JsonNode classData, ClassDetails classDetails) {
+        List<Proficiency> proficienciesList = new ArrayList<>();
+        List<Proficiency> savingThrowsList = new ArrayList<>();
 
-    public List<Proficiency> parseProficiencies(JsonNode proficienciesNode) {
-        List<Proficiency> proficiencies = new ArrayList<>();
+        JsonNode proficienciesNode = classData.path("proficiencies");
         if (proficienciesNode != null && proficienciesNode.isArray()) {
             for (JsonNode proficiencyNode : proficienciesNode) {
+                String index = proficiencyNode.path("index").asText();
                 Proficiency proficiency = new Proficiency();
-                proficiency.setIndex(proficiencyNode.path("index").asText());
+                proficiency.setIndex(index);
                 proficiency.setName(proficiencyNode.path("name").asText());
                 proficiency.setUrl(proficiencyNode.path("url").asText());
-                proficiencies.add(proficiency);
+
+                if (index.startsWith("saving-throw")) {
+                    savingThrowsList.add(proficiency);
+                } else {
+                    proficienciesList.add(proficiency);
+                }
             }
         }
-        return proficiencies;
+
+        classDetails.setProficiencies(proficienciesList);
+        classDetails.setSavingThrows(savingThrowsList);
+    }
+
+    // Helper method to parse and set starting equipment
+    private List<StartingEquipment> parseStartingEquipment(JsonNode startingEquipmentNode) {
+        List<StartingEquipment> equipmentList = new ArrayList<>();
+        if (startingEquipmentNode != null && startingEquipmentNode.isArray()) {
+            for (JsonNode equipmentNode : startingEquipmentNode) {
+                StartingEquipment equipment = new StartingEquipment();
+                equipment.setName(equipmentNode.path("equipment").path("name").asText());
+                equipment.setQuantity(equipmentNode.path("quantity").asInt());
+                equipment.setUrl(equipmentNode.path("equipment").path("url").asText());
+                equipmentList.add(equipment);
+            }
+        }
+        return equipmentList;
     }
 
     // Helper method to parse JSON string into JsonNode

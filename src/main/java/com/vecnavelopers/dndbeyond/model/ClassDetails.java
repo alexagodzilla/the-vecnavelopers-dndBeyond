@@ -13,7 +13,8 @@ public class ClassDetails {
     private JsonNode spells; // A list of spells
     private JsonNode proficiencyChoices;
     private List<Proficiency> proficiencies;
-    private JsonNode savingThrows;
+    private List<Proficiency> savingThrows;
+    private List<StartingEquipment> startingEquipment;
     private JsonNode subclasses;
 
     // Getters and setters
@@ -81,13 +82,17 @@ public class ClassDetails {
         this.proficiencies = proficiencies;
     }
 
-    public JsonNode getSavingThrows() {
+    public List<Proficiency> getSavingThrows() {
         return savingThrows;
     }
 
-    public void setSavingThrows(JsonNode savingThrows) {
+    public void setSavingThrows(List<Proficiency> savingThrows) {
         this.savingThrows = savingThrows;
     }
+
+    public List<StartingEquipment> getStartingEquipment() { return startingEquipment; }
+
+    public void setStartingEquipment(List<StartingEquipment> startingEquipment) { this.startingEquipment = startingEquipment; }
 
     public JsonNode getSubclasses() {
         return subclasses;
