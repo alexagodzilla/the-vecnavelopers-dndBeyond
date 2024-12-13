@@ -60,4 +60,14 @@ public class SpeciesService {
 
         return speciesDetails;
     }
+
+    // Helper method to parse JSON string into JsonNode
+    private JsonNode parseJsonToNode(String jsonData) {
+        try {
+            return objectMapper.readTree(jsonData);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;  // Handle error, could also throw a custom exception
+        }
+    }
 }
