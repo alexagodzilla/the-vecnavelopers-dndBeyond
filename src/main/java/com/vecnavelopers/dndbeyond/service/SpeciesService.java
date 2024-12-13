@@ -56,6 +56,7 @@ public class SpeciesService {
             speciesDetails.setSpeciesName(speciesData.path("name").asText());
             speciesDetails.setSpeciesSpeed(speciesData.path("speed").asInt());
             speciesDetails.setSpeciesSize(speciesData.path("size").asText());
+            speciesDetails.setSpeciesSizeDescription(speciesData.path("size_description").asText());
         }
 
         return speciesDetails;

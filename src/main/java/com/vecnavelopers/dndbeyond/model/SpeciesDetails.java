@@ -4,6 +4,7 @@ public class SpeciesDetails {
     private String speciesName;
     private int speciesSpeed;
     private String speciesSize;
+    private String speciesSizeDescription;
 
     // Getters and Setters
     public String getSpeciesName() { return speciesName; }
@@ -17,4 +18,8 @@ public class SpeciesDetails {
     public String getSpeciesSize() { return speciesSize; }
 
     public void setSpeciesSize(String speciesSize) { this.speciesSize = speciesSize; }
+
+    public String getSpeciesSizeDescription() { return speciesSizeDescription; }
+
+    public void setSpeciesSizeDescription(String speciesSizeDescription) { this.speciesSizeDescription = speciesSizeDescription; }
 }
