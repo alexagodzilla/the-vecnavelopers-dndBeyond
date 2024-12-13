@@ -45,7 +45,7 @@ public class DndApiService {
         }
     }
 
-    // This method uses the fetched data to create a ClassDetails object
+    // Use the fetched data to create a ClassDetails object
     public ClassDetails getClassDetails(String className) {
         // Fetch class data from the API
         String classDataJson = getClassDetailsFromApi(className);
