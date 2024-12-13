@@ -1,53 +1,60 @@
 body {
-    font-family: Arial, sans-serif;
-    text-align: center;
-    margin: 20px;
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #F4F4F9;
 }
-
 h1 {
-    color: #333;
-    font-size: 24px;
+  text-align: center;
+  margin-top: 20px;
+  color: #333;
 }
-
-button {
-    display: inline-block;
-    margin: 10px;
-    font-size: 16px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    padding: 10px 20px;
-    cursor: pointer;
+div {
+  text-align: center;
+  margin-top: 30px;
 }
-
-button:hover {
-    background-color: #0056b3;
-}
-
-.dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: #F9F9F9;
-    min-width: 200px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    padding: 12px;
-    z-index: 1;
-    border-radius: 4px;
-}
-
 .class-container {
-  padding: 10px 20px;
+  display: inline-block;
+  width: 200px;
+  height: 200px;
   background-color: #4CAF50;
   color: white;
   text-align: center;
-  border-radius: 5px;
+  border-radius: 10px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  position: relative;
+  margin: 10px;
+  transition: transform 0.3s ease,
+  background-color 0.3s ease;
+  overflow: hidden;
 }
-
 .class-container:hover {
   background-color: #45A049;
+  transform: scale(1.05);
+}
+.class-name {
+  font-size: 20px;
+  font-weight: bold;
+  line-height: 200px;
+  transition: opacity 0.3s ease;
+}
+.class-description {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 10px;
+  text-align: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.class-container:hover .class-description {
+  opacity: 1;
+}
+.class-container:hover .class-name {
+  opacity: 0;
 }

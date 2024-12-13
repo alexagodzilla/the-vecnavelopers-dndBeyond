@@ -7,13 +7,17 @@
   <title>Class Selection</title>
 </head>
 <body>
-<h1>Choose Your Class</h1>
+<h1>Select Your Character Class</h1>
+
 <div>
-  <th:block th:each="class : ${characterClass}">
-    <form th:action="@{/classes/{className}(className=${class})}" method="get">
-      <button type="submit" th:text="${class}"></button>
-    </form>
-  </th:block>
+  <p>Hover over a class name to see its description:</p>
+  <!-- Iterate over the class descriptions map and create buttons -->
+  <div th:each="entry : ${classDescription}">
+    <a th:href="@{'/classes/' + ${entry.key}}">
+      <button th:text="${entry.key}" th:title="${entry.value}" style="cursor: pointer;"></button>
+    </a>
+  </div>
 </div>
+
 </body>
 </html>

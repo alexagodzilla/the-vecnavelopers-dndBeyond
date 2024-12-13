@@ -1,6 +1,7 @@
 package com.vecnavelopers.dndbeyond.controller;
 
 import com.vecnavelopers.dndbeyond.model.ClassDetails;
+import com.vecnavelopers.dndbeyond.service.ClassService;
 import com.vecnavelopers.dndbeyond.service.DndApiService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,14 +12,17 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class CharacterController {
 
     private final DndApiService dndApiService;
+    private final ClassService classService;
 
-    public CharacterController(DndApiService dndApiService) {
+    public CharacterController(DndApiService dndApiService, ClassService classService) {
         this.dndApiService = dndApiService;
+        this.classService = classService;
     }
 
     @GetMapping("/classes/{className}")
@@ -30,8 +34,10 @@ public class CharacterController {
 
     @GetMapping("/class_selection")
     public String showClassSelectionPage(Model model) {
-        List<String> characterClass = List.of("Warrior", "Mage", "Rogue", "Cleric");
-        model.addAttribute("characterClass", characterClass);
+//        List<String> characterClass = List.of("Warrior", "Mage", "Rogue", "Cleric");
+        Map<String, String> classDescription = classService.getClassDescriptions();
+        model.addAttribute("classDescription", classDescription);
+//        model.addAttribute("characterClass", characterClass);
         return "class-selection";
     }
 
