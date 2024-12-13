@@ -2,6 +2,8 @@ package com.vecnavelopers.dndbeyond.model;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
+import java.util.List;
+
 public class ClassDetails {
     private String className;
     private int hitDie;
@@ -10,8 +12,9 @@ public class ClassDetails {
     private String spellcastingAbility;
     private JsonNode spells; // A list of spells
     private JsonNode proficiencyChoices;
-    private JsonNode proficiencies;
-    private JsonNode savingThrows;
+    private List<Proficiency> proficiencies;
+    private List<Proficiency> savingThrows;
+    private List<StartingEquipment> startingEquipment;
     private JsonNode subclasses;
 
     // Getters and setters
@@ -71,21 +74,25 @@ public class ClassDetails {
         this.proficiencyChoices = proficiencyChoices;
     }
 
-    public JsonNode getProficiencies() {
+    public List<Proficiency> getProficiencies() {
         return proficiencies;
     }
 
-    public void setProficiencies(JsonNode proficiencies) {
+    public void setProficiencies(List<Proficiency> proficiencies) {
         this.proficiencies = proficiencies;
     }
 
-    public JsonNode getSavingThrows() {
+    public List<Proficiency> getSavingThrows() {
         return savingThrows;
     }
 
-    public void setSavingThrows(JsonNode savingThrows) {
+    public void setSavingThrows(List<Proficiency> savingThrows) {
         this.savingThrows = savingThrows;
     }
+
+    public List<StartingEquipment> getStartingEquipment() { return startingEquipment; }
+
+    public void setStartingEquipment(List<StartingEquipment> startingEquipment) { this.startingEquipment = startingEquipment; }
 
     public JsonNode getSubclasses() {
         return subclasses;
