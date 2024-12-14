@@ -1,5 +1,6 @@
 package com.vecnavelopers.dndbeyond.controller;
 
+import com.vecnavelopers.dndbeyond.dto.AbilityScoresDto;
 import com.vecnavelopers.dndbeyond.repository.CharacterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,7 +19,7 @@ public class AbilityScoresController {
   }
 
    @PostMapping("/abilityScores")
-    public boolean saveAbilityScores(Map<String, Integer> abilityScores){
+    public boolean saveAbilityScores(AbilityScoresDto dto){
       return false;
    }
 

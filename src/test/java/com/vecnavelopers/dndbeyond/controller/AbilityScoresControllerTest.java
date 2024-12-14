@@ -1,5 +1,6 @@
 package com.vecnavelopers.dndbeyond.controller;
 
+import com.vecnavelopers.dndbeyond.dto.AbilityScoresDto;
 import com.vecnavelopers.dndbeyond.model.Character;
 import com.vecnavelopers.dndbeyond.repository.CharacterRepository;
 import org.junit.jupiter.api.Test;
@@ -34,16 +35,10 @@ class AbilityScoresControllerTest {
 
         when(characterRepository.findById(any())).thenReturn(Optional.of(character));
 
-        Map<String, Integer> scores = Map.of(
-                "strength", 14,
-                "dexterity", 12,
-                "constitution", 10,
-                "intelligence", 8,
-                "wisdom", 8,
-                "charisma", 8
-        );
+        AbilityScoresDto dto = new AbilityScoresDto(14, 12, 10, 10, 8, 8);
 
-        controller.saveAbilityScores(scores);
+
+        controller.saveAbilityScores(dto);
 
         assertEquals(14, character.getCharacterStrength());
         assertEquals(12, character.getCharacterDexterity());
