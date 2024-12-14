@@ -6,10 +6,14 @@
     <title>Ability Scores</title>
 </head>
 <body>
-
+<div class="score-container">
+    <div>Total</div>
+    <div>27</div>
+</div>
 <div th:each="ability: ${abilities}">
     <div class="score-container">
         <div>
+            <div th:text="${#strings.capitalize(ability)}"></div>
             <div th:id="${ability} + 'NumberDisplay'">8</div>
             <button th:id="${ability} + 'MinusButton'" th:data-ability="${ability}" th:onclick="decreaseValue(this.getAttribute('data-ability'))">-</button>
             <button th:id="${ability} + 'PlusButton'" th:data-ability="${ability}" th:onclick="increaseValue(this.getAttribute('data-ability'))">+</button>
