@@ -7,11 +7,13 @@
 </head>
 <body>
 
-<div class="score-container">
-    <div>
-        <div id="strengthNumberDisplay">8</div>
-        <button id="strengthMinusButton" onclick="decreaseValue('strength')">-</button>
-        <button id="strengthPlusButton" onclick="increaseValue('strength')">+</button>
+<div th:each="ability: ${abilities}">
+    <div class="score-container">
+        <div>
+            <div th:id="${ability} + 'NumberDisplay'">8</div>
+            <button th:id="${ability} + 'MinusButton'" th:data-ability="${ability}" th:onclick="decreaseValue(this.getAttribute('data-ability'))">-</button>
+            <button th:id="${ability} + 'PlusButton'" th:data-ability="${ability}" th:onclick="increaseValue(this.getAttribute('data-ability'))">+</button>
+        </div>
     </div>
 </div>
 <script>

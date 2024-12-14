@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -28,7 +29,8 @@ public class AbilityScoresController {
     @GetMapping("/abilityScores")
     public ModelAndView getClassDetails() {
         ModelAndView modelAndView = new ModelAndView( "ability-scores");
-//        model.addAttribute("abilityScores", abilityScores);
+        modelAndView.addObject("abilities",
+                List.of("strength", "dexterity", "constitution", "intelligence", "wisdom", "charisma"));
         return modelAndView;
     }
 
