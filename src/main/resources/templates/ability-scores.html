@@ -2,14 +2,42 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ability Scores</title>
 </head>
 <body>
-    <div class="score-container ">
-        <div id="strength">8</div>
-        <button>-</button>
-        <button>+</button>
+<div class="score-container">
+    <div>
+        <div id="numberDisplay">8</div>
+        <button id="minusButton" onclick="decreaseValue()">-</button>
+        <button id="plusButton" onclick="increaseValue()">+</button>
     </div>
+</div>
+<script>
+    let currentValue = 8;
+    const minValue = 8;
+    const maxValue = 15;
 
+    function updateDisplay() {
+        document.getElementById("numberDisplay").innerText = currentValue;
+        document.getElementById("minusButton").disabled = currentValue <= minValue;
+        document.getElementById("plusButton").disabled = currentValue >= maxValue;
+    }
+
+    function increaseValue() {
+        if (currentValue < maxValue) {
+            currentValue++;
+            updateDisplay();
+        }
+    }
+
+    function decreaseValue() {
+        if (currentValue > minValue) {
+            currentValue--;
+            updateDisplay();
+        }
+    }
+    updateDisplay();
+</script>
 </body>
 </html>
