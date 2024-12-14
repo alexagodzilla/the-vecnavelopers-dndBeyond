@@ -24,7 +24,7 @@ class AbilityScoresControllerTest {
 
     @Test
     public void savingScoresWhenSixElementsTest(){
-       AbilityScoresController controller = new AbilityScoresController(characterRepository);
+        AbilityScoresController controller = new AbilityScoresController(characterRepository);
         Character character = new Character();
         character.setCharacterStrength(8);
         character.setCharacterDexterity(8);
@@ -38,7 +38,7 @@ class AbilityScoresControllerTest {
         AbilityScoresDto dto = new AbilityScoresDto(14, 12, 10, 10, 8, 8);
 
 
-        controller.saveAbilityScores(dto);
+        controller.saveAbilityScores(dto, 1L);
 
         assertEquals(14, character.getCharacterStrength());
         assertEquals(12, character.getCharacterDexterity());
