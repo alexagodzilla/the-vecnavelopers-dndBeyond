@@ -50,4 +50,18 @@ class AbilityScoresControllerTest {
         verify(characterRepository, times(1)).save(character);
     }
 
+    @Test
+    public void ThrowsExceptionIfCharacterNotFoundTest(){
+        AbilityScoresController controller = new AbilityScoresController(characterRepository);
+
+        when(characterRepository.findById(any())).thenReturn(Optional.empty());
+
+        AbilityScoresDto dto = new AbilityScoresDto(14, 12, 10, 10, 8, 8);
+
+        assertThrows(RuntimeException.class, () -> {
+            controller.saveAbilityScores(dto, 1L);
+        });
+
+    }
+
 }
