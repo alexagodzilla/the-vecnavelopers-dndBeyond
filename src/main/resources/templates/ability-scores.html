@@ -6,34 +6,44 @@
     <title>Ability Scores</title>
 </head>
 <body>
+
 <div class="score-container">
     <div>
-        <div id="numberDisplay">8</div>
-        <button id="minusButton" onclick="decreaseValue()">-</button>
-        <button id="plusButton" onclick="increaseValue()">+</button>
+        <div id="strengthNumberDisplay">8</div>
+        <button id="strengthMinusButton" onclick="decreaseValue('strength')">-</button>
+        <button id="strengthPlusButton" onclick="increaseValue('strength')">+</button>
     </div>
 </div>
 <script>
-    let currentValue = 8;
+    let currentValues = {
+        "strength": 8,
+        "dexterity": 8,
+        "constitution": 8,
+        "intelligence": 8,
+        "wisdom": 8,
+        "charisma": 8
+    }
     const minValue = 8;
     const maxValue = 15;
 
     function updateDisplay() {
-        document.getElementById("numberDisplay").innerText = currentValue;
-        document.getElementById("minusButton").disabled = currentValue <= minValue;
-        document.getElementById("plusButton").disabled = currentValue >= maxValue;
+        Object.keys(currentValues).forEach(key => {
+            document.getElementById(key + "NumberDisplay").innerText = currentValues[key];
+            document.getElementById(key + "MinusButton").disabled = currentValues[key] <= minValue;
+            document.getElementById(key + "PlusButton").disabled = currentValues[key] >= maxValue;
+        });
     }
 
-    function increaseValue() {
-        if (currentValue < maxValue) {
-            currentValue++;
+    function increaseValue(key) {
+        if (currentValues[key] < maxValue) {
+            currentValues[key]++;
             updateDisplay();
         }
     }
 
-    function decreaseValue() {
-        if (currentValue > minValue) {
-            currentValue--;
+    function decreaseValue(key) {
+        if (currentValues[key] > minValue) {
+            currentValues[key]--;
             updateDisplay();
         }
     }
