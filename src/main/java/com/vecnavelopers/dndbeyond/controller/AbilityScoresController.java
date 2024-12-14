@@ -22,7 +22,7 @@ public class AbilityScoresController {
     }
 
     @PostMapping("/abilityScores/{id}")
-    public boolean saveAbilityScores(AbilityScoresDto dto, @PathVariable Long id){
+    public void saveAbilityScores(AbilityScoresDto dto, @PathVariable Long id){
         Character character = characterRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Character not found"));
         character.setCharacterStrength(dto.getStrength());
@@ -31,7 +31,8 @@ public class AbilityScoresController {
         character.setCharacterIntelligence(dto.getIntelligence());
         character.setCharacterWisdom(dto.getWisdom());
         character.setCharacterCharisma(dto.getCharisma());
-        return false;
+
+        characterRepository.save(character);
     }
 
 }
