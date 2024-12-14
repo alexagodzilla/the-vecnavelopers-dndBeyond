@@ -2,8 +2,11 @@ package com.vecnavelopers.dndbeyond.controller;
 
 import com.vecnavelopers.dndbeyond.dto.AbilityScoresDto;
 import com.vecnavelopers.dndbeyond.model.Character;
+import com.vecnavelopers.dndbeyond.model.ClassDetails;
 import com.vecnavelopers.dndbeyond.repository.CharacterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,6 +22,13 @@ public class AbilityScoresController {
     @Autowired
     public AbilityScoresController(CharacterRepository characterRepository){
         this.characterRepository = characterRepository;
+    }
+
+    @GetMapping("/abilityScores")
+    public String getClassDetails(Model model) {
+
+//        model.addAttribute("abilityScores", abilityScores);
+        return "ability-scores"; // returns the name of the Thymeleaf template
     }
 
     @PostMapping("/abilityScores/{id}")
