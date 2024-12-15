@@ -21,6 +21,7 @@
         </div>
     </div>
 </div>
+<button id="submit" onclick="submit()">Submit</button>
 <script>
     let currentValues = {
         "strength": 8,
@@ -45,6 +46,7 @@
             else document.getElementById(key + "PlusButton").disabled = false
         });
         document.getElementById("availablePoints").innerText = availablePoints;
+        document.getElementById("submit").disabled = availablePoints != 0;
     }
 
     function increaseValue(key) {
@@ -61,6 +63,21 @@
         availablePoints += currentValues[key] > 13 ? 2 : 1;
         currentValues[key]--;
         updateDisplay();
+    }
+    function submit() {
+        if (availablePoints != 0) return;
+        fetch("/abilityScores/1", {
+            method: 'POST', // HTTP method
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(currentValues)
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+        });
     }
     updateDisplay();
 </script>

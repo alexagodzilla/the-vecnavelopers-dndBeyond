@@ -6,10 +6,7 @@ import com.vecnavelopers.dndbeyond.model.ClassDetails;
 import com.vecnavelopers.dndbeyond.repository.CharacterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
@@ -35,7 +32,7 @@ public class AbilityScoresController {
     }
 
     @PostMapping("/abilityScores/{id}")
-    public void saveAbilityScores(AbilityScoresDto dto, @PathVariable Long id){
+    public void saveAbilityScores(@RequestBody AbilityScoresDto dto, @PathVariable Long id){
         Character character = characterRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Character not found"));
         character.setCharacterStrength(dto.getStrength());
