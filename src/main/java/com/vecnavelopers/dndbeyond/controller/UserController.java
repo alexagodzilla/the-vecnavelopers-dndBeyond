@@ -46,7 +46,7 @@ public class UserController {
         if (userId != null) {
             return new RedirectView("/profile/" + userId);
         } else {
-            // Optionally, log or handle the error case here
+            // I will figure out a more intelligent way to handle the error later
             return new RedirectView("/error");
         }
     }

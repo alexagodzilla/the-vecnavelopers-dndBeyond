@@ -6,24 +6,12 @@
     <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
-
-<header>
     <h1>User Profile</h1>
-    <nav>
-        <a href="/logout">Logout</a>
-    </nav>
-</header>
+    <a href="/logout">Logout</a>
 
 <div class="profile">
-    <h2>Welcome, <span th:text="${user.email}"></span>!</h2>
+    <h2>Welcome, <span th:text="${user.username}"></span>!</h2>
     <p>Your user ID is: <span th:text="${user.id}"></span></p>
-    <p>Your email address is: <span th:text="${user.email}"></span></p>
-
-    <!-- You can add more user details here as needed -->
-    <p>
-        <!-- Example: Display user name or other info if available -->
-        <span th:text="${user.name != null ? 'Your name is: ' + user.name : 'Name not available'}"></span>
-    </p>
 </div>
 
 </body>
