@@ -16,18 +16,18 @@ public class CurrentUserService {
     }
 
     public Long getCurrentUserId() {
-        // Get the principal (logged-in user info)
+
         DefaultOidcUser principal = (DefaultOidcUser) SecurityContextHolder
                 .getContext()
                 .getAuthentication()
                 .getPrincipal();
 
-        // Retrieve the email from OIDC attributes
         String email = (String) principal.getAttributes().get("email");
 
-        // Find the user by email and return the ID
-        return userRepository.findUserByUsername(email)
-                .map(User::getId)
-                .orElse(null); // Return null if the user is not found
+        User user = userRepository
+                .findUserByUsername(email)
+                .orElseGet(() -> userRepository.save(new User(email)));
+
+        return user.getId();
     }
 }

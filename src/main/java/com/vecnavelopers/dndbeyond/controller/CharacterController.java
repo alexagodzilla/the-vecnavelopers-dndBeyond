@@ -34,11 +34,11 @@ public class CharacterController {
     }
 
 
-    @GetMapping("/create-character")
-    public String showCreateCharacterPage(Model model) {
-
-        return "create-character";
-    }
+//    @GetMapping("/create-character")
+//    public String showCreateCharacterPage(Model model) {
+//
+//        return "create-character";
+//    }
 
     @GetMapping("/class_selection")
     public String showClassSelectionPage(Model model) {
