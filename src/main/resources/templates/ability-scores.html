@@ -8,7 +8,7 @@
 <body>
 <div class="score-container">
     <div>Total</div>
-    <div>27</div>
+    <div id="availablePoints">27</div>
 </div>
 <div th:each="ability: ${abilities}">
     <div class="score-container">
@@ -32,24 +32,30 @@
     const minValue = 8;
     const maxValue = 15;
 
+    let availablePoints = 27;
+
     function updateDisplay() {
         Object.keys(currentValues).forEach(key => {
             document.getElementById(key + "NumberDisplay").innerText = currentValues[key];
             document.getElementById(key + "MinusButton").disabled = currentValues[key] <= minValue;
             document.getElementById(key + "PlusButton").disabled = currentValues[key] >= maxValue;
         });
+        document.getElementById("availablePoints").innerText = availablePoints;
     }
 
     function increaseValue(key) {
-        if (currentValues[key] < maxValue) {
-            currentValues[key]++;
-            updateDisplay();
-        }
+        if (availablePoints <= 0) return;
+        if (currentValues[key] >= maxValue) return;
+        if (currentValues[key] >= 13 && availablePoints <= 1) return;
+        availablePoints -= currentValues[key] >= 13 ? 2 : 1;
+        currentValues[key]++;
+        updateDisplay();
     }
 
     function decreaseValue(key) {
         if (currentValues[key] > minValue) {
             currentValues[key]--;
+            availablePoints += 1
             updateDisplay();
         }
     }
