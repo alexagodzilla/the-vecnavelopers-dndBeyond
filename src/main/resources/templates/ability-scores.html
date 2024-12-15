@@ -38,7 +38,10 @@
         Object.keys(currentValues).forEach(key => {
             document.getElementById(key + "NumberDisplay").innerText = currentValues[key];
             document.getElementById(key + "MinusButton").disabled = currentValues[key] <= minValue;
-            document.getElementById(key + "PlusButton").disabled = currentValues[key] >= maxValue;
+            if ((currentValues[key] >= 13 && availablePoints <= 1) || availablePoints == 0 || currentValues[key] >= maxValue) {
+                document.getElementById(key + "PlusButton").disabled = true
+            }
+            else document.getElementById(key + "PlusButton").disabled = false
         });
         document.getElementById("availablePoints").innerText = availablePoints;
     }
@@ -53,11 +56,10 @@
     }
 
     function decreaseValue(key) {
-        if (currentValues[key] > minValue) {
-            currentValues[key]--;
-            availablePoints += 1
-            updateDisplay();
-        }
+        if (currentValues[key] <= minValue) return;
+        availablePoints += currentValues[key] > 13 ? 2 : 1;
+        currentValues[key]--;
+        updateDisplay();
     }
     updateDisplay();
 </script>
