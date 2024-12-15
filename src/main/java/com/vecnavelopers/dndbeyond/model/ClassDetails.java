@@ -17,6 +17,11 @@ public class ClassDetails {
     private List<StartingEquipment> startingEquipment;
     private JsonNode subclasses;
 
+    private String classTagline;
+    private String classFlavour;
+    private String classDescription;
+    private String classPrimaryAbility;
+
     // Getters and setters
     public String getClassName() {
         return className;
@@ -101,4 +106,20 @@ public class ClassDetails {
     public void setSubclasses(JsonNode subclasses) {
         this.subclasses = subclasses;
     }
+
+    public void setClassTagline(String classTagline) { this.classTagline = classTagline; }
+
+    public String getClassTagline() { return classTagline; }
+
+    public void setClassFlavour(String classFlavour) { this.classFlavour = classFlavour; }
+
+    public String getClassFlavour() { return classFlavour; }
+
+    public void setClassDescription(String classDescription) { this.classDescription = classDescription; }
+
+    public String getClassDescription() { return classDescription; }
+
+    public void setClassPrimaryAbility(String classPrimaryAbility) { this.classPrimaryAbility = classPrimaryAbility; }
+
+    public String getClassPrimaryAbility() { return classPrimaryAbility; }
 }
