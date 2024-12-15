@@ -3,6 +3,8 @@ package com.vecnavelopers.dndbeyond.model;
 import com.fasterxml.jackson.databind.JsonNode;
 
 import java.util.List;
+import java.util.stream.Collectors;
+import com.vecnavelopers.dndbeyond.util.AbilityScoreMapper;
 
 public class ClassDetails {
     private String className;
@@ -13,7 +15,7 @@ public class ClassDetails {
     private JsonNode spells; // A list of spells
     private JsonNode proficiencyChoices;
     private List<Proficiency> proficiencies;
-    private List<Proficiency> savingThrows;
+    private List<String> savingThrows;
     private List<StartingEquipment> startingEquipment;
     private JsonNode subclasses;
 
@@ -87,12 +89,23 @@ public class ClassDetails {
         this.proficiencies = proficiencies;
     }
 
-    public List<Proficiency> getSavingThrows() {
+    public List<String> getSavingThrows() {
         return savingThrows;
     }
 
-    public void setSavingThrows(List<Proficiency> savingThrows) {
+    public void setSavingThrows(List<String> savingThrows) {
         this.savingThrows = savingThrows;
+    }
+
+    // Method to format saving throws
+    public String getSavingThrowsFormatted() {
+        if (savingThrows == null || savingThrows.isEmpty()) {
+            return "None";
+        }
+
+        return savingThrows.stream()
+                .map(AbilityScoreMapper::getFullName) // Map shorthand to full name
+                .collect(Collectors.joining(" and ")); // Join names with "and"
     }
 
     public List<StartingEquipment> getStartingEquipment() { return startingEquipment; }

@@ -119,7 +119,7 @@ public class ClassService {
     // Helper method to parse and set Proficiencies and Saving Throws
     public void parseProficienciesAndSavingThrows(JsonNode classData, ClassDetails classDetails) {
         List<Proficiency> proficienciesList = new ArrayList<>();
-        List<Proficiency> savingThrowsList = new ArrayList<>();
+        List<String> savingThrowsList = new ArrayList<>();
 
         JsonNode proficienciesNode = classData.path("proficiencies");
         if (proficienciesNode != null && proficienciesNode.isArray()) {
@@ -130,8 +130,9 @@ public class ClassService {
                 proficiency.setName(proficiencyNode.path("name").asText());
                 proficiency.setUrl(proficiencyNode.path("url").asText());
 
-                if (index.startsWith("saving-throw")) {
-                    savingThrowsList.add(proficiency);
+                if (index.startsWith("saving-throw-")) {
+                    String shorthand = index.replace("saving-throw-", "").toUpperCase();
+                    savingThrowsList.add(shorthand);
                 } else {
                     proficienciesList.add(proficiency);
                 }
