@@ -8,6 +8,8 @@ import com.vecnavelopers.dndbeyond.util.AbilityScoreMapper;
 
 public class ClassDetails {
     private String className;
+    private String description;
+    private String imageUrl;
     private int hitDie;
     private JsonNode classLevels; // Can be a List or Map, depending on your needs
     private Spellcasting spellcasting;
@@ -25,6 +27,23 @@ public class ClassDetails {
     private String classPrimaryAbility;
 
     // Getters and setters
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
     public String getClassName() {
         return className;
     }
