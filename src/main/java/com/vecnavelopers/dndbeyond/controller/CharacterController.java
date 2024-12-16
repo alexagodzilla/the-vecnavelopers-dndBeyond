@@ -65,18 +65,6 @@ public class CharacterController {
     }
 
 
-
-//    @GetMapping("/choose-class/character/{id}")
-//    public ModelAndView chooseClass(@PathVariable Long id) {
-//        ModelAndView classSelectionPage = new ModelAndView("class-selection");
-//        List<ClassDetails> classDetailsList = classService.getClassDescriptions();
-//        Long currentUserId = currentUserService.getCurrentUserId();
-//        classSelectionPage.addObject("characterId", id);
-//        classSelectionPage.addObject("userId", currentUserId);
-//        classSelectionPage.addObject("classDetails", classDetailsList);
-//        return classSelectionPage;
-//    }
-
     @GetMapping("/choose-class/character/{id}")
     public ModelAndView chooseClass(@PathVariable Long id) {
         ModelAndView classSelectionPage = new ModelAndView("class-selection");

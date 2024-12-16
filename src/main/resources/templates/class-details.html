@@ -35,6 +35,8 @@
     <li th:if="${#lists.isEmpty(classDetails.startingEquipment)}">No starting equipment available.</li>
   </ul>
 </div>
+<a th:href="@{/choose-class/character/{characterId}(characterId=${characterId})}" class="back">Go Back</a>
+
 
 </body>
 </html>
