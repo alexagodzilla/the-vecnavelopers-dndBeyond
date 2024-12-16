@@ -19,6 +19,12 @@ public class CharacterNameController {
         this.characterRepository = characterRepository;
     }
 
+    @GetMapping("/nameAndPic")
+    public ModelAndView getClassNameAndPic() {
+        return new ModelAndView( "name-and-pic");
+
+    }
+
     @PostMapping("/nameAndPic/{id}")
     public void saveNameAndPic(@RequestBody NameAndPicDto dto, @PathVariable Long id){
         Character character = characterRepository.findById(id)
