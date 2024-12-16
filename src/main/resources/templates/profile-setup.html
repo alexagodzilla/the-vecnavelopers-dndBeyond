@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>D&D Profile</title>
+  <link rel="stylesheet" href="/profile.css">
+</head>
+<body>
+<div class="container">
+  <h1>Welcome to D&D Adventures</h1>
+  <p>Please complete your profile to get started!</p>
+
+  <form th:action="@{/profile/setup}" method="post" enctype="multipart/form-data">
+    <div class="form-group">
+      <label for="displayName">Display Name</label>
+      <input type="text" id="displayName" name="displayName" required placeholder="Enter your display name">
+    </div>
+
+    <div class="form-group">
+      <label for="bio">Bio</label>
+      <textarea id="bio" name="bio" rows="5" placeholder="Tell us about your D&D persona..." required></textarea>
+    </div>
+
+    <div class="form-group">
+      <label for="profilePicture">Profile Picture</label>
+      <input type="file" id="profilePicture" name="profilePicture" accept="image/*">
+    </div>
+
+    <button type="submit" class="btn">Save Profile</button>
+  </form>
+</div>
+</body>
+</html>
