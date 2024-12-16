@@ -17,7 +17,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ActiveProfiles("test")
 @SpringBootTest(properties = "spring.flyway.clean-disabled=false")
@@ -26,14 +26,14 @@ class CharacterNameControllerTest {
     @Mock
     CharacterRepository characterRepository;
 
-    @Autowired
-    private Flyway flyway;
-
-    @BeforeEach
-    void setUpDatabase() {
-        flyway.clean();
-        flyway.migrate();
-    }
+//    @Autowired
+//    private Flyway flyway;
+//
+//    @BeforeEach
+//    void setUpDatabase() {
+//        flyway.clean();
+//        flyway.migrate();
+//    }
 
     @Test
     public void ThrowsExceptionIfCharacterNotFoundTest() {
@@ -44,6 +44,23 @@ class CharacterNameControllerTest {
         assertThrows(RuntimeException.class, () -> {
             controller.saveNameAndPic(dto, 1L);
         });
+    }
+
+    @Test
+    public void savingNameAndPicTest(){
+        CharacterNameController controller = new CharacterNameController(characterRepository);
+        Character character = new Character();
+
+        when(characterRepository.findById(any())).thenReturn(Optional.of(character));
+
+        NameAndPicDto dto = new NameAndPicDto("TestName", "testUrl");
+
+        controller.saveNameAndPic(dto, 1L);
+
+        assertEquals(dto.getName(), character.getCharacterName());
+//        assertEquals(dto.getPicUrl(), character.getCharacterPic());
+
+        verify(characterRepository, times(1)).save(character);
     }
 
 

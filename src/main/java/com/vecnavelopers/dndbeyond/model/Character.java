@@ -152,6 +152,4 @@ public class Character {
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
-
-
 }
