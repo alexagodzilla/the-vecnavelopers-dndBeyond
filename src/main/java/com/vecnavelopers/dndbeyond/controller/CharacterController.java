@@ -83,12 +83,12 @@ public class CharacterController {
         return "redirect:/profile/" + currentUserId;
     }
 
-//    @PutMapping("/characters/{id}")
-//    public ResponseEntity<Character> updateCharacter(@PathVariable Long id, @RequestBody Character updatedCharacter) {
-//        updatedCharacter.setId(id);
-//        characterService.saveCharacter(updatedCharacter); // Save the updated character
-//        return ResponseEntity.ok(updatedCharacter);
-//    }
+    @PatchMapping("/update-class-name")
+    public String updateClassName(@RequestParam String className, @RequestParam Long characterId) {
+        characterService.updateCharacterClass(characterId, className);
+
+        return "redirect:/character/" + characterId;
+    }
 
 
 

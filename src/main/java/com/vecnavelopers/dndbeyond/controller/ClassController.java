@@ -39,4 +39,7 @@ public class ClassController {
         model.addAttribute("userId", userId);
         return "class-details";
     }
+
+
+
 }

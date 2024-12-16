@@ -35,7 +35,13 @@
     <li th:if="${#lists.isEmpty(classDetails.startingEquipment)}">No starting equipment available.</li>
   </ul>
 </div>
-<a th:href="@{/choose-class/character/{characterId}(characterId=${characterId})}" class="back">Go Back</a>
+<a th:href="@{/choose-class/character/{characterId}(characterId=${characterId})}" class="back">Go Back to the character page</a>
+<form id="updateClassNameForm" th:action="@{/update-class-name}" method="post">
+  <input type="hidden" name="_method" value="PATCH">
+  <input type="hidden" id="className" name="className" th:value="${classDetails.className}">
+  <input type="hidden" id="characterId" name="characterId" th:value="${characterId}">
+  <button type="submit">Update Class Name</button>
+</form>
 
 
 </body>
