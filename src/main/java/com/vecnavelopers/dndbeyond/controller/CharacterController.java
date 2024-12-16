@@ -6,8 +6,10 @@ import com.vecnavelopers.dndbeyond.repository.UserRepository;
 import com.vecnavelopers.dndbeyond.service.ClassService;
 
 import com.vecnavelopers.dndbeyond.service.CurrentUserService;
+import com.vecnavelopers.dndbeyond.service.CharacterService;
 import com.vecnavelopers.dndbeyond.service.DndApiService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.core.oidc.user.DefaultOidcUser;
 import com.vecnavelopers.dndbeyond.repository.CharacterRepository;
@@ -22,6 +24,9 @@ import java.util.Map;
 
 @Controller
 public class CharacterController {
+
+    @Autowired
+    private CharacterService characterService;
 
     private final DndApiService dndApiService;
     private final ClassService classService;
@@ -53,7 +58,7 @@ public class CharacterController {
     @PostMapping("/create-character")
     public String createCharacter() {
         Long userId = currentUserService.getCurrentUserId();
-        // Intellij belived new Character was char so I need to tell java what character I am importing by sepcifying is as below
+        // Intellij believed new Character was char so I need to tell java what character I am importing by specifying is as below
         com.vecnavelopers.dndbeyond.model.Character newCharacter = new com.vecnavelopers.dndbeyond.model.Character();
         newCharacter.setUserId(userId);
         characterRepository.save(newCharacter);
@@ -73,13 +78,20 @@ public class CharacterController {
         return classSelectionPage;
     }
 
-    @PostMapping("/delete-character/{characterId}")
-    public String deleteCharacter(@PathVariable Long characterId, @RequestParam Long userId) {
-        System.out.println("Deleting character with ID: " + characterId + " for user: " + userId);
-        characterRepository.deleteById(characterId);
+    @DeleteMapping("/choose-class/character/{id}")
+    public String deleteCharacter(@PathVariable Long id) {
         Long currentUserId = currentUserService.getCurrentUserId();
+        characterService.deleteCharacter(id);
         return "redirect:/profile/" + currentUserId;
     }
+
+//    @PutMapping("/characters/{id}")
+//    public ResponseEntity<Character> updateCharacter(@PathVariable Long id, @RequestBody Character updatedCharacter) {
+//        updatedCharacter.setId(id);
+//        characterService.saveCharacter(updatedCharacter); // Save the updated character
+//        return ResponseEntity.ok(updatedCharacter);
+//    }
+
 
 
 

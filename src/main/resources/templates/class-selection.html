@@ -58,10 +58,9 @@
   </div>
 </div>
 
-<form action="/delete-character/{{characterId}}" method="POST">
-  <input type="hidden" name="_method" value="DELETE"/>
-  <input type="hidden" name="userId" th:value="${userId}"/>
-  <input type="hidden" name="characterId" th:value="${characterId}"/>
+<form action="/choose-class/character/{{characterId}}" method="POST" th:action="@{/choose-class/character/{id}(id=${characterId})}">
+  <input type="hidden" name="_method" value="DELETE" />
+  <input type="hidden" name="userId" th:value="${userId}" />
   <button type="submit">Delete Character</button>
 </form>
 </body>
