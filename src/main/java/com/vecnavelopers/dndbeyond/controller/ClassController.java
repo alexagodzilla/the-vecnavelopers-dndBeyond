@@ -2,26 +2,26 @@ package com.vecnavelopers.dndbeyond.controller;
 
 
 import com.vecnavelopers.dndbeyond.model.ClassDetails;
-import com.vecnavelopers.dndbeyond.service.DndApiService;
+import com.vecnavelopers.dndbeyond.service.ClassService;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+
 
 @Controller
 public class ClassController {
 
-    private final DndApiService dndApiService;
+    private final ClassService classService;
 
-    public ClassController(DndApiService dndApiService) {
-        this.dndApiService = dndApiService;
+    public ClassController(ClassService classService) {
+        this.classService = classService;
     }
 
     @GetMapping("/classes/{className}")
     public String getClassDetails(@PathVariable String className, Model model) {
-        ClassDetails classDetails = dndApiService.getClassDetails(className);
+        ClassDetails classDetails = classService.getClassDetails(className);
         model.addAttribute("classDetails", classDetails);
         return "class-details"; // returns the name of the Thymeleaf template
     }
