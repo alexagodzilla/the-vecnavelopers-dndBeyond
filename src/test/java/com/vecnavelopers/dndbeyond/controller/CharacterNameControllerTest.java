@@ -53,12 +53,12 @@ class CharacterNameControllerTest {
 
         when(characterRepository.findById(any())).thenReturn(Optional.of(character));
 
-        NameAndPicDto dto = new NameAndPicDto("TestName", "testUrl");
+        NameAndPicDto dto = new NameAndPicDto("TestName", "testPicUrl");
 
         controller.saveNameAndPic(dto, 1L);
 
         assertEquals(dto.getName(), character.getCharacterName());
-//        assertEquals(dto.getPicUrl(), character.getCharacterPic());
+        assertEquals(dto.getPicUrl(), character.getCharacterPicUrl());
 
         verify(characterRepository, times(1)).save(character);
     }

@@ -24,6 +24,7 @@ public class CharacterNameController {
         Character character = characterRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Character not found"));
         character.setCharacterName(dto.getName());
+        character.setCharacterPicUrl(dto.getPicUrl());
         characterRepository.save(character);
     }
 }
