@@ -54,7 +54,7 @@
       <h3 th:text="${class.className}"></h3>
       <p th:text="${class.classTagline}"></p>
     </div>
-    <a th:href="@{/classes/{classname}(classname=${class.className})}" class="details">See Class Details</a>
+    <a th:href="@{/classes/{classname}(classname=${#strings.toLowerCase(class.className)})}" class="details">See Class Details</a>
   </div>
 </div>
 
