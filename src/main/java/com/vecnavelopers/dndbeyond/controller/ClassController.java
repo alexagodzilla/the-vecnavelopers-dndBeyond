@@ -23,6 +23,6 @@ public class ClassController {
     public String getClassDetails(@PathVariable String className, Model model) {
         ClassDetails classDetails = classService.getClassDetails(className);
         model.addAttribute("classDetails", classDetails);
-        return "class-details"; // returns the name of the Thymeleaf template
+        return "class-details";
     }
 }
