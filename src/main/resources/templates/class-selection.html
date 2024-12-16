@@ -1,23 +1,68 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="class.css">
   <title>Class Selection</title>
+  <style>
+    .card {
+        width: 200px;
+        height: 300px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        margin: 10px;
+        position: relative;
+        text-align: center;
+        overflow: hidden;
+    }
+
+    .card img {
+        width: 100%;
+        height: 150px;
+        object-fit: cover;
+    }
+
+    .card .description {
+        padding: 10px;
+        font-size: 14px;
+        color: #555;
+    }
+
+    .card:hover .details {
+        display: block;
+    }
+
+    .details {
+        display: none;
+        position: absolute;
+        bottom: 10px;
+        left: 10px;
+        background-color: rgba(0, 0, 0, 0.5);
+        color: white;
+        padding: 5px;
+        border-radius: 5px;
+    }
+  </style>
 </head>
 <body>
-<h1>Select Your Character Class</h1>
 
-<div>
-  <p>Hover over a class name to see its description:</p>
-  <!-- Iterate over the class descriptions map and create buttons -->
-  <div th:each="entry : ${classDescription}">
-    <a th:href="@{'/classes/' + ${entry.key}}">
-      <button th:text="${entry.key}" th:title="${entry.value}" style="cursor: pointer;"></button>
-    </a>
+<h1>Select a Class</h1>
+
+<div th:each="class : ${classDetails}">
+  <div class="card">
+    <img th:src="@{${class.imageUrl}}" alt="Class Image">
+    <div class="description">
+      <h3 th:text="${class.className}"></h3>
+      <p th:text="${class.description}"></p>
+    </div>
+    <a th:href="@{/classes/{classname}(classname=${class.className})}" class="details">See Class Details</a>
   </div>
 </div>
 
+<form action="/delete-character/{{characterId}}" method="POST">
+  <input type="hidden" name="_method" value="DELETE"/>
+  <input type="hidden" name="userId" th:value="${userId}"/>
+  <input type="hidden" name="characterId" th:value="${characterId}"/>
+  <button type="submit">Delete Character</button>
+</form>
 </body>
 </html>

@@ -20,10 +20,12 @@ public class ProfileController {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
-        ModelAndView profilePage = new ModelAndView("profile-page"); // This is the template name
+        ModelAndView profilePage = new ModelAndView("profile-page");
         profilePage.addObject("user", user);
 
         return profilePage;
     }
+
+
 }
 

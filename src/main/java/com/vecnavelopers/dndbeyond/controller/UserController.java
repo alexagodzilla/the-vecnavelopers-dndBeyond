@@ -19,26 +19,6 @@ public class UserController {
     @Autowired
     private CurrentUserService currentUserService;
 
-//    @GetMapping("/users/after-login")
-//    public RedirectView afterLogin() {
-//        DefaultOidcUser principal = (DefaultOidcUser) SecurityContextHolder
-//                .getContext()
-//                .getAuthentication()
-//                .getPrincipal();
-//
-//        String username = (String) principal.getAttributes().get("email");
-//        userRepository
-//                .findUserByUsername(username)
-//                .orElseGet(() -> userRepository.save(new User(username)));
-//
-//        Long userId = currentUserService.getCurrentUserId();
-//        if (userId != null) {
-//            return new RedirectView("/profile/" + userId);
-//        } else {
-//            return new RedirectView("/error");
-//        }
-//    }
-
     @GetMapping("/users/after-login")
     public RedirectView afterLogin() {
         Long userId = currentUserService.getCurrentUserId();

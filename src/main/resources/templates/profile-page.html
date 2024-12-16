@@ -9,10 +9,17 @@
     <h1>User Profile</h1>
     <a href="/logout">Logout</a>
 
-<div class="profile">
-    <h2>Welcome, <span th:text="${user.username}"></span>!</h2>
-    <p>Your user ID is: <span th:text="${user.id}"></span></p>
-</div>
+    <div class="profile">
+        <h2>Welcome, <span th:text="${user.username}"></span>!</h2>
+<!--        <p>Your user ID is: <span th:text="${user.id}"></span></p>-->
+    </div>
+    <form action="/create-character" method="POST">
+        <input type="hidden" name="userId" value="${userId}" />
+        <button type="submit">Create a new Character</button>
+    </form>
+    <a href="/all-characters" class="btn-my-character">See all your characters</a>
+    <a href="/all-campaigns" class="btn-my-campaigns">See all your campaigns</a>
+
 
 </body>
 </html>
