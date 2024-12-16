@@ -19,7 +19,7 @@ public class ClassService {
     private final OkHttpClient client = new OkHttpClient();
     private final ObjectMapper objectMapper = new ObjectMapper();
 
-    private ClassExtraDetailsRepository classExtraDetailsRepository;
+    private final ClassExtraDetailsRepository classExtraDetailsRepository;
 
     @Autowired
     public ClassService(ClassExtraDetailsRepository classExtraDetailsRepository) {
@@ -64,6 +64,7 @@ public class ClassService {
 
         // Extract class information from the API response
         if (classData != null) {
+            classDetails.setClassIndex(classData.path("index").asText());
             classDetails.setClassName(classData.path("name").asText());
             classDetails.setHitDie(classData.path("hit_die").asInt());
             classDetails.setClassLevels(classData.path("class_levels"));
