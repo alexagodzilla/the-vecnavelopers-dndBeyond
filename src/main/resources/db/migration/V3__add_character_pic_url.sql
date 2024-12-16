@@ -1,0 +1,3 @@
+--UPDATE EXISTING CHARACTER TABLE
+ALTER TABLE characters
+ADD character_pic_url TEXT;

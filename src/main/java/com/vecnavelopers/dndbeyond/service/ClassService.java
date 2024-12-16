@@ -19,7 +19,7 @@ public class ClassService {
     private final OkHttpClient client = new OkHttpClient();
     private final ObjectMapper objectMapper = new ObjectMapper();
 
-    private ClassExtraDetailsRepository classExtraDetailsRepository;
+    private final ClassExtraDetailsRepository classExtraDetailsRepository;
 
     @Autowired
     public ClassService(ClassExtraDetailsRepository classExtraDetailsRepository) {
@@ -64,6 +64,7 @@ public class ClassService {
 
         // Extract class information from the API response
         if (classData != null) {
+            classDetails.setClassIndex(classData.path("index").asText());
             classDetails.setClassName(classData.path("name").asText());
             classDetails.setHitDie(classData.path("hit_die").asInt());
             classDetails.setClassLevels(classData.path("class_levels"));
@@ -167,4 +168,22 @@ public class ClassService {
             return null;  // Handle error, could also throw a custom exception
         }
     }
+
+    public List<ClassSummary> getAllClasses() {
+        // Fetch all classes from the database
+        List<ClassExtraDetails> extraDetailsList = classExtraDetailsRepository.findAll();
+
+        // Create a list to hold the Class Summary objects
+        List<ClassSummary> classSummaryList = new ArrayList<>();
+        for (ClassExtraDetails classExtraDetails : extraDetailsList) {
+            ClassSummary classSummary = new ClassSummary();
+            classSummary.setClassName(classExtraDetails.getClassName());
+            classSummary.setClassTagline(classExtraDetails.getClassTagline());
+            classSummary.setClassIcon(classExtraDetails.getClassIcon());
+            classSummaryList.add(classSummary);
+        }
+        return classSummaryList;
+    }
+
+
 }

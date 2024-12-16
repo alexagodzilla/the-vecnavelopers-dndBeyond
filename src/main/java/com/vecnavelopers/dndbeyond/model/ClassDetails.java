@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import com.vecnavelopers.dndbeyond.util.AbilityScoreMapper;
 
 public class ClassDetails {
+    private String classIndex;
     private String className;
     private int hitDie;
     private JsonNode classLevels; // Can be a List or Map, depending on your needs
@@ -23,8 +24,14 @@ public class ClassDetails {
     private String classFlavour;
     private String classDescription;
     private String classPrimaryAbility;
+    private String classIcon;
 
     // Getters and setters
+
+    public String getClassIndex() { return className; }
+
+    public void setClassIndex(String classIndex) { this.classIndex = classIndex; }
+
     public String getClassName() {
         return className;
     }
@@ -135,4 +142,9 @@ public class ClassDetails {
     public void setClassPrimaryAbility(String classPrimaryAbility) { this.classPrimaryAbility = classPrimaryAbility; }
 
     public String getClassPrimaryAbility() { return classPrimaryAbility; }
+
+    public void setClassIcon(String classIcon) { this.classIcon = classIcon; }
+
+    public String getClassIcon() { return classIcon; }
+
 }

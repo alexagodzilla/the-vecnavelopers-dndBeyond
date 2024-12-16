@@ -90,6 +90,9 @@ public class Character {
     @Column(name = "character_proficiency_bonus", nullable = false, columnDefinition = "SMALLINT default 0")
     private Integer characterProficiencyBonus;
 
+    @Column(name = "character_pic_url")
+    private String characterPicUrl;
+
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)
     private Timestamp createdAt;
@@ -124,7 +127,7 @@ public class Character {
                      Integer characterIntelligence, Integer characterWisdom, Integer characterCharisma,
                      String characterAlignment, Integer characterCurrentHp, Integer characterMaxHp,
                      Integer characterArmourClass, Integer characterInitiative, Integer characterExp,
-                     Integer characterCoin, Integer characterProficiencyBonus, Timestamp createdAt,
+                     Integer characterCoin, Integer characterProficiencyBonus, String characterPicUrl, Timestamp createdAt,
                      Timestamp updatedAt) {
         this.userId = userId;
         this.characterName = characterName;
@@ -149,6 +152,7 @@ public class Character {
         this.characterExp = characterExp;
         this.characterCoin = characterCoin;
         this.characterProficiencyBonus = characterProficiencyBonus;
+        this.characterPicUrl = characterPicUrl;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
