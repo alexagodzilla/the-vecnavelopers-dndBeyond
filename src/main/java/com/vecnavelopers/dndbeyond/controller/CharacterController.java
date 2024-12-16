@@ -1,13 +1,14 @@
 package com.vecnavelopers.dndbeyond.controller;
 
 import com.vecnavelopers.dndbeyond.model.ClassDetails;
+import com.vecnavelopers.dndbeyond.model.ClassSummary;
 import com.vecnavelopers.dndbeyond.model.User;
 import com.vecnavelopers.dndbeyond.repository.UserRepository;
 import com.vecnavelopers.dndbeyond.service.ClassService;
 
 import com.vecnavelopers.dndbeyond.service.CurrentUserService;
 import com.vecnavelopers.dndbeyond.service.CharacterService;
-import com.vecnavelopers.dndbeyond.service.DndApiService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -28,13 +29,11 @@ public class CharacterController {
     @Autowired
     private CharacterService characterService;
 
-    private final DndApiService dndApiService;
     private final ClassService classService;
     private final CurrentUserService currentUserService;
     private final CharacterRepository characterRepository;
 
-    public CharacterController(DndApiService dndApiService, ClassService classService, CurrentUserService currentUserService, CharacterRepository characterRepository) {
-        this.dndApiService = dndApiService;
+    public CharacterController(ClassService classService, CurrentUserService currentUserService, CharacterRepository characterRepository) {
         this.classService = classService;
         this.currentUserService = currentUserService;
         this.characterRepository = characterRepository;
@@ -67,14 +66,25 @@ public class CharacterController {
 
 
 
+//    @GetMapping("/choose-class/character/{id}")
+//    public ModelAndView chooseClass(@PathVariable Long id) {
+//        ModelAndView classSelectionPage = new ModelAndView("class-selection");
+//        List<ClassDetails> classDetailsList = classService.getClassDescriptions();
+//        Long currentUserId = currentUserService.getCurrentUserId();
+//        classSelectionPage.addObject("characterId", id);
+//        classSelectionPage.addObject("userId", currentUserId);
+//        classSelectionPage.addObject("classDetails", classDetailsList);
+//        return classSelectionPage;
+//    }
+
     @GetMapping("/choose-class/character/{id}")
     public ModelAndView chooseClass(@PathVariable Long id) {
         ModelAndView classSelectionPage = new ModelAndView("class-selection");
-        List<ClassDetails> classDetailsList = classService.getClassDescriptions();
+        List<ClassSummary> classSummaryList = classService.getAllClasses();
         Long currentUserId = currentUserService.getCurrentUserId();
-        classSelectionPage.addObject("characterId", id);
+        classSelectionPage.addObject("classSummaryList", classSummaryList);
         classSelectionPage.addObject("userId", currentUserId);
-        classSelectionPage.addObject("classDetails", classDetailsList);
+        classSelectionPage.addObject("characterId", id);
         return classSelectionPage;
     }
 

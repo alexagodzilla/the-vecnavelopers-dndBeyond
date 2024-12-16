@@ -47,12 +47,12 @@
 
 <h1>Select a Class</h1>
 
-<div th:each="class : ${classDetails}">
+<div th:each="class : ${classSummaryList}">
   <div class="card">
-    <img th:src="@{${class.imageUrl}}" alt="Class Image">
+    <img th:src="@{${class.classIcon}}" alt="Class Image">
     <div class="description">
       <h3 th:text="${class.className}"></h3>
-      <p th:text="${class.description}"></p>
+      <p th:text="${class.classTagline}"></p>
     </div>
     <a th:href="@{/classes/{classname}(classname=${class.className})}" class="details">See Class Details</a>
   </div>
