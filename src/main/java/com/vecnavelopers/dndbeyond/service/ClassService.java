@@ -167,4 +167,22 @@ public class ClassService {
             return null;  // Handle error, could also throw a custom exception
         }
     }
+
+    public List<ClassSummary> getAllClasses() {
+        // Fetch all classes from the database
+        List<ClassExtraDetails> extraDetailsList = classExtraDetailsRepository.findAll();
+
+        // Create a list to hold the Class Summary objects
+        List<ClassSummary> classSummaryList = new ArrayList<>();
+        for (ClassExtraDetails classExtraDetails : extraDetailsList) {
+            ClassSummary classSummary = new ClassSummary();
+            classSummary.setClassName(classExtraDetails.getClassName());
+            classSummary.setClassTagline(classExtraDetails.getClassTagline());
+            classSummary.setClassIcon(classExtraDetails.getClassIcon());
+            classSummaryList.add(classSummary);
+        }
+        return classSummaryList;
+    }
+
+
 }

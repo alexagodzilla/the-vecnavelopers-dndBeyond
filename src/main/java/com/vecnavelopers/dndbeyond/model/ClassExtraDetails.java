@@ -17,7 +17,7 @@ public class ClassExtraDetails {
     private Long id;
 
     @Column(name = "class_index", nullable = false, unique = true)
-    private Long classIndex;
+    private String classIndex;
 
     @Column(name = "class_name", nullable = false, unique = true)
     private String className;
