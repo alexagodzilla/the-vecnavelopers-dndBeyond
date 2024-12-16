@@ -3,6 +3,8 @@ package com.vecnavelopers.dndbeyond.model;
 import com.fasterxml.jackson.databind.JsonNode;
 
 import java.util.List;
+import java.util.stream.Collectors;
+import com.vecnavelopers.dndbeyond.util.AbilityScoreMapper;
 
 public class ClassDetails {
     private String className;
@@ -15,9 +17,14 @@ public class ClassDetails {
     private JsonNode spells; // A list of spells
     private JsonNode proficiencyChoices;
     private List<Proficiency> proficiencies;
-    private List<Proficiency> savingThrows;
+    private List<String> savingThrows;
     private List<StartingEquipment> startingEquipment;
     private JsonNode subclasses;
+
+    private String classTagline;
+    private String classFlavour;
+    private String classDescription;
+    private String classPrimaryAbility;
 
     // Getters and setters
 
@@ -101,12 +108,23 @@ public class ClassDetails {
         this.proficiencies = proficiencies;
     }
 
-    public List<Proficiency> getSavingThrows() {
+    public List<String> getSavingThrows() {
         return savingThrows;
     }
 
-    public void setSavingThrows(List<Proficiency> savingThrows) {
+    public void setSavingThrows(List<String> savingThrows) {
         this.savingThrows = savingThrows;
+    }
+
+    // Method to format saving throws
+    public String getSavingThrowsFormatted() {
+        if (savingThrows == null || savingThrows.isEmpty()) {
+            return "None";
+        }
+
+        return savingThrows.stream()
+                .map(AbilityScoreMapper::getFullName) // Map shorthand to full name
+                .collect(Collectors.joining(" and ")); // Join names with "and"
     }
 
     public List<StartingEquipment> getStartingEquipment() { return startingEquipment; }
@@ -120,4 +138,20 @@ public class ClassDetails {
     public void setSubclasses(JsonNode subclasses) {
         this.subclasses = subclasses;
     }
+
+    public void setClassTagline(String classTagline) { this.classTagline = classTagline; }
+
+    public String getClassTagline() { return classTagline; }
+
+    public void setClassFlavour(String classFlavour) { this.classFlavour = classFlavour; }
+
+    public String getClassFlavour() { return classFlavour; }
+
+    public void setClassDescription(String classDescription) { this.classDescription = classDescription; }
+
+    public String getClassDescription() { return classDescription; }
+
+    public void setClassPrimaryAbility(String classPrimaryAbility) { this.classPrimaryAbility = classPrimaryAbility; }
+
+    public String getClassPrimaryAbility() { return classPrimaryAbility; }
 }
