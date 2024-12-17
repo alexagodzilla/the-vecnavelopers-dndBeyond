@@ -152,37 +152,30 @@ public class ProfileController {
 
     @GetMapping("/all-characters")
     public String getUserCharacters(Model model) {
-        // Step 1: Retrieve authenticated user's Auth0 ID
         String auth0Id = SecurityContextHolder.getContext().getAuthentication().getName();
 
-        // Step 2: Find the user and handle missing users gracefully
         User currentUser = userRepository.findByAuth0Id(auth0Id)
                 .orElseThrow(() -> new IllegalStateException("User not found."));
 
-        // Step 3: Use the custom query to fetch the user's characters
         List<Character> characters = characterRepository.findCharactersByUserId(currentUser.getId());
 
-        // Step 4: Add characters to the model
         model.addAttribute("characters", characters);
 
-        // Handle empty character list message
         if (characters.isEmpty()) {
             model.addAttribute("message", "You have no characters yet.");
         }
 
-        return "user-characters"; // Return the Thymeleaf template name
+        return "user-characters";
     }
 
-    // View Character Details
     @GetMapping("/character/{id}")
     public String viewCharacter(@PathVariable Long id, Model model) {
         Character character = characterRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Character not found"));
         model.addAttribute("character", character);
-        return "character-details"; // Thymeleaf template for displaying all fields
+        return "character-details";
     }
 
-    // Edit Character
     @GetMapping("/character/edit/{id}")
     public String editCharacter(@PathVariable Long id, Model model) {
         Character character = characterRepository.findById(id)
@@ -191,7 +184,6 @@ public class ProfileController {
         return "character-creation"; // Return to the character creation/edit form
     }
 
-    // Copy Character
     @GetMapping("/character/copy/{id}")
     public String copyCharacter(@PathVariable Long id) {
         Character original = characterRepository.findById(id)
@@ -203,7 +195,6 @@ public class ProfileController {
         return "redirect:/all-characters";
     }
 
-    // Delete Character
     @GetMapping("/character/delete/{id}")
     public String deleteCharacter(@PathVariable Long id) {
         characterRepository.deleteById(id);
