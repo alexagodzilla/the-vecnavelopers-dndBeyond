@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/species")
@@ -22,11 +23,18 @@ public class SpeciesController {
     }
 
     @GetMapping("/{speciesName}")
-    public String getSpeciesDetails(@PathVariable String speciesName, Model model) {
+    public String getSpeciesDetails(
+            @PathVariable String speciesName,
+            @RequestParam(required = false) Long characterId,
+            @RequestParam(required = false) Long userId,
+            Model model) {
         SpeciesDetails speciesDetails = speciesService.getSpeciesDetails(speciesName);
         model.addAttribute("speciesDetails", speciesDetails);
         SpeciesExtraDetails extraDetails = speciesExtraDetailsRepository.findBySpeciesName(speciesName);
         model.addAttribute("extraDetails", extraDetails);
+        model.addAttribute("characterId", characterId);
+        model.addAttribute("userId", userId);
         return "species-details";
     }
+
 }

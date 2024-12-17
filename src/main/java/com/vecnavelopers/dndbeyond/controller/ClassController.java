@@ -24,12 +24,6 @@ public class ClassController {
         this.classExtraDetailsRepository = classExtraDetailsRepository;
     }
 
-//    @GetMapping("/classes/{className}")
-//    public String getClassDetails(@PathVariable String className, Model model) {
-//        ClassDetails classDetails = classService.getClassDetails(className);
-//        model.addAttribute("classDetails", classDetails);
-//        return "class-details";
-//    }
 
     @GetMapping("/classes/{className}")
     public String getClassDetails(
