@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -16,10 +17,19 @@ public class CharacterService {
         characterRepository.deleteById(id);
     }
 
-    public void updateCharacterClass(Long characterId, String className) {
+    public void updateCharacterClassAndProficiencies(Long characterId, String className, List<String> proficiencies) {
+        // Retrieve the Character or throw an exception if not found
         com.vecnavelopers.dndbeyond.model.Character character = characterRepository.findById(characterId)
                 .orElseThrow(() -> new RuntimeException("Character not found"));
+
+        // Update Class Name
         character.setCharacterClass(className);
+
+        // Update Proficiencies (assumes that exactly 2 are provided)
+        character.setCharacterProficiency1(proficiencies.get(0));
+        character.setCharacterProficiency2(proficiencies.get(1));
+
+        // Save the updated character information
         characterRepository.save(character);
     }
 

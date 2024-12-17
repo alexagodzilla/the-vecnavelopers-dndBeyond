@@ -74,11 +74,25 @@ public class ClassService {
             JsonNode spellcastingNode = classData.path("spellcasting");
             Spellcasting spellcasting = parseSpellcasting(spellcastingNode);
             classDetails.setSpellcasting(spellcasting);
-
-
             classDetails.setSpellcastingAbility(classData.path("spellcasting_ability").asText());
             classDetails.setSpells(classData.path("spells"));
-            classDetails.setProficiencyChoices(classData.path("proficiency_choices"));
+
+            // Parse Proficiency Choices
+            JsonNode proficiencyChoicesNode = classData.path("proficiency_choices");
+            List<String> proficiencyNames = new ArrayList<>();
+            if (proficiencyChoicesNode != null && proficiencyChoicesNode.isArray()) {
+                for (JsonNode proficiencyChoice : proficiencyChoicesNode) {
+                    JsonNode optionsNode = proficiencyChoice.path("from").path("options");
+                    if (optionsNode != null && optionsNode.isArray()) {
+                        for (JsonNode option : optionsNode) {
+                            JsonNode itemNode = option.path("item");
+                            String proficiencyName = itemNode.path("name").asText();
+                            proficiencyNames.add(proficiencyName);
+                        }
+                    }
+                }
+            }
+            classDetails.setProficiencyNames(proficiencyNames);
 
             // Parse Proficiencies (and Saving Throws)
             parseProficienciesAndSavingThrows(classData, classDetails);

@@ -14,7 +14,7 @@ public class ClassDetails {
     private Spellcasting spellcasting;
     private String spellcastingAbility;
     private JsonNode spells; // A list of spells
-    private JsonNode proficiencyChoices;
+    private List<String> proficiencyNames;
     private List<Proficiency> proficiencies;
     private List<String> savingThrows;
     private List<StartingEquipment> startingEquipment;
@@ -80,13 +80,9 @@ public class ClassDetails {
         this.spells = spells;
     }
 
-    public JsonNode getProficiencyChoices() {
-        return proficiencyChoices;
-    }
+    public List<String> getProficiencyNames() { return proficiencyNames; }
 
-    public void setProficiencyChoices(JsonNode proficiencyChoices) {
-        this.proficiencyChoices = proficiencyChoices;
-    }
+    public void setProficiencyNames(List<String> proficiencyNames) { this.proficiencyNames = proficiencyNames; }
 
     public List<Proficiency> getProficiencies() {
         return proficiencies;

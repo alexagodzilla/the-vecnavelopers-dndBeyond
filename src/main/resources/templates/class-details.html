@@ -14,8 +14,22 @@
 <p><strong>Hit Point Die:</strong> D<span th:text="${classDetails.hitDie}"></span></p>
 <p><strong> Saving Throw Proficiencies:</strong> <span th:text="${classDetails.savingThrowsFormatted}"></span></p>
 
+<!-- Display Proficiency Choices -->
+<div class="section-title">Choose Two Skill Proficiencies:</div>
+<div class="section-content">
+  <div th:each="proficiency : ${classDetails.proficiencyNames}">
+    <!-- Filter to show only skills and remove 'Skill:' from the display -->
+    <div th:if="${proficiency.startsWith('Skill:')}">
+      <label>
+        <input type="checkbox" name="chosenProficiencies" th:value="${proficiency}" onclick="limitCheckboxes(this)">
+        <span th:text="${proficiency.substring(6)}"></span> <!-- Remove "Skill:" -->
+      </label>
+    </div>
+  </div>
+</div>
+
 <!-- Proficiencies Section -->
-<div class="section-title">Proficiencies</div>
+<div class="section-title">Proficiencies:</div>
 <div class="section-content" th:if="${classDetails.proficiencies != null}">
   <ul>
     <li th:each="proficiency : ${classDetails.proficiencies}">
@@ -26,7 +40,7 @@
 </div>
 
 <!-- Starting Equipment Section -->
-<div class="section-title">Starting Equipment</div>
+<div class="section-title">Starting Equipment:</div>
 <div class="section-content" th:if="${classDetails.startingEquipment != null}">
   <ul>
     <li th:each="equipment : ${classDetails.startingEquipment}">
@@ -37,16 +51,68 @@
     <li th:if="${#lists.isEmpty(classDetails.startingEquipment)}">No starting equipment available.</li>
   </ul>
 </div>
+
+<!-- Back Link -->
 <a th:href="@{/choose-class/character/{characterId}(characterId=${characterId})}" class="back">Go Back to the character page</a>
 
-<form id="updateClassNameForm" th:action="@{/update-class-name}" method="post">
+<!-- Combined Form: Submit Class and Chosen Proficiencies -->
+<form id="updateClassAndProficienciesForm" th:action="@{/update-class-name}" method="post">
   <input type="hidden" name="_method" value="PATCH">
   <input type="hidden" id="className" name="className" th:value="${classDetails.className}">
   <input type="hidden" id="characterId" name="characterId" th:value="${characterId}">
+
+  <!-- Submit Button -->
   <button type="submit">Add Class</button>
 </form>
+
+<script>
+  // JavaScript to limit the number of checked checkboxes to 2
+  function limitCheckboxes(checkbox) {
+    const maxSelections = 2;
+    const checkboxes = document.querySelectorAll('input[name="chosenProficiencies"]:checked');
+
+    if (checkboxes.length > maxSelections) {
+      // If more than 2 checkboxes are ticked, untick the last one and show an alert
+      checkbox.checked = false;
+      alert("You can only select two skill proficiencies.");
+    } else {
+      // Disable or grey out checkboxes when the limit is reached
+      const allCheckboxes = document.querySelectorAll('input[name="chosenProficiencies"]');
+      allCheckboxes.forEach(function (box) {
+        if (checkboxes.length === maxSelections && !box.checked) {
+          box.disabled = true;  // Disable unselected checkboxes
+          box.parentElement.style.color = 'gray';  // Optional: Grey out the label
+        } else {
+          box.disabled = false;
+          box.parentElement.style.color = '';  // Reset label color
+        }
+      });
+    }
+  }
+
+  // Ensure only selected proficiencies are sent when the form is submitted
+  document.getElementById('updateClassAndProficienciesForm').addEventListener('submit', function(event) {
+    // Create an array of selected proficiency values
+    const selectedProficiencies = [];
+    document.querySelectorAll('input[name="chosenProficiencies"]:checked').forEach(function(checkbox) {
+      selectedProficiencies.push(checkbox.value);
+    });
+
+    // Ensure exactly 2 proficiencies are selected
+    if (selectedProficiencies.length !== 2) {
+      event.preventDefault();  // Prevent form submission
+      alert("You must select exactly two skill proficiencies.");
+    } else {
+      // Manually add the selected proficiencies to the form before submission
+      const proficiencyInput = document.createElement('input');
+      proficiencyInput.type = 'hidden';
+      proficiencyInput.name = 'chosenProficiencies';
+      proficiencyInput.value = selectedProficiencies.join(',');  // Join selected proficiencies
+      this.appendChild(proficiencyInput);
+    }
+  });
+</script>
 
 
 </body>
 </html>
-
