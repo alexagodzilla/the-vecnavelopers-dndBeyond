@@ -8,15 +8,15 @@
     <div>
         <div>
             <label for="character-name"> Choose a name for your Character: </label>
-            <input type="text" id="character-name"/>
+            <input type="text" id="character-name" th:value="${characterName}"/>
         </div>
         <div>
             <label for="character-pic-url"> Add an url pic for your Character: </label>
-            <input type="text" id="character-pic-url"/>
+            <input type="text" id="character-pic-url" th:value="${characterPicUrl}"/>
         </div>
         <div>
             <label for="character-description"> Character description: </label>
-            <input type="text" id="character-description"/>
+            <input type="text" id="character-description" th:value="${characterDescription}"/>
         </div>
 
         <button id="save-button">Save</button>
@@ -57,7 +57,7 @@
             });
             function submit(details) {
 
-                fetch("/nameAndPic/[[${characterId}]]", {
+                fetch("/characterDetails/[[${characterId}]]", {
                     method: 'POST', // HTTP method
                     headers: {
                         'Content-Type': 'application/json'

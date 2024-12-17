@@ -18,8 +18,13 @@ public class CharacterDetailsController {
 
     @GetMapping("/characterDetails/{id}")
     public ModelAndView getCharacterDetails(@PathVariable Long id) {
+        Character character = characterRepository.findById(id)
+                .orElse(new Character());
         ModelAndView modelAndView = new ModelAndView( "character-details");
         modelAndView.addObject("characterId", id);
+        modelAndView.addObject("characterName", character.getCharacterName());
+        modelAndView.addObject("characterPicUrl", character.getCharacterPicUrl());
+        modelAndView.addObject("characterDescription", character.getCharacterDescription());
         return modelAndView;
 
     }
