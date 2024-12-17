@@ -16,9 +16,11 @@ public class CharacterDetailsController {
         this.characterRepository = characterRepository;
     }
 
-    @GetMapping("/characterDetails")
-    public ModelAndView getCharacterDetails() {
-        return new ModelAndView( "character-details");
+    @GetMapping("/characterDetails/{id}")
+    public ModelAndView getCharacterDetails(@PathVariable Long id) {
+        ModelAndView modelAndView = new ModelAndView( "character-details");
+        modelAndView.addObject("characterId", id);
+        return modelAndView;
 
     }
 
