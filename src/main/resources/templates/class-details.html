@@ -38,6 +38,7 @@
   </ul>
 </div>
 <a th:href="@{/choose-class/character/{characterId}(characterId=${characterId})}" class="back">Go Back to the character page</a>
+
 <form id="updateClassNameForm" th:action="@{/update-class-name}" method="post">
   <input type="hidden" name="_method" value="PATCH">
   <input type="hidden" id="className" name="className" th:value="${classDetails.className}">

@@ -157,5 +157,9 @@ public class Character {
         this.updatedAt = updatedAt;
     }
 
+    public void setCharacterOrigin(String backgroundName) {
+        this.characterOrigin = backgroundName;  // Setting the backgroundName as characterOrigin
+    }
+
 
 }

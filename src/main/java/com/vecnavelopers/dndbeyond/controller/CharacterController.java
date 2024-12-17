@@ -1,16 +1,10 @@
 package com.vecnavelopers.dndbeyond.controller;
 
-import com.vecnavelopers.dndbeyond.model.ClassDetails;
-import com.vecnavelopers.dndbeyond.model.ClassSummary;
-import com.vecnavelopers.dndbeyond.model.SpeciesSummary;
-import com.vecnavelopers.dndbeyond.model.User;
+import com.vecnavelopers.dndbeyond.model.*;
+import com.vecnavelopers.dndbeyond.repository.BackgroundRepository;
 import com.vecnavelopers.dndbeyond.repository.UserRepository;
-import com.vecnavelopers.dndbeyond.service.ClassService;
+import com.vecnavelopers.dndbeyond.service.*;
 
-import com.vecnavelopers.dndbeyond.service.CurrentUserService;
-import com.vecnavelopers.dndbeyond.service.CharacterService;
-
-import com.vecnavelopers.dndbeyond.service.SpeciesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -33,12 +27,15 @@ public class CharacterController {
 
     @Autowired
     private SpeciesService speciesService;
-
+    private final BackgroundService backgroundService;
     private final ClassService classService;
     private final CurrentUserService currentUserService;
     private final CharacterRepository characterRepository;
 
-    public CharacterController(ClassService classService, CurrentUserService currentUserService, CharacterRepository characterRepository) {
+
+
+    public CharacterController(BackgroundService backgroundService, ClassService classService, CurrentUserService currentUserService, CharacterRepository characterRepository) {
+        this.backgroundService = backgroundService;
         this.classService = classService;
         this.currentUserService = currentUserService;
         this.characterRepository = characterRepository;
@@ -91,7 +88,6 @@ public class CharacterController {
     @PatchMapping("/update-class-name")
     public String updateClassName(@RequestParam String className, @RequestParam Long characterId) {
         characterService.updateCharacterClass(characterId, className);
-
         return "redirect:/choose-species/character/" + characterId;
     }
 
@@ -109,7 +105,23 @@ public class CharacterController {
     @PatchMapping("/update-species-name")
     public String updateSpeciesName(@RequestParam String speciesName, @RequestParam Long characterId) {
         characterService.updateCharacterSpecies(characterId, speciesName);
-        return "redirect:/choose-species/character/" + characterId;
+        return "redirect:/choose-background/character/" + characterId;
     }
 
+    @GetMapping("/choose-background/character/{id}")
+    public ModelAndView chooseBackground(@PathVariable Long id) {
+        ModelAndView backgroundSelectionPage = new ModelAndView("background-selection");
+        List<Background> backgroundList = backgroundService.getAllBackgrounds();
+        Long currentUserId = currentUserService.getCurrentUserId();
+        backgroundSelectionPage.addObject("backgroundList", backgroundList);
+        backgroundSelectionPage.addObject("userId", currentUserId);
+        backgroundSelectionPage.addObject("characterId", id);
+        return backgroundSelectionPage;
+    }
+
+    @PatchMapping("/update-background-name")
+    public String updateBackgroundName(@RequestParam String backgroundName, @RequestParam Long characterId) {
+        characterService.updateCharacterBackground(characterId, backgroundName);
+        return "redirect:/choose-background/character/" + characterId;
+    }
 }
