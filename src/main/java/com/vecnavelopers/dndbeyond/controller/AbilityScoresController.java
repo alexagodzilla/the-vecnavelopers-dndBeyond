@@ -33,7 +33,7 @@ public class AbilityScoresController {
     }
 
     @PatchMapping("/abilityScores/{id}")
-    public void saveAbilityScores(@RequestBody AbilityScoresDto dto, @PathVariable Long id){
+    public ModelAndView saveAbilityScores(@RequestBody AbilityScoresDto dto, @PathVariable Long id){
         Character character = characterRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Character not found"));
         character.setCharacterStrength(dto.getStrength());
@@ -44,6 +44,7 @@ public class AbilityScoresController {
         character.setCharacterCharisma(dto.getCharisma());
 
         characterRepository.save(character);
+        return new ModelAndView("redirect:/charactersDetails/" + id);
     }
 
 }
