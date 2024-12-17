@@ -2,6 +2,7 @@ package com.vecnavelopers.dndbeyond.controller;
 
 import com.vecnavelopers.dndbeyond.model.ClassDetails;
 import com.vecnavelopers.dndbeyond.model.ClassSummary;
+import com.vecnavelopers.dndbeyond.model.SpeciesSummary;
 import com.vecnavelopers.dndbeyond.model.User;
 import com.vecnavelopers.dndbeyond.repository.UserRepository;
 import com.vecnavelopers.dndbeyond.service.ClassService;
@@ -9,6 +10,7 @@ import com.vecnavelopers.dndbeyond.service.ClassService;
 import com.vecnavelopers.dndbeyond.service.CurrentUserService;
 import com.vecnavelopers.dndbeyond.service.CharacterService;
 
+import com.vecnavelopers.dndbeyond.service.SpeciesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -28,6 +30,9 @@ public class CharacterController {
 
     @Autowired
     private CharacterService characterService;
+
+    @Autowired
+    private SpeciesService speciesService;
 
     private final ClassService classService;
     private final CurrentUserService currentUserService;
@@ -87,9 +92,19 @@ public class CharacterController {
     public String updateClassName(@RequestParam String className, @RequestParam Long characterId) {
         characterService.updateCharacterClass(characterId, className);
 
-        return "redirect:/character/" + characterId;
+        return "redirect:/choose-species/character/" + characterId;
     }
 
+    @GetMapping("/choose-species/character/{id}")
+    public ModelAndView chooseSpecies(@PathVariable Long id) {
+        ModelAndView speciesSelectionPage = new ModelAndView("species-selection");
+        List<SpeciesSummary> speciesSummaryList = speciesService.getAllSpecies();
+        Long currentUserId = currentUserService.getCurrentUserId();
+        speciesSelectionPage.addObject("speciesSummaryList", speciesSummaryList);
+        speciesSelectionPage.addObject("userId", currentUserId);
+        speciesSelectionPage.addObject("characterId", id);
+        return speciesSelectionPage;
+    }
 
 
 
