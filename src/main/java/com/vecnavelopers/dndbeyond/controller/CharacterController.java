@@ -106,6 +106,10 @@ public class CharacterController {
         return speciesSelectionPage;
     }
 
-
+    @PatchMapping("/update-species-name")
+    public String updateSpeciesName(@RequestParam String speciesName, @RequestParam Long characterId) {
+        characterService.updateCharacterSpecies(characterId, speciesName);
+        return "redirect:/choose-species/character/" + characterId;
+    }
 
 }
