@@ -38,7 +38,7 @@ class CharacterNameControllerTest {
     @Test
     public void ThrowsExceptionIfCharacterNotFoundTest() {
         CharacterNameController controller = new CharacterNameController(characterRepository);
-        NameAndPicDto dto = new NameAndPicDto("TestName", "testUrl");
+        NameAndPicDto dto = new NameAndPicDto("TestName", "testUrl", "descriptionTest");
         when(characterRepository.findById(any())).thenReturn(Optional.empty());
 
         assertThrows(RuntimeException.class, () -> {
@@ -47,18 +47,19 @@ class CharacterNameControllerTest {
     }
 
     @Test
-    public void savingNameAndPicTest(){
+    public void savingNamePicDescriptionTest(){
         CharacterNameController controller = new CharacterNameController(characterRepository);
         Character character = new Character();
 
         when(characterRepository.findById(any())).thenReturn(Optional.of(character));
 
-        NameAndPicDto dto = new NameAndPicDto("TestName", "testPicUrl");
+        NameAndPicDto dto = new NameAndPicDto("TestName", "testPicUrl", "descriptionTest");
 
         controller.saveNameAndPic(dto, 1L);
 
         assertEquals(dto.getName(), character.getCharacterName());
         assertEquals(dto.getPicUrl(), character.getCharacterPicUrl());
+        assertEquals(dto.getDescriprion(), character.getCharacterDescription());
 
         verify(characterRepository, times(1)).save(character);
     }
