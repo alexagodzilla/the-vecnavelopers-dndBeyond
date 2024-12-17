@@ -57,8 +57,8 @@
             });
             function submit(details) {
 
-                fetch("/characterDetails/[[${characterId}]]", {
-                    method: 'POST', // HTTP method
+                fetch(`/characterDetails/[[${characterId}]]`, {
+                    method: 'PATCH', // HTTP method
                     headers: {
                         'Content-Type': 'application/json'
                     },
@@ -69,7 +69,7 @@
                         throw new Error(`HTTP error! status: ${response.status}`);
                     }
                      return response.json();
-                .then(data => {
+                }).then(data => {
                     if (data.redirectUrl) {
                         window.location.href = data.redirectUrl;
                     }
