@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <title>User Characters</title>
+  <title>Your Characters</title>
   <link rel="stylesheet" href="/characters.css">
 </head>
 <body>
@@ -10,7 +10,7 @@
 
 <div class="character-container">
   <!-- Loop through the list of characters -->
-  <div th:each="character : ${characters}" class="character-card">
+  <div th:each="character, iterStat : ${characters}" th:if="${iterStat.index < 6}" class="character-card">
     <!-- Character Picture -->
     <div th:if="${character.characterPicUrl != null}">
       <img th:src="@{${character.characterPicUrl}}" alt="Character Picture">
@@ -22,36 +22,29 @@
     <!-- Character Details -->
     <div class="character-details">
       <h2 th:text="${character.characterName}">Character Name</h2>
-      <p><strong>ID:</strong> <span th:text="${character.id}">ID</span></p>
-      <p><strong>User ID:</strong> <span th:text="${character.userId}">User ID</span></p>
-      <p><strong>Description:</strong> <span th:text="${character.characterDescription}">Description</span></p>
-      <p><strong>Class:</strong> <span th:text="${character.characterClass}">Class</span></p>
-      <p><strong>Subclass:</strong> <span th:text="${character.characterSubclass}">Subclass</span></p>
+      <p><strong>Level:</strong> <span th:text="${character.characterLevel}">1</span></p>
       <p><strong>Species:</strong> <span th:text="${character.characterSpecies}">Species</span></p>
-      <p><strong>Subspecies:</strong> <span th:text="${character.characterSubspecies}">Subspecies</span></p>
-      <p><strong>Origin:</strong> <span th:text="${character.characterOrigin}">Origin</span></p>
-      <p><strong>Level:</strong> <span th:text="${character.characterLevel}">Level</span></p>
-      <p><strong>Strength:</strong> <span th:text="${character.characterStrength}">Strength</span></p>
-      <p><strong>Dexterity:</strong> <span th:text="${character.characterDexterity}">Dexterity</span></p>
-      <p><strong>Constitution:</strong> <span th:text="${character.characterConstitution}">Constitution</span></p>
-      <p><strong>Intelligence:</strong> <span th:text="${character.characterIntelligence}">Intelligence</span></p>
-      <p><strong>Wisdom:</strong> <span th:text="${character.characterWisdom}">Wisdom</span></p>
-      <p><strong>Charisma:</strong> <span th:text="${character.characterCharisma}">Charisma</span></p>
-      <p><strong>Alignment:</strong> <span th:text="${character.characterAlignment}">Alignment</span></p>
-      <p><strong>Current HP:</strong> <span th:text="${character.characterCurrentHp}">Current HP</span></p>
-      <p><strong>Max HP:</strong> <span th:text="${character.characterMaxHp}">Max HP</span></p>
-      <p><strong>Armour Class:</strong> <span th:text="${character.characterArmourClass}">Armour Class</span></p>
-      <p><strong>Initiative:</strong> <span th:text="${character.characterInitiative}">Initiative</span></p>
-      <p><strong>EXP:</strong> <span th:text="${character.characterExp}">EXP</span></p>
-      <p><strong>Coins:</strong> <span th:text="${character.characterCoin}">Coins</span></p>
-      <p><strong>Proficiency Bonus:</strong> <span th:text="${character.characterProficiencyBonus}">Proficiency Bonus</span></p>
-      <p><strong>Created At:</strong> <span th:text="${#dates.format(character.createdAt, 'yyyy-MM-dd HH:mm')}">Created At</span></p>
-      <p><strong>Updated At:</strong> <span th:text="${#dates.format(character.updatedAt, 'yyyy-MM-dd HH:mm')}">Updated At</span></p>
+      <p><strong>Class:</strong> <span th:text="${character.characterClass}">Class</span></p>
     </div>
 
-    <!-- View Character Button -->
-    <a th:href="@{/character/{id}(id=${character.id})}" class="button">View Character</a>
+    <!-- Action Buttons -->
+    <div class="button-container">
+      <a th:href="@{/character/{id}(id=${character.id})}" class="button">View</a>
+      <a th:href="@{/character/edit/{id}(id=${character.id})}" class="button">Edit</a>
+      <a th:href="@{/character/copy/{id}(id=${character.id})}" class="button">Copy</a>
+      <a href="javascript:void(0);" class="button button-delete"
+         th:attr="onclick='confirmDelete(' + ${character.id} + ')'">Delete</a>
+    </div>
   </div>
 </div>
+
+<!-- JavaScript for Delete Confirmation -->
+<script>
+  function confirmDelete(characterId) {
+      if (confirm("Are you sure you want to delete this character? This action cannot be undone.")) {
+          window.location.href = '/character/delete/' + characterId;
+      }
+  }
+</script>
 </body>
 </html>

@@ -4,6 +4,7 @@ import com.vecnavelopers.dndbeyond.model.Character;
 import com.vecnavelopers.dndbeyond.model.User;
 import com.vecnavelopers.dndbeyond.repository.CharacterRepository;
 import com.vecnavelopers.dndbeyond.repository.UserRepository;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -171,7 +172,45 @@ public class ProfileController {
 
         return "user-characters"; // Return the Thymeleaf template name
     }
- }
+
+    // View Character Details
+    @GetMapping("/character/{id}")
+    public String viewCharacter(@PathVariable Long id, Model model) {
+        Character character = characterRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Character not found"));
+        model.addAttribute("character", character);
+        return "character-details"; // Thymeleaf template for displaying all fields
+    }
+
+    // Edit Character
+    @GetMapping("/character/edit/{id}")
+    public String editCharacter(@PathVariable Long id, Model model) {
+        Character character = characterRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Character not found"));
+        model.addAttribute("character", character);
+        return "character-creation"; // Return to the character creation/edit form
+    }
+
+    // Copy Character
+    @GetMapping("/character/copy/{id}")
+    public String copyCharacter(@PathVariable Long id) {
+        Character original = characterRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Character not found"));
+        Character copy = new Character();
+        BeanUtils.copyProperties(original, copy, "id", "createdAt", "updatedAt");
+        copy.setCharacterName(original.getCharacterName() + " (Copy)");
+        characterRepository.save(copy);
+        return "redirect:/all-characters";
+    }
+
+    // Delete Character
+    @GetMapping("/character/delete/{id}")
+    public String deleteCharacter(@PathVariable Long id) {
+        characterRepository.deleteById(id);
+        return "redirect:/all-characters";
+    }
+
+}
 
 
 
