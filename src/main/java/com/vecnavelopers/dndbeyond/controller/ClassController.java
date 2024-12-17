@@ -8,12 +8,10 @@ import com.vecnavelopers.dndbeyond.repository.ClassExtraDetailsRepository;
 import com.vecnavelopers.dndbeyond.service.ClassService;
 
 import com.vecnavelopers.dndbeyond.service.SpellService;
+import com.vecnavelopers.dndbeyond.util.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.List;
@@ -62,6 +60,11 @@ public class ClassController {
         model.addAttribute("characterId", characterId);
         model.addAttribute("userId", userId);
         return "class-details";
+    }
+
+    @ModelAttribute("stringUtils")
+    public StringUtils stringUtils() {
+        return new StringUtils();
     }
 
 

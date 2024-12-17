@@ -31,7 +31,7 @@
 <br>
 
 <!-- Proficiencies Section -->
-<div class="section-title"><strong>Proficiencies:</strong></div>
+<div class="section-title"><strong>Weapon and Armour Proficiencies:</strong></div>
 <div class="section-content" th:if="${classDetails.proficiencies != null}">
   <ul>
     <li th:each="proficiency : ${classDetails.proficiencies}">
@@ -81,6 +81,13 @@
     <li th:if="${#lists.isEmpty(classDetails.startingEquipment)}">No starting equipment available.</li>
   </ul>
 </div>
+
+<!-- Optional Starting Equipment Section -->
+<div class="section-title"><strong>Optional Starting Equipment:</strong></div>
+<div th:each="option : ${classDetails.startingEquipmentOptions}">
+  <p th:text="${stringUtils.capitalizeWords(#strings.replace(#strings.replace(option.desc, ', ', ' OR '), ' OR  ', ' OR '))}"></p>
+</div>
+
 
 <!-- Back Link -->
 <a th:href="@{/choose-class/character/{characterId}(characterId=${characterId})}" class="back">Go Back to the character page</a>
@@ -139,6 +146,23 @@
       proficiencyInput.name = 'chosenProficiencies';
       proficiencyInput.value = selectedProficiencies.join(',');  // Join selected proficiencies
       this.appendChild(proficiencyInput);
+    }
+  });
+
+  // Prevent form submission if no equipment option is selected
+  document.getElementById('updateClassAndEquipmentForm').addEventListener('submit', function(event) {
+    const selectedEquipment = document.querySelector('input[name="chosenEquipment"]:checked');
+
+    if (!selectedEquipment) {
+      event.preventDefault();  // Prevent form submission
+      alert("You must select one piece of optional starting equipment.");
+    } else {
+      // Optionally, add the selected equipment to a hidden field if needed for later processing
+      const equipmentInput = document.createElement('input');
+      equipmentInput.type = 'hidden';
+      equipmentInput.name = 'chosenEquipment';
+      equipmentInput.value = selectedEquipment.value;  // Capture the selected equipment name
+      this.appendChild(equipmentInput);
     }
   });
 </script>

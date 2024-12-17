@@ -100,6 +100,10 @@ public class ClassService {
             // Parse Starting Equipment
             List<StartingEquipment> startingEquipmentList = parseStartingEquipment(classData.path("starting_equipment"));
             classDetails.setStartingEquipment(startingEquipmentList);
+
+            // Parse Starting Equipment Options
+            List<StartingEquipmentOption> startingEquipmentOptions = parseStartingEquipmentOptions(classData.path("starting_equipment_options"));
+            classDetails.setStartingEquipmentOptions(startingEquipmentOptions);
         }
 
         // Fetch additional data from the class_extra_details table
@@ -174,6 +178,41 @@ public class ClassService {
         }
         return equipmentList;
     }
+
+    // Helper method to parse Optional Starting Equipment
+    private List<StartingEquipmentOption> parseStartingEquipmentOptions(JsonNode optionsNode) {
+        List<StartingEquipmentOption> equipmentOptionsList = new ArrayList<>();
+        if (optionsNode != null && optionsNode.isArray()) {
+            for (JsonNode optionNode : optionsNode) {
+                StartingEquipmentOption equipmentOption = new StartingEquipmentOption();
+                equipmentOption.setDesc(optionNode.path("desc").asText());
+                equipmentOption.setChoose(optionNode.path("choose").asInt());
+                equipmentOption.setType(optionNode.path("type").asText());
+
+                JsonNode fromNode = optionNode.path("from");
+                if (fromNode != null) {
+                    JsonNode optionsArrayNode = fromNode.path("options");
+                    if (optionsArrayNode != null && optionsArrayNode.isArray()) {
+                        List<StartingEquipmentOptionItem> optionItems = new ArrayList<>();
+                        for (JsonNode itemNode : optionsArrayNode) {
+                            StartingEquipmentOptionItem optionItem = new StartingEquipmentOptionItem();
+                            JsonNode optionDetailsNode = itemNode.path("item").path("name");
+                            if (!optionDetailsNode.isMissingNode()) {
+                                optionItem.setName(optionDetailsNode.asText());
+                                optionItem.setUrl(itemNode.path("item").path("url").asText());
+                            }
+                            optionItems.add(optionItem);
+                        }
+                        equipmentOption.setOptions(optionItems);
+                    }
+                }
+
+                equipmentOptionsList.add(equipmentOption);
+            }
+        }
+        return equipmentOptionsList;
+    }
+
 
     // Helper method to parse JSON string into JsonNode
     private JsonNode parseJsonToNode(String jsonData) {

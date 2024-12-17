@@ -18,6 +18,7 @@ public class ClassDetails {
     private List<Proficiency> proficiencies;
     private List<String> savingThrows;
     private List<StartingEquipment> startingEquipment;
+    private List<StartingEquipmentOption> startingEquipmentOptions;
     private JsonNode subclasses;
 
     private String classTagline;
@@ -114,6 +115,10 @@ public class ClassDetails {
     public List<StartingEquipment> getStartingEquipment() { return startingEquipment; }
 
     public void setStartingEquipment(List<StartingEquipment> startingEquipment) { this.startingEquipment = startingEquipment; }
+
+    public List<StartingEquipmentOption> getStartingEquipmentOptions() { return startingEquipmentOptions; }
+
+    public void setStartingEquipmentOptions(List<StartingEquipmentOption> startingEquipmentOptions) { this.startingEquipmentOptions = startingEquipmentOptions; }
 
     public JsonNode getSubclasses() {
         return subclasses;
