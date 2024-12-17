@@ -6,5 +6,5 @@ dependency-reduced-pom.xml
 .factorypath
 .project
 .settings/
-target/
+target/*
 src/.DS_Store

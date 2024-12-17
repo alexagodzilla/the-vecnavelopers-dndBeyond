@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5" >
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ability Scores</title>
+</head>
+<body>
+<div class="score-container">
+    <div>Total</div>
+    <div id="availablePoints">27</div>
+</div>
+<div th:each="ability: ${abilities}">
+    <div class="score-container">
+        <div>
+            <div th:text="${#strings.capitalize(ability)}"></div>
+            <div th:id="${ability} + 'NumberDisplay'">8</div>
+            <button th:id="${ability} + 'MinusButton'" th:data-ability="${ability}" th:onclick="decreaseValue(this.getAttribute('data-ability'))">-</button>
+            <button th:id="${ability} + 'PlusButton'" th:data-ability="${ability}" th:onclick="increaseValue(this.getAttribute('data-ability'))">+</button>
+        </div>
+    </div>
+</div>
+<button id="submit" onclick="submit()">Submit</button>
+<script>
+    let currentValues = {
+        "strength": 8,
+        "dexterity": 8,
+        "constitution": 8,
+        "intelligence": 8,
+        "wisdom": 8,
+        "charisma": 8
+    }
+    const minValue = 8;
+    const maxValue = 15;
+
+    let availablePoints = 27;
+
+    function updateDisplay() {
+        Object.keys(currentValues).forEach(key => {
+            document.getElementById(key + "NumberDisplay").innerText = currentValues[key];
+            document.getElementById(key + "MinusButton").disabled = currentValues[key] <= minValue;
+            if ((currentValues[key] >= 13 && availablePoints <= 1) || availablePoints == 0 || currentValues[key] >= maxValue) {
+                document.getElementById(key + "PlusButton").disabled = true
+            }
+            else document.getElementById(key + "PlusButton").disabled = false
+        });
+        document.getElementById("availablePoints").innerText = availablePoints;
+        document.getElementById("submit").disabled = availablePoints != 0;
+    }
+
+    function increaseValue(key) {
+        if (availablePoints <= 0) return;
+        if (currentValues[key] >= maxValue) return;
+        if (currentValues[key] >= 13 && availablePoints <= 1) return;
+        availablePoints -= currentValues[key] >= 13 ? 2 : 1;
+        currentValues[key]++;
+        updateDisplay();
+    }
+
+    function decreaseValue(key) {
+        if (currentValues[key] <= minValue) return;
+        availablePoints += currentValues[key] > 13 ? 2 : 1;
+        currentValues[key]--;
+        updateDisplay();
+    }
+    function submit() {
+        if (availablePoints != 0) return;
+        fetch("/abilityScores/1", {
+            method: 'POST', // HTTP method
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(currentValues)
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+        });
+    }
+    updateDisplay();
+</script>
+</body>
+</html>

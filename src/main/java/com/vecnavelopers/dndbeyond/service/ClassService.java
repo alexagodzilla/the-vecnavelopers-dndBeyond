@@ -2,23 +2,29 @@ package com.vecnavelopers.dndbeyond.service;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.vecnavelopers.dndbeyond.model.ClassDetails;
-import com.vecnavelopers.dndbeyond.model.Spellcasting;
-import com.vecnavelopers.dndbeyond.model.Proficiency;
-import com.vecnavelopers.dndbeyond.model.StartingEquipment;
+import com.vecnavelopers.dndbeyond.model.*;
+import com.vecnavelopers.dndbeyond.repository.ClassExtraDetailsRepository;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class DndApiService {
+public class ClassService {
 
     private final OkHttpClient client = new OkHttpClient();
     private final ObjectMapper objectMapper = new ObjectMapper();
+
+    private final ClassExtraDetailsRepository classExtraDetailsRepository;
+
+    @Autowired
+    public ClassService(ClassExtraDetailsRepository classExtraDetailsRepository) {
+        this.classExtraDetailsRepository = classExtraDetailsRepository;
+    }
 
     // This method fetches the class data from the API and returns the raw JSON response
     public String getClassDetailsFromApi(String className) {
@@ -45,7 +51,7 @@ public class DndApiService {
         }
     }
 
-    // This method uses the fetched data to create a ClassDetails object
+    // Use the fetched data to create a ClassDetails object
     public ClassDetails getClassDetails(String className) {
         // Fetch class data from the API
         String classDataJson = getClassDetailsFromApi(className);
@@ -58,6 +64,7 @@ public class DndApiService {
 
         // Extract class information from the API response
         if (classData != null) {
+            classDetails.setClassIndex(classData.path("index").asText());
             classDetails.setClassName(classData.path("name").asText());
             classDetails.setHitDie(classData.path("hit_die").asInt());
             classDetails.setClassLevels(classData.path("class_levels"));
@@ -79,6 +86,18 @@ public class DndApiService {
             // Parse Starting Equipment
             List<StartingEquipment> startingEquipmentList = parseStartingEquipment(classData.path("starting_equipment"));
             classDetails.setStartingEquipment(startingEquipmentList);
+        }
+
+        // Fetch additional data from the class_extra_details table
+        ClassExtraDetails extraDetails = classExtraDetailsRepository.findByClassName(className);
+
+        if (extraDetails != null) {
+            classDetails.setClassTagline(extraDetails.getClassTagline());
+            classDetails.setClassFlavour(extraDetails.getClassFlavour());
+            classDetails.setClassDescription(extraDetails.getClassDescription());
+            classDetails.setClassPrimaryAbility(extraDetails.getClassPrimaryAbility());
+        } else {
+            System.out.println("No extra details found for class: " + className);
         }
 
         return classDetails;
@@ -103,7 +122,7 @@ public class DndApiService {
     // Helper method to parse and set Proficiencies and Saving Throws
     public void parseProficienciesAndSavingThrows(JsonNode classData, ClassDetails classDetails) {
         List<Proficiency> proficienciesList = new ArrayList<>();
-        List<Proficiency> savingThrowsList = new ArrayList<>();
+        List<String> savingThrowsList = new ArrayList<>();
 
         JsonNode proficienciesNode = classData.path("proficiencies");
         if (proficienciesNode != null && proficienciesNode.isArray()) {
@@ -114,8 +133,9 @@ public class DndApiService {
                 proficiency.setName(proficiencyNode.path("name").asText());
                 proficiency.setUrl(proficiencyNode.path("url").asText());
 
-                if (index.startsWith("saving-throw")) {
-                    savingThrowsList.add(proficiency);
+                if (index.startsWith("saving-throw-")) {
+                    String shorthand = index.replace("saving-throw-", "").toUpperCase();
+                    savingThrowsList.add(shorthand);
                 } else {
                     proficienciesList.add(proficiency);
                 }
@@ -150,4 +170,22 @@ public class DndApiService {
             return null;  // Handle error, could also throw a custom exception
         }
     }
+
+    public List<ClassSummary> getAllClasses() {
+        // Fetch all classes from the database
+        List<ClassExtraDetails> extraDetailsList = classExtraDetailsRepository.findAll();
+
+        // Create a list to hold the Class Summary objects
+        List<ClassSummary> classSummaryList = new ArrayList<>();
+        for (ClassExtraDetails classExtraDetails : extraDetailsList) {
+            ClassSummary classSummary = new ClassSummary();
+            classSummary.setClassName(classExtraDetails.getClassName());
+            classSummary.setClassTagline(classExtraDetails.getClassTagline());
+            classSummary.setClassIcon(classExtraDetails.getClassIcon());
+            classSummaryList.add(classSummary);
+        }
+        return classSummaryList;
+    }
+
+
 }

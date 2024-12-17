@@ -17,7 +17,7 @@ class CharacterTest {
                 "Warrior", "Barbarian", "Human", "Subspecies", "Origin", 1,
                 10,  12,  14,  16,  18,  20,
                 "Neutral",  100,  120,  18,  2, 1000,  50,
-                 5, null, null);
+                 5,null, null, null);
     }
 
 
@@ -42,7 +42,7 @@ class CharacterTest {
                 "characterLevel=1, characterStrength=10, characterDexterity=12, characterConstitution=14, " +
                 "characterIntelligence=16, characterWisdom=18, characterCharisma=20, characterAlignment=Neutral, " +
                 "characterCurrentHp=100, characterMaxHp=120, characterArmourClass=18, characterInitiative=2, " +
-                "characterExp=1000, characterCoin=50, characterProficiencyBonus=5, createdAt=null, updatedAt=null)";
+                "characterExp=1000, characterCoin=50, characterProficiencyBonus=5, characterPicUrl=null, createdAt=null, updatedAt=null)";
 
         assertEquals(expectedToString, character.toString());
     }

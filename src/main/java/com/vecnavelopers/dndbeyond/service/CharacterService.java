@@ -1,0 +1,25 @@
+package com.vecnavelopers.dndbeyond.service;
+
+import com.vecnavelopers.dndbeyond.repository.CharacterRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
+
+import java.util.Optional;
+
+@Service
+public class CharacterService {
+    @Autowired
+    private CharacterRepository characterRepository; // Inject the repository to interact with the DB
+
+    public void deleteCharacter(Long id) {
+        characterRepository.deleteById(id);
+    }
+
+    public void updateCharacterClass(Long characterId, String className) {
+        com.vecnavelopers.dndbeyond.model.Character character = characterRepository.findById(characterId)
+                .orElseThrow(() -> new RuntimeException("Character not found"));
+        character.setCharacterClass(className);
+        characterRepository.save(character);
+    }
+}

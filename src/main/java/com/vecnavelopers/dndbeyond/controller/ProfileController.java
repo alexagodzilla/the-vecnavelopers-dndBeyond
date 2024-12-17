@@ -10,8 +10,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
-@Controller
+@RestController
 public class ProfileController {
 
     @Autowired
@@ -49,6 +54,11 @@ public class ProfileController {
         if (!user.getAuth0Id().equals(auth0Id)) {
             throw new IllegalStateException("Unauthorized access to profile.");
         }
+
+    @GetMapping("/profile/{userId}")
+    public ModelAndView viewProfile(@PathVariable Long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
 
         ModelAndView profilePage = new ModelAndView("profile-page");
         profilePage.addObject("user", user);
@@ -144,3 +154,6 @@ public class ProfileController {
     }
 
 }
+
+}
+

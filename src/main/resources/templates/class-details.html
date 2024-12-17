@@ -1,40 +1,18 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Class Details</title>
 </head>
 <body>
-<h1><span th:text="${classDetails.className}"></span></h1>
+<h1>You've chosen: <span th:text="${classDetails.className}"></span></h1>
 
-<p><strong>Class Name:</strong> <span th:text="${classDetails.className}"></span></p>
-<p><strong>Hit Die:</strong> <span th:text="${classDetails.hitDie}"></span></p>
-
-<!-- Spellcasting Section -->
-<div class="section-title">Spellcasting</div>
-<div class="section-content" th:if="${classDetails.spellcasting != null}">
-  <p><strong>Spellcasting Ability:</strong> <span th:text="${classDetails.spellcasting.ability}"></span></p>
-
-  <h3>Spellcasting Info:</h3>
-  <ul>
-    <li th:each="detail : ${classDetails.spellcasting.info}" th:unless="${#lists.isEmpty(classDetails.spellcasting.info)}">
-      <span th:text="${detail}"></span>
-    </li>
-    <li th:if="${#lists.isEmpty(classDetails.spellcasting.info)}">No spellcasting details available.</li>
-  </ul>
-</div>
-
-<!-- Saving Throws Section -->
-<div class="section-title">Saving Throws</div>
-<div class="section-content" th:if="${classDetails.savingThrows != null}">
-  <ul>
-    <li th:each="savingThrow : ${classDetails.savingThrows}">
-      <span th:text="${savingThrow.name}"></span><br>
-    </li>
-    <li th:if="${#lists.isEmpty(classDetails.savingThrows)}">No saving throws available.</li>
-  </ul>
-</div>
+<p th:if="${classDetails != null}">
+  <span th:text="${classDetails.classDescription}">Class information not available.</span>
+</p>
+<p><strong>Hit Point Die:</strong> D<span th:text="${classDetails.hitDie}"></span></p>
+<p><strong> Saving Throw Proficiencies:</strong> <span th:text="${classDetails.savingThrowsFormatted}"></span></p>
 
 <!-- Proficiencies Section -->
 <div class="section-title">Proficiencies</div>
@@ -59,6 +37,14 @@
     <li th:if="${#lists.isEmpty(classDetails.startingEquipment)}">No starting equipment available.</li>
   </ul>
 </div>
+<a th:href="@{/choose-class/character/{characterId}(characterId=${characterId})}" class="back">Go Back to the character page</a>
+<form id="updateClassNameForm" th:action="@{/update-class-name}" method="post">
+  <input type="hidden" name="_method" value="PATCH">
+  <input type="hidden" id="className" name="className" th:value="${classDetails.className}">
+  <input type="hidden" id="characterId" name="characterId" th:value="${characterId}">
+  <button type="submit">Update Class Name</button>
+</form>
+
 
 </body>
 </html>
