@@ -15,6 +15,8 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.view.RedirectView;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.jar.JarEntry;
+
 @RestController
 public class UserController {
 
@@ -26,21 +28,27 @@ public class UserController {
 
     @GetMapping("/users/after-login")
     public RedirectView afterLogin() {
-        Long userId = currentUserService.getCurrentUserId();
-        String username = (String) principal.getAttributes().get("email");
-        userRepository
-                .findUserByUsername(username)
-                .orElseGet(() -> userRepository.save(new User(username)));
+        DefaultOidcUser principal = (DefaultOidcUser) SecurityContextHolder.getContext()
+                .getAuthentication()
+                .getPrincipal();
 
-        return new RedirectView("/profile/setup");
-    }
+        String email = principal.getAttribute("email");
+        if (email == null) {
+            return new RedirectView("/error");
+        }
+
+        User user = userRepository.findUserByUsername(email)
+                .orElseGet(() -> {
+                    User newUser = new User(email);
+                    return userRepository.save(newUser);
+                });
+
+        Long userId = user.getId();
 
         if (userId != null) {
             return new RedirectView("/profile/" + userId);
         } else {
-            // I will figure out a more intelligent way to handle the error later
             return new RedirectView("/error");
         }
     }
-
 }
