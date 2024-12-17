@@ -1,6 +1,8 @@
 package com.vecnavelopers.dndbeyond.controller;
 
+import com.vecnavelopers.dndbeyond.model.Character;
 import com.vecnavelopers.dndbeyond.model.User;
+import com.vecnavelopers.dndbeyond.repository.CharacterRepository;
 import com.vecnavelopers.dndbeyond.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -16,11 +18,15 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.List;
+
 @Controller
 public class ProfileController {
 
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private CharacterRepository characterRepository;
 
     private String getAuthenticatedUserId() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -143,7 +149,30 @@ public class ProfileController {
             }
         }
 
+    @GetMapping("/all-characters")
+    public String getUserCharacters(Model model) {
+        // Step 1: Retrieve authenticated user's Auth0 ID
+        String auth0Id = SecurityContextHolder.getContext().getAuthentication().getName();
+
+        // Step 2: Find the user and handle missing users gracefully
+        User currentUser = userRepository.findByAuth0Id(auth0Id)
+                .orElseThrow(() -> new IllegalStateException("User not found."));
+
+        // Step 3: Use the custom query to fetch the user's characters
+        List<Character> characters = characterRepository.findCharactersByUserId(currentUser.getId());
+
+        // Step 4: Add characters to the model
+        model.addAttribute("characters", characters);
+
+        // Handle empty character list message
+        if (characters.isEmpty()) {
+            model.addAttribute("message", "You have no characters yet.");
+        }
+
+        return "user-characters"; // Return the Thymeleaf template name
     }
+ }
+
 
 
 
