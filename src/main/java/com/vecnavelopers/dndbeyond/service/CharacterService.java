@@ -29,4 +29,11 @@ public class CharacterService {
         character.setCharacterSpecies(speciesName);
         characterRepository.save(character);
     }
+
+    public void updateCharacterBackground(Long characterId, String backgroundName) {
+        com.vecnavelopers.dndbeyond.model.Character character = characterRepository.findById(characterId)
+                .orElseThrow(() -> new RuntimeException("Character not found"));
+        character.setCharacterOrigin(backgroundName);
+        characterRepository.save(character);
+    }
 }

@@ -1,6 +1,5 @@
 package com.vecnavelopers.dndbeyond.repository;
 
-import com.vecnavelopers.dndbeyond.model.ClassExtraDetails;
 import com.vecnavelopers.dndbeyond.model.SpeciesExtraDetails;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
