@@ -27,7 +27,7 @@ public class User {
     @Column(name = "display_name")
     private String displayName;
 
-    @Column(name = "profile_picture")
+    @Column(name = "profile_picture", nullable = true)
     private String profilePicture;
 
     @Column(name = "user_bio")
@@ -49,12 +49,16 @@ public class User {
         this.userBio = userBio;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
-        this.enabled = true;
+        this.enabled = enabled;
     }
 
     public User(String username) {
         this.username = username;
         this.enabled = true;
+    }
+
+    public void setBio(String bio) {
+        this.userBio = bio;
     }
 //
 //    public Long getId() { return id; }
