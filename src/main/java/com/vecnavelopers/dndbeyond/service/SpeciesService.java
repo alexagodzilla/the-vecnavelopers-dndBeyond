@@ -3,10 +3,16 @@ package com.vecnavelopers.dndbeyond.service;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vecnavelopers.dndbeyond.model.SpeciesDetails;
+import com.vecnavelopers.dndbeyond.model.SpeciesExtraDetails;
+import com.vecnavelopers.dndbeyond.model.SpeciesSummary;
+import com.vecnavelopers.dndbeyond.repository.SpeciesExtraDetailsRepository;
 import okhttp3.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Service
@@ -14,6 +20,13 @@ public class SpeciesService {
 
     private final OkHttpClient client = new OkHttpClient();
     private final ObjectMapper objectMapper = new ObjectMapper();
+
+    private final SpeciesExtraDetailsRepository speciesExtraDetailsRepository;
+
+    @Autowired
+    public SpeciesService(SpeciesExtraDetailsRepository speciesExtraDetailsRepository) {
+        this.speciesExtraDetailsRepository = speciesExtraDetailsRepository;
+    }
 
     // This method fetches the species data from the API and returns the raw JSON response
     public String getSpeciesDetailsFromApi(String speciesName) {
@@ -59,6 +72,15 @@ public class SpeciesService {
             speciesDetails.setSpeciesSizeDescription(speciesData.path("size_description").asText());
         }
 
+        // Fetch additional data from the species_extra_details table
+        SpeciesExtraDetails extraDetails = speciesExtraDetailsRepository.findBySpeciesName(speciesName);
+
+        if (extraDetails != null) {
+            speciesDetails.setSpeciesTagline(extraDetails.getSpeciesTagline());
+            speciesDetails.setSpeciesFlavour(extraDetails.getSpeciesFlavour());
+            speciesDetails.setSpeciesDescription(extraDetails.getSpeciesDescription());
+        }
+
         return speciesDetails;
     }
 
@@ -70,5 +92,20 @@ public class SpeciesService {
             e.printStackTrace();
             return null;  // Handle error, could also throw a custom exception
         }
+    }
+
+    public List<SpeciesSummary> getAllSpecies() {
+        // Fetch all species from the database
+        List<SpeciesExtraDetails> extraDetailsList = speciesExtraDetailsRepository.findAll();
+
+        // Create a list to hold the Species Summary objects
+        List<SpeciesSummary> speciesSummaryList = new ArrayList<>();
+        for (SpeciesExtraDetails speciesExtraDetails : extraDetailsList) {
+            SpeciesSummary speciesSummary = new SpeciesSummary();
+            speciesSummary.setSpeciesName(speciesExtraDetails.getSpeciesName());
+            speciesSummary.setSpeciesTagline(speciesExtraDetails.getSpeciesTagline());
+            speciesSummaryList.add(speciesSummary);
+        }
+        return speciesSummaryList;
     }
 }

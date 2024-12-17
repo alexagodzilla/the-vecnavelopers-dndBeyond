@@ -6,9 +6,11 @@
   <title>Class Details</title>
 </head>
 <body>
-<h1>You've chosen to be a <span th:text="${classDetails.className}"></span></h1>
+<h1>You've chosen: <span th:text="${classDetails.className}"></span></h1>
 
-<p><span th:text="${classDetails.classDescription}"></span></p>
+<p th:if="${classDetails != null}">
+  <span th:text="${classDetails.classDescription}">Class information not available.</span>
+</p>
 <p><strong>Hit Point Die:</strong> D<span th:text="${classDetails.hitDie}"></span></p>
 <p><strong> Saving Throw Proficiencies:</strong> <span th:text="${classDetails.savingThrowsFormatted}"></span></p>
 

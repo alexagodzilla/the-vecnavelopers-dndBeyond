@@ -6,6 +6,11 @@ public class SpeciesDetails {
     private String speciesSize;
     private String speciesSizeDescription;
 
+    private String speciesTagline;
+    private String speciesFlavour;
+    private String speciesDescription;
+    private String speciesImage;
+
     // Getters and Setters
     public String getSpeciesName() { return speciesName; }
 
@@ -22,4 +27,17 @@ public class SpeciesDetails {
     public String getSpeciesSizeDescription() { return speciesSizeDescription; }
 
     public void setSpeciesSizeDescription(String speciesSizeDescription) { this.speciesSizeDescription = speciesSizeDescription; }
+
+    public String getSpeciesTagline() { return speciesTagline; }
+
+    public void setSpeciesTagline(String speciesTagline) { this.speciesTagline = speciesTagline; }
+
+    public String getSpeciesFlavour() { return speciesFlavour; }
+
+    public void setSpeciesFlavour(String speciesFlavour) { this.speciesFlavour = speciesFlavour; }
+
+    public String getSpeciesDescription() { return speciesDescription; }
+
+    public void setSpeciesDescription(String speciesDescription) { this.speciesDescription = speciesDescription; }
+
 }
