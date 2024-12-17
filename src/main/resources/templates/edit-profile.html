@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Edit Profile</title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+<h1>Edit Profile</h1>
+<form th:action="@{/profile/edit}" method="POST" enctype="multipart/form-data">
+  <div>
+    <label for="displayName">Display Name:</label>
+    <input type="text" id="displayName" name="displayName" th:value="${user.displayName}" required />
+  </div>
+  <div>
+    <label for="bio">Bio:</label>
+    <textarea id="bio" name="bio" rows="5" th:text="${user.userBio}"></textarea>
+  </div>
+  <div>
+    <label for="profilePicture">Profile Picture:</label>
+    <input type="file" id="profilePicture" name="profilePicture" />
+  </div>
+  <button type="submit">Save Changes</button>
+</form>
+<a href="/profile/{userId}" th:href="@{/profile/{userId}(userId=${user.id})}">Cancel</a>
+</body>
+</html>
