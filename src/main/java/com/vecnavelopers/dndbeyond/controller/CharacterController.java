@@ -65,18 +65,6 @@ public class CharacterController {
     }
 
 
-
-//    @GetMapping("/choose-class/character/{id}")
-//    public ModelAndView chooseClass(@PathVariable Long id) {
-//        ModelAndView classSelectionPage = new ModelAndView("class-selection");
-//        List<ClassDetails> classDetailsList = classService.getClassDescriptions();
-//        Long currentUserId = currentUserService.getCurrentUserId();
-//        classSelectionPage.addObject("characterId", id);
-//        classSelectionPage.addObject("userId", currentUserId);
-//        classSelectionPage.addObject("classDetails", classDetailsList);
-//        return classSelectionPage;
-//    }
-
     @GetMapping("/choose-class/character/{id}")
     public ModelAndView chooseClass(@PathVariable Long id) {
         ModelAndView classSelectionPage = new ModelAndView("class-selection");
@@ -95,12 +83,12 @@ public class CharacterController {
         return "redirect:/profile/" + currentUserId;
     }
 
-//    @PutMapping("/characters/{id}")
-//    public ResponseEntity<Character> updateCharacter(@PathVariable Long id, @RequestBody Character updatedCharacter) {
-//        updatedCharacter.setId(id);
-//        characterService.saveCharacter(updatedCharacter); // Save the updated character
-//        return ResponseEntity.ok(updatedCharacter);
-//    }
+    @PatchMapping("/update-class-name")
+    public String updateClassName(@RequestParam String className, @RequestParam Long characterId) {
+        characterService.updateCharacterClass(characterId, className);
+
+        return "redirect:/character/" + characterId;
+    }
 
 
 
