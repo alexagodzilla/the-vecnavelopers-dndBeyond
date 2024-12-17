@@ -42,6 +42,8 @@ public class Character {
     @Column(name = "character_subspecies", length = 50)
     private String characterSubspecies;
 
+    // Setting the backgroundName as characterOrigin
+    @Setter
     @Column(name = "character_origin", length = 50)
     private String characterOrigin;
 
@@ -156,10 +158,5 @@ public class Character {
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
-
-    public void setCharacterOrigin(String backgroundName) {
-        this.characterOrigin = backgroundName;  // Setting the backgroundName as characterOrigin
-    }
-
 
 }
