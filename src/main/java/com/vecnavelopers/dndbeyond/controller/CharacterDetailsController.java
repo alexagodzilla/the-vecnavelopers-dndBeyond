@@ -1,32 +1,29 @@
 package com.vecnavelopers.dndbeyond.controller;
 
-import com.vecnavelopers.dndbeyond.dto.AbilityScoresDto;
-import com.vecnavelopers.dndbeyond.dto.NameAndPicDto;
+import com.vecnavelopers.dndbeyond.dto.CharacterDetailsDto;
 import com.vecnavelopers.dndbeyond.model.Character;
 import com.vecnavelopers.dndbeyond.repository.CharacterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.List;
-
 @RestController
-public class CharacterNameController {
+public class CharacterDetailsController {
     private final CharacterRepository characterRepository;
 
     @Autowired
-    public CharacterNameController(CharacterRepository characterRepository) {
+    public CharacterDetailsController(CharacterRepository characterRepository) {
         this.characterRepository = characterRepository;
     }
 
-    @GetMapping("/nameAndPic")
-    public ModelAndView getClassNameAndPic() {
-        return new ModelAndView( "name-and-pic");
+    @GetMapping("/characterDetails")
+    public ModelAndView getCharacterDetails() {
+        return new ModelAndView( "character-details");
 
     }
 
-    @PostMapping("/nameAndPic/{id}")
-    public void saveNameAndPic(@RequestBody NameAndPicDto dto, @PathVariable Long id){
+    @PostMapping("/characterDetails/{id}")
+    public void saveCharacterDetails(@RequestBody CharacterDetailsDto dto, @PathVariable Long id){
         Character character = characterRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Character not found"));
         character.setCharacterName(dto.getName());

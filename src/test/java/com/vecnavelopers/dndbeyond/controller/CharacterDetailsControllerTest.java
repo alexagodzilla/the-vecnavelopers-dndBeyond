@@ -1,15 +1,10 @@
 package com.vecnavelopers.dndbeyond.controller;
 
-import com.vecnavelopers.dndbeyond.dto.AbilityScoresDto;
-import com.vecnavelopers.dndbeyond.dto.NameAndPicDto;
+import com.vecnavelopers.dndbeyond.dto.CharacterDetailsDto;
 import com.vecnavelopers.dndbeyond.model.Character;
 import com.vecnavelopers.dndbeyond.repository.CharacterRepository;
-import com.vecnavelopers.dndbeyond.repository.UserRepository;
-import org.flywaydb.core.Flyway;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
@@ -21,7 +16,7 @@ import static org.mockito.Mockito.*;
 
 @ActiveProfiles("test")
 @SpringBootTest(properties = "spring.flyway.clean-disabled=false")
-class CharacterNameControllerTest {
+class CharacterDetailsControllerTest {
 
     @Mock
     CharacterRepository characterRepository;
@@ -37,25 +32,25 @@ class CharacterNameControllerTest {
 
     @Test
     public void ThrowsExceptionIfCharacterNotFoundTest() {
-        CharacterNameController controller = new CharacterNameController(characterRepository);
-        NameAndPicDto dto = new NameAndPicDto("TestName", "testUrl", "descriptionTest");
+        CharacterDetailsController controller = new CharacterDetailsController(characterRepository);
+        CharacterDetailsDto dto = new CharacterDetailsDto("TestName", "testUrl", "descriptionTest");
         when(characterRepository.findById(any())).thenReturn(Optional.empty());
 
         assertThrows(RuntimeException.class, () -> {
-            controller.saveNameAndPic(dto, 1L);
+            controller.saveCharacterDetails(dto, 1L);
         });
     }
 
     @Test
     public void savingNamePicDescriptionTest(){
-        CharacterNameController controller = new CharacterNameController(characterRepository);
+        CharacterDetailsController controller = new CharacterDetailsController(characterRepository);
         Character character = new Character();
 
         when(characterRepository.findById(any())).thenReturn(Optional.of(character));
 
-        NameAndPicDto dto = new NameAndPicDto("TestName", "testPicUrl", "descriptionTest");
+        CharacterDetailsDto dto = new CharacterDetailsDto("TestName", "testPicUrl", "descriptionTest");
 
-        controller.saveNameAndPic(dto, 1L);
+        controller.saveCharacterDetails(dto, 1L);
 
         assertEquals(dto.getName(), character.getCharacterName());
         assertEquals(dto.getPicUrl(), character.getCharacterPicUrl());
