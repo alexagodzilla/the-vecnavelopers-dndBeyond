@@ -2,36 +2,68 @@ package com.vecnavelopers.dndbeyond.controller;
 
 import com.vecnavelopers.dndbeyond.model.User;
 import com.vecnavelopers.dndbeyond.repository.UserRepository;
-import com.vecnavelopers.dndbeyond.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class ProfileController {
 
     @Autowired
     private UserRepository userRepository;
-    @Autowired
-    AuthService authService;
 
-    private static final String UPLOAD_DIR = "uploads/";
+    private String getAuthenticatedUserId() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null || !authentication.isAuthenticated()) {
+            throw new IllegalStateException("User is not authenticated.");
+        }
+        return authentication.getName(); // Get the username/ID directly from the principal
+    }
+
+    @GetMapping("/")
+    public String homePageRedirect() {
+        try {
+            String auth0Id = getAuthenticatedUserId();
+            // Check if the user exists in the database
+            return userRepository.findByAuth0Id(auth0Id)
+                    .map(user -> "redirect:/profile/" + user.getId()) // Redirect to profile page
+                    .orElse("redirect:/profile/setup"); // Redirect to setup page if user doesn't exist
+        } catch (IllegalStateException e) {
+            // Handle unauthenticated access gracefully
+            return "redirect:/login";
+        }
+    }
+
+    @GetMapping("/profile/{userId}")
+    public ModelAndView viewProfile(@PathVariable Long userId) {
+        String auth0Id = getAuthenticatedUserId();
+
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        if (!user.getAuth0Id().equals(auth0Id)) {
+            throw new IllegalStateException("Unauthorized access to profile.");
+        }
+
+        ModelAndView profilePage = new ModelAndView("profile-page");
+        profilePage.addObject("user", user);
+
+        return profilePage;
+    }
 
     @GetMapping("/profile/setup")
     public String showProfileSetupPage() {
+        String auth0Id = getAuthenticatedUserId();
+        boolean userExists = userRepository.findByAuth0Id(auth0Id).isPresent();
+        if (userExists) {
+            User existingUser = userRepository.findByAuth0Id(auth0Id).orElseThrow();
+            return "redirect:/profile/" + existingUser.getId();
+        }
         return "profile-setup";
     }
 
@@ -41,19 +73,7 @@ public class ProfileController {
                               @RequestParam(value = "profilePicture", required = false) MultipartFile profilePicture,
                               Model model) {
         try {
-            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-            String auth0Id = null;
-            if (authentication != null && authentication.getPrincipal() instanceof Jwt jwt) {
-                auth0Id = jwt.getClaim("sub");
-            }
-
-            if (auth0Id == null) {
-                throw new IllegalStateException("Authenticated user does not have an auth0_id.");
-            }
-
-            System.out.println("Auth0 ID: " + auth0Id);
-            System.out.println("Display Name: " + displayName);
-            System.out.println("Bio: " + bio);
+            String auth0Id = getAuthenticatedUserId();
 
             User user = userRepository.findByAuth0Id(auth0Id).orElse(new User());
             user.setAuth0Id(auth0Id);
@@ -66,22 +86,61 @@ public class ProfileController {
                 System.out.println("Uploaded file: " + fileName);
             }
 
-
             userRepository.save(user);
             System.out.println("Profile updated successfully!");
 
-            return "redirect:/profile/success"; // Redirect to the success page
+            return "redirect:/profile/" + user.getId(); // Redirect to the user's profile page
         } catch (Exception e) {
             e.printStackTrace();
             model.addAttribute("message", "An error occurred while updating your profile.");
             return "profile-setup"; // Return to the profile setup page with an error message
         }
-
-
-}
+    }
 
     @GetMapping("/profile/success")
     public String showSuccessPage() {
         return "profile-success";
     }
+
+
+    @GetMapping("/profile/edit")
+    public String showEditProfilePage(Model model) {
+        String auth0Id = getAuthenticatedUserId();
+
+        User user = userRepository.findByAuth0Id(auth0Id)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        model.addAttribute("user", user);
+
+        return "edit-profile";
+    }
+
+    @PostMapping("/profile/edit")
+    public String saveEditedProfile(@RequestParam("displayName") String displayName,
+                                    @RequestParam("bio") String bio,
+                                    @RequestParam(value = "profilePicture", required = false) MultipartFile profilePicture,
+                                    Model model) {
+        try {
+            String auth0Id = getAuthenticatedUserId();
+
+            User user = userRepository.findByAuth0Id(auth0Id)
+                    .orElseThrow(() -> new RuntimeException("User not found"));
+
+            user.setDisplayName(displayName);
+            user.setBio(bio);
+
+            if (profilePicture != null && !profilePicture.isEmpty()) {
+                String fileName = profilePicture.getOriginalFilename();
+                user.setProfilePicture(fileName);
+                System.out.println("Uploaded new file: " + fileName);
+            }
+
+            userRepository.save(user);
+            return "redirect:/profile/" + user.getId();
+        } catch (Exception e) {
+            e.printStackTrace();
+            model.addAttribute("message", "An error occurred while saving your profile.");
+            return "edit-profile";
+        }
+    }
+
 }

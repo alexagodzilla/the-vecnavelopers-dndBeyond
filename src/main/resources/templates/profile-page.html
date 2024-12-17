@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>User Profile</title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+<h1>User Profile</h1>
+<a href="/logout">Logout</a>
+
+<div class="profile">
+  <h2>Welcome, <span th:text="${user.displayName}">Display Name</span>!</h2>
+  <p>Bio: <span th:text="${user.userBio}"></span>!</p>
+
+  <div>
+    <img th:src="@{/uploads/{fileName}(fileName=${user.profilePicture})}"
+         alt="Profile Picture" style="max-width: 200px; border-radius: 10px;"
+         th:if="${user.profilePicture != null}">
+  </div>
+</div>
+
+<a href="/profile/edit" class="btn-edit-profile">Edit Profile</a>
+
+<form action="/create-character" method="POST">
+  <input type="hidden" name="userId" th:value="${user.id}" />
+  <button type="submit">Create a new Character</button>
+</form>
+
+<a href="/all-characters" class="btn-my-character">See all your characters</a>
+<a href="/all-campaigns" class="btn-my-campaigns">See all your campaigns</a>
+
+</body>
+</html>
