@@ -5,10 +5,12 @@ import com.vecnavelopers.dndbeyond.model.Character;
 import com.vecnavelopers.dndbeyond.model.ClassDetails;
 import com.vecnavelopers.dndbeyond.repository.CharacterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -33,7 +35,7 @@ public class AbilityScoresController {
     }
 
     @PatchMapping("/abilityScores/{id}")
-    public ModelAndView saveAbilityScores(@RequestBody AbilityScoresDto dto, @PathVariable Long id){
+    public ResponseEntity <Map<String, String>>saveAbilityScores(@RequestBody AbilityScoresDto dto, @PathVariable Long id){
         Character character = characterRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Character not found"));
         character.setCharacterStrength(dto.getStrength());
@@ -44,7 +46,10 @@ public class AbilityScoresController {
         character.setCharacterCharisma(dto.getCharisma());
 
         characterRepository.save(character);
-        return new ModelAndView("redirect:/charactersDetails/" + id);
+        Map<String, String> response = new HashMap<>();
+        response.put("redirectUrl", "/characterDetails/" + id);
+
+        return ResponseEntity.ok(response);
     }
 
 }

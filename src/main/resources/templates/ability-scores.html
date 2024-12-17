@@ -65,20 +65,32 @@
         updateDisplay();
     }
     function submit() {
-        if (availablePoints != 0) return;
-        fetch("/abilityScores/[[${characterId}]]", {
-            method: 'PATCH', // HTTP method
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(currentValues)
-        })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-        });
-    }
+    if (availablePoints != 0) return;
+    fetch("/abilityScores/[[${characterId}]]", {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(currentValues)
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json(); // Parse the JSON response
+    })
+    .then(data => {
+        if (data.redirectUrl) {
+            // Perform the redirect using the provided URL
+            window.location.href = data.redirectUrl;
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert("An error occurred while saving the ability scores.");
+    });
+}
+
     updateDisplay();
 </script>
 </body>
