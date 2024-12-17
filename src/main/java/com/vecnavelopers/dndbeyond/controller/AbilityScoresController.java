@@ -23,11 +23,12 @@ public class AbilityScoresController {
         this.characterRepository = characterRepository;
     }
 
-    @GetMapping("/abilityScores")
-    public ModelAndView getClassDetails() {
+    @GetMapping("/abilityScores/{id}")
+    public ModelAndView getClassDetails(@PathVariable Long id) {
         ModelAndView modelAndView = new ModelAndView( "ability-scores");
         modelAndView.addObject("abilities",
                 List.of("strength", "dexterity", "constitution", "intelligence", "wisdom", "charisma"));
+        modelAndView.addObject("characterId", id);
         return modelAndView;
     }
 
