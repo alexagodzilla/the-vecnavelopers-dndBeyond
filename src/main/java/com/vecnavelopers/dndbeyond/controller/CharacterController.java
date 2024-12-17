@@ -122,6 +122,6 @@ public class CharacterController {
     @PatchMapping("/update-background-name")
     public String updateBackgroundName(@RequestParam String backgroundName, @RequestParam Long characterId) {
         characterService.updateCharacterBackground(characterId, backgroundName);
-        return "redirect:/choose-background/character/" + characterId;
+        return "redirect:/abilityScores/" + characterId;
     }
 }

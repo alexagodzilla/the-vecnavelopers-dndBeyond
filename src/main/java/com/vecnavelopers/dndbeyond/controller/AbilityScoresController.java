@@ -32,7 +32,7 @@ public class AbilityScoresController {
         return modelAndView;
     }
 
-    @PostMapping("/abilityScores/{id}")
+    @PatchMapping("/abilityScores/{id}")
     public void saveAbilityScores(@RequestBody AbilityScoresDto dto, @PathVariable Long id){
         Character character = characterRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Character not found"));

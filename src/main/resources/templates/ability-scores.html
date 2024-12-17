@@ -67,7 +67,7 @@
     function submit() {
         if (availablePoints != 0) return;
         fetch("/abilityScores/[[${characterId}]]", {
-            method: 'POST', // HTTP method
+            method: 'PATCH', // HTTP method
             headers: {
                 'Content-Type': 'application/json'
             },
