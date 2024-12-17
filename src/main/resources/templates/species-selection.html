@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Class Selection</title>
+    <style>
+        .card {
+            width: 200px;
+            height: 300px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            margin: 10px;
+            position: relative;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .card img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+        }
+
+        .card .description {
+            padding: 10px;
+            font-size: 14px;
+            color: #555;
+        }
+
+        .card:hover .details {
+            display: block;
+        }
+
+        .details {
+            display: none;
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            padding: 5px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Select a Species</h1>
+
+<div th:each="species : ${speciesSummaryList}">
+    <div class="card">
+        <div class="description">
+            <h3 th:text="${species.speciesName}"></h3>
+            <p th:text="${species.speciesTagline}"></p>
+        </div>
+        <a th:href="@{/species/{speciesname}(speciesname=${#strings.toLowerCase(species.speciesName)}, characterId=${characterId}, userId=${userId})}" class="details">See Species Details</a>
+
+    </div>
+</div>
+
+
+
+
+
+</body>
+</html>

@@ -24,7 +24,8 @@ public class BackgroundService {
     }
 
     // Fetch a background by name
-    public Optional<Background> getBackgroundByName(String backgroundName) {
-        return backgroundRepository.findByBackgroundNameIgnoreCase(backgroundName);
+    public Background getBackgroundByName(String backgroundName) {
+        return backgroundRepository.findByBackgroundNameIgnoreCase(backgroundName)
+                .orElseThrow(() -> new RuntimeException("Background not found"));
     }
 }
