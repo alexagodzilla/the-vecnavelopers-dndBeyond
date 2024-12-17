@@ -11,9 +11,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 
 @Controller
+@RequestMapping("/classes")
 public class ClassController {
 
     private final ClassService classService;
@@ -24,14 +26,8 @@ public class ClassController {
         this.classExtraDetailsRepository = classExtraDetailsRepository;
     }
 
-//    @GetMapping("/classes/{className}")
-//    public String getClassDetails(@PathVariable String className, Model model) {
-//        ClassDetails classDetails = classService.getClassDetails(className);
-//        model.addAttribute("classDetails", classDetails);
-//        return "class-details";
-//    }
 
-    @GetMapping("/classes/{className}")
+    @GetMapping("/{className}")
     public String getClassDetails(
             @PathVariable String className,
             @RequestParam(required = false) Long characterId,
