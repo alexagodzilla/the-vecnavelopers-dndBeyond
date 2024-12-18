@@ -4,6 +4,30 @@
     <meta charset="UTF-8">
     <title>Class Selection</title>
     <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;  /* Center everything horizontally */
+            justify-content: flex-start;
+            text-align: center;
+            padding: 20px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+        }
+
+        /* Grid container for the class cards */
+        .class-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr); /* 4 columns */
+            gap: 10px; /* space between cards */
+            margin: 10px;
+            max-width: 90%;
+        }
+
+        /* Individual card styling */
         .card {
             width: 200px;
             height: 300px;
@@ -13,12 +37,22 @@
             position: relative;
             text-align: center;
             overflow: hidden;
+            background-color: #fff;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
+        /* Grow card on hover */
+        .card:hover {
+            transform: scale(1.05);  /* Slightly grow the card */
+            box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);  /* Add a shadow to signify focus */
+        }
+
+        /* Image Styling */
         .card img {
-            width: 100%;
-            height: 150px;
-            object-fit: cover;
+            width: 80%;
+            height: auto;
+            object-fit: contain;
+            margin: 10px auto;
         }
 
         .card .description {
@@ -27,32 +61,40 @@
             color: #555;
         }
 
-        .card:hover .details {
+        /* Make the entire card clickable */
+        .card-link {
             display: block;
+            text-decoration: none;
+            color: inherit;  /* Ensure the link color doesn't override text color */
         }
 
-        .details {
-            display: none;
-            position: absolute;
-            bottom: 10px;
-            left: 10px;
-            background-color: rgba(0, 0, 0, 0.5);
-            color: white;
-            padding: 5px;
-            border-radius: 5px;
+        /* Responsive design for smaller screens */
+        @media (max-width: 768px) {
+            .class-grid {
+                grid-template-columns: repeat(2, 1fr); /* 2 columns on smaller screens */
+            }
         }
+
+        @media (max-width: 480px) {
+            .class-grid {
+                grid-template-columns: 1fr; /* 1 column on mobile screens */
+            }
+        }
+
     </style>
 </head>
 <body>
 
-<h1>Select a Background</h1>
-
+<h1>Choose a Background</h1>
+<div class="class-grid">
 <div th:each="background : ${backgroundList}">
+    <a th:href="@{/background/{backgroundname}(backgroundname=${#strings.toLowerCase(background.backgroundName)}, characterId=${characterId}, userId=${userId})}" class="card-link">
     <div class="card">
         <div class="description">
             <h3 th:text="${background.backgroundName}"></h3>
         </div>
-        <a th:href="@{/background/{backgroundname}(backgroundname=${#strings.toLowerCase(background.backgroundName)}, characterId=${characterId}, userId=${userId})}" class="details">See Background Details</a>
+    </div>
+    </a>
     </div>
 </div>
 
