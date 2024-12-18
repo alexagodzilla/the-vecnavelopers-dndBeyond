@@ -15,7 +15,7 @@
 <p><strong> Saving Throw Proficiencies:</strong> <span th:text="${classDetails.savingThrowsFormatted}"></span></p>
 
 <!-- Display Proficiency Choices -->
-<div class="section-title">Choose Two Skill Proficiencies:</div>
+<div class="section-title"><strong>Choose Two Skill Proficiencies:</strong></div>
 <div class="section-content">
   <div th:each="proficiency : ${classDetails.proficiencyNames}">
     <!-- Filter to show only skills and remove 'Skill:' from the display -->
@@ -28,8 +28,10 @@
   </div>
 </div>
 
+<br>
+
 <!-- Proficiencies Section -->
-<div class="section-title">Proficiencies:</div>
+<div class="section-title"><strong>Proficiencies:</strong></div>
 <div class="section-content" th:if="${classDetails.proficiencies != null}">
   <ul>
     <li th:each="proficiency : ${classDetails.proficiencies}">
@@ -39,8 +41,36 @@
   </ul>
 </div>
 
+<!-- Cantrips Section (Level 0 Spells) -->
+<div class="section-title" th:if="${#lists.isEmpty(cantrips)}"><strong>Cantrips:</strong></div>
+<div class="section-content" th:if="${#lists.isEmpty(cantrips)}">
+  <p>This class knows no cantrips.</p>
+</div>
+<div class="section-title" th:unless="${#lists.isEmpty(cantrips)}"><strong>Cantrips:</strong></div>
+<div class="section-content" th:unless="${#lists.isEmpty(cantrips)}">
+  <ul>
+    <li th:each="spell : ${cantrips}">
+      <span th:text="${spell.name}"></span>
+    </li>
+  </ul>
+</div>
+
+<!-- Spells Section (Level 1 Spells) -->
+<div class="section-title" th:if="${#lists.isEmpty(level1Spells)}"><strong>Spells:</strong></div>
+<div class="section-content" th:if="${#lists.isEmpty(level1Spells)}">
+  <p>This class knows no spells.</p>
+</div>
+<div class="section-title" th:unless="${#lists.isEmpty(level1Spells)}"><strong>Spells:</strong></div>
+<div class="section-content" th:unless="${#lists.isEmpty(level1Spells)}">
+  <ul>
+    <li th:each="spell : ${level1Spells}">
+      <span th:text="${spell.name}"></span>
+    </li>
+  </ul>
+</div>
+
 <!-- Starting Equipment Section -->
-<div class="section-title">Starting Equipment:</div>
+<div class="section-title"><strong>Starting Equipment:</strong></div>
 <div class="section-content" th:if="${classDetails.startingEquipment != null}">
   <ul>
     <li th:each="equipment : ${classDetails.startingEquipment}">
