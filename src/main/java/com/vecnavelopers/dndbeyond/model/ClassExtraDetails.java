@@ -37,6 +37,9 @@ public class ClassExtraDetails {
     @Column(name = "class_icon")
     private String classIcon;
 
+    @Column(name = "class_image")
+    private String classImage;
+
     // Getters and Setters
 
 }

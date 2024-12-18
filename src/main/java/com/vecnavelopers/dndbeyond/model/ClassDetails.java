@@ -26,6 +26,7 @@ public class ClassDetails {
     private String classDescription;
     private String classPrimaryAbility;
     private String classIcon;
+    private String classImage;
 
     // Getters and setters
 
@@ -147,5 +148,9 @@ public class ClassDetails {
     public void setClassIcon(String classIcon) { this.classIcon = classIcon; }
 
     public String getClassIcon() { return classIcon; }
+
+    public void setClassImage(String classImage) { this.classImage = classImage; }
+
+    public String getClassImage() { return classImage; }
 
 }
