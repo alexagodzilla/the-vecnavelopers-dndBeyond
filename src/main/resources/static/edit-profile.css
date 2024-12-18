@@ -1,0 +1,85 @@
+body {
+    font-family: 'MedievalSharp', serif;
+    background: #651766; /* White background */
+    margin: 0;
+    padding: 0;
+    color: #B30404; /* Deep red text */
+}
+
+.container {
+    max-width: 600px;
+    margin: 50px auto;
+    background: #000; /* Black background for container */
+    padding: 20px;
+    border-radius: 8px;
+    border: 4px solid #FFD700; /* Gold trim */
+}
+
+h1 {
+    text-align: center;
+    color: #B30404; /* Deep red */
+    font-family: 'Cinzel Decorative', serif;
+}
+
+p {
+    text-align: center;
+    color: #B30404; /* Deep red text */
+    font-family: 'Cinzel', serif;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 8px;
+    color: #B30404; /* Deep red */
+    font-family: 'Cinzel', serif;
+}
+
+input[type="text"], textarea {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #FFD700; /* Gold trim */
+    border-radius: 4px;
+    box-sizing: border-box;
+    background-color: #fffaf0; /* Light parchment */
+    font-family: 'Cinzel', serif;
+    color: #B30404; /* Deep red text */
+}
+
+textarea {
+    resize: vertical;
+}
+
+input[type="file"] {
+    margin-top: 10px;
+    font-family: 'Cinzel', serif;
+}
+
+.btn {
+    display: inline-block;
+    width: auto;
+    padding: 12px 20px;
+    background-color: #B30404; /* Deep red */
+    color: #fff;
+    border: 2px solid #FFD700; /* Gold trim border */
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 18px;
+    font-family: 'Cinzel Decorative', serif;
+    text-align: center;
+}
+
+.btn:hover {
+    background-color: #FFD700; /* Gold */
+    border-color: #FFD700; /* Maintain gold trim */
+    color: #000; /* Black text for contrast */
+}
+
+.btn-container {
+    text-align: center;
+    margin-top: 20px;
+}
