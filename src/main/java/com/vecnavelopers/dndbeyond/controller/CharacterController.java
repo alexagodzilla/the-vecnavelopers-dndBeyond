@@ -86,8 +86,14 @@ public class CharacterController {
     }
 
     @PatchMapping("/update-class-name")
-    public String updateClassName(@RequestParam String className, @RequestParam Long characterId) {
-        characterService.updateCharacterClass(characterId, className);
+    public String updateClassNameAndProficiencies(
+            @RequestParam String className,
+            @RequestParam Long characterId,
+            @RequestParam(required = false) List<String> chosenProficiencies) {
+        if (chosenProficiencies == null || chosenProficiencies.size() != 2) {
+            throw new IllegalArgumentException("You must select two skill proficiencies.");
+        }
+        characterService.updateCharacterClassAndProficiencies(characterId, className, chosenProficiencies);
         return "redirect:/choose-species/character/" + characterId;
     }
 
@@ -130,4 +136,5 @@ public class CharacterController {
         characterService.updateCharacterBackground(characterId, backgroundName);
         return "redirect:/abilityScores/" + characterId;
     }
+
 }

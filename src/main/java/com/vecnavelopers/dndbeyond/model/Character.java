@@ -95,6 +95,15 @@ public class Character {
     @Column(name = "character_pic_url")
     private String characterPicUrl;
 
+    @Column(name = "character_proficiency_1")
+    private String characterProficiency1;
+
+    @Column(name = "character_proficiency_2")
+    private String characterProficiency2;
+
+    @Column(name = "chosen_starting_equipment")
+    private String chosenStartingEquipment;
+
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)
     private Timestamp createdAt;
