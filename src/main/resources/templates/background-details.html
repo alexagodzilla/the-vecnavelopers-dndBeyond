@@ -6,6 +6,7 @@
     <title>Background Details</title>
 </head>
 <body>
+<div th:insert="fragments/nav :: navigation"></div>
 <h1>You've chosen: <span th:text="${background.get().backgroundName}"></span></h1>
 
 <p><span th:text="${background.get().backgroundDescription}"></span></p>
