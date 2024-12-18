@@ -1,5 +1,6 @@
 package com.vecnavelopers.dndbeyond.controller;
 
+import com.vecnavelopers.dndbeyond.dto.UserProfileDto;
 import com.vecnavelopers.dndbeyond.model.User;
 import com.vecnavelopers.dndbeyond.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -143,8 +144,14 @@ public class ProfileController {
             }
         }
 
+        @GetMapping("/loggedUser")
+        @ResponseBody
+        public UserProfileDto getLoggedUser() {
+            String auth0Id = getAuthenticatedUserId();
+
+            User user = userRepository.findByAuth0Id(auth0Id)
+                    .orElseThrow(() -> new RuntimeException("User not found"));
+            return new UserProfileDto(user.getId(), user.getProfilePicture());
+        }
+
     }
-
-
-
-
