@@ -30,12 +30,12 @@ public class CharacterService {
         characterRepository.save(character);
     }
 
-    public void removeCharacterSpecies(Long characterId) {
-        com.vecnavelopers.dndbeyond.model.Character character = characterRepository.findById(characterId)
-                .orElseThrow(() -> new RuntimeException("Character not found"));
-        character.setCharacterSpecies(null); // Assuming species name is stored in this field
-        characterRepository.save(character);
-    }
+//    public void removeCharacterSpecies(Long characterId) {
+//        com.vecnavelopers.dndbeyond.model.Character character = characterRepository.findById(characterId)
+//                .orElseThrow(() -> new RuntimeException("Character not found"));
+//        character.setCharacterSpecies(null); // Assuming species name is stored in this field
+//        characterRepository.save(character);
+//    }
 
     public void updateCharacterBackground(Long characterId, String backgroundName) {
         com.vecnavelopers.dndbeyond.model.Character character = characterRepository.findById(characterId)
