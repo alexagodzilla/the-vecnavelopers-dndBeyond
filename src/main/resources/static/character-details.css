@@ -4,11 +4,14 @@ body {
     margin: 0;
     padding: 0;
     background-color: #f4f4f9;
+    height: 100vh;
+    overflow: hidden; /* Prevent scrolling */
+}
+
+.main-container {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
-    overflow: hidden; /* Prevent scrolling */
 }
 
 /* Main container for character details */

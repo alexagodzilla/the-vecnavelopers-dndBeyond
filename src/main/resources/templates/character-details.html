@@ -5,11 +5,12 @@
     <title>Name Pic Description</title>
 </head>
 <body>
-<div>
+    <div th:insert="fragments/nav :: navigation"></div>
     <div>
-        <label for="character-name"> Choose a name for your Character: </label>
-        <input type="text" id="character-name" th:value="${characterName}"/>
-    </div>
+        <div>
+            <label for="character-name"> Choose a name for your Character: </label>
+            <input type="text" id="character-name" th:value="${characterName}"/>
+        </div>
     <div>
         <label for="character-pic-url"> Add an url pic for your Character: </label>
         <input type="text" id="character-pic-url" th:value="${characterPicUrl}"/>

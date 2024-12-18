@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -47,6 +47,7 @@
   </style>
 </head>
 <body>
+<div th:insert="fragments/nav :: navigation"></div>
 <div class="container">
   <h1>Profile Saved Successfully!</h1>
   <p>Your profile has been updated. You can now proceed to explore the platform.</p>

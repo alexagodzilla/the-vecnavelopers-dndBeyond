@@ -1,0 +1,53 @@
+<nav th:fragment="navigation" xmlns:th="http://www.thymeleaf.org">
+    <link rel="stylesheet" th:href="@{/navbar.css}" />
+    <div class="navbar_left_container">
+        <div class="nav_icon_container">
+            <a class="clickable nav_logo" href="/">
+                <img id="big-logo"
+                     src="/logo-big.svg"
+                >
+            </a>
+        </div>
+    </div>
+    <div class="navbar_right_container">
+        <span class="clickable nav_icon_container">
+            <a id="user-profile-link" href="#">
+                <img id="user-profile-pic"
+                     src="/profile-default.svg"
+                     style="width: 40px; height: 40px; border-radius: 50%;"
+
+                />
+            </a>
+
+        </span>
+        <a href="/logout">Logout</a>
+    </div>
+    <script th:inline="none">
+
+        function getUserDetails(){
+            console.log("Get User Details");
+            fetch('/loggedUser', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => {
+                console.log("Complete");
+                console.log(response);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(response => {
+                console.log(response);
+                document.getElementById("user-profile-link").setAttribute("href", "/profile/" + response.id);
+                if (response.picUrl) {
+                    document.getElementById("user-profile-pic").setAttribute("src", response.picUrl);
+                }
+            });
+        }
+        getUserDetails();
+    </script>
+</nav>
