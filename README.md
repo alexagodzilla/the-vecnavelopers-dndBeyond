@@ -1,3 +1,4 @@
+
 # D&Dbeyond Vecnavelopers
 
 **D&Dbeyond Vecnavelopers** is a user-friendly app that enables players to create and customise their characters seamlessly while adhering to the official D&D rules. It leverages the official API for accuracy and consistency.
@@ -41,27 +42,22 @@ Before cloning and running this project, ensure you have the following installed
 ---
 
 ## Installation
-
 1. Clone the repository:
    ```bash
    git clone https://github.com/alexagodzilla/the-vecnavelopers-dndbeyond.git
    ```  
-
 2. Navigate to the project directory:
    ```bash
    cd the-vecnavelopers-dndbeyond
    ```  
-
 3. Build the project:
    ```bash
    mvn clean install
    ```  
-
 4. Run the application using Spring Boot:
    ```bash
    mvn spring-boot:run
    ```  
-
 5. Access the app in your browser at:
    ```bash
    http://localhost:8080
@@ -70,7 +66,6 @@ Before cloning and running this project, ensure you have the following installed
 ---
 
 ## Technologies Used
-
 - **Java 21**
 - **Spring Boot 3.4.0**
     - Spring Data JPA
@@ -87,7 +82,6 @@ Before cloning and running this project, ensure you have the following installed
 ---
 
 ## Dependencies
-
 The main dependencies of the project are listed in the `pom.xml`. Highlights include:
 - `org.springframework.boot:spring-boot-starter-data-jpa`
 - `org.springframework.boot:spring-boot-starter-thymeleaf`
@@ -99,13 +93,33 @@ The main dependencies of the project are listed in the `pom.xml`. Highlights inc
 
 ---
 
-## Contribution
+## Testing
 
+In this project, you’ll find two main folders: **controller** and **model**. Each folder contains individual tests located in the following path:
+
+```
+the-vecnavelopers-dndbeyond/src/test/java/com/vecnavelopers/dndbeyond
+```
+
+### To run the tests manually:
+
+1. **Navigate to the test folder**:
+    - Open the `controller` or `model` folder, depending on which tests you want to run.
+
+2. **Run all tests in IntelliJ**:
+    - Once inside the folder, click the **green double arrow** button in IntelliJ to run all the tests.
+
+3. **Run individual tests**:
+    - To run a specific test, simply click the **single arrow** button next to the individual test.
+
+This way, you have full control over running the tests either in bulk or individually.
+
+---
+
+## Contribution
 Feel free to fork this repository and contribute to the project. Submit a pull request with any enhancements or fixes!
 
 ---
 
 ## License
-
 Nope Sorry :(
-
