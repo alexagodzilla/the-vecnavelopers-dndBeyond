@@ -7,6 +7,7 @@
 </head>
 <body>
 <div th:insert="fragments/nav :: navigation"></div>
+<div class="main-container">
 <div class="character-details-container">
   <div class="character-image" th:if="${character.characterPicUrl != null}">
     <img th:src="@{${character.characterPicUrl}}" alt="Character Picture">
@@ -62,12 +63,12 @@
   <div class="character-info">
     <strong>Proficiency Bonus:</strong> <span th:text="${character.characterProficiencyBonus}">Bonus</span>
   </div>
-
+  <div>
+    <a href="/all-characters" class="button-back">Back to Characters</a>
+  </div>
 </div>
 
-<div>
-  <a href="/all-characters" class="button-back">Back to Characters</a>
-</div>
 
+</div>
 </body>
 </html>
