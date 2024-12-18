@@ -7,21 +7,31 @@
 </head>
 <body>
 <div th:insert="fragments/nav :: navigation"></div>
-<h1>You've chosen: <span th:text="${background.get().backgroundName}"></span></h1>
+<h1>You've chosen: <span th:text="${background.backgroundName}"></span></h1>
 
-<p><span th:text="${background.get().backgroundDescription}"></span></p>
-<p><strong>Bonus Feat:</strong> <span th:text="${background.get().backgroundFeat}"></span></p>
+<p><span th:text="${background.backgroundDescription}"></span></p>
+<p><strong>Bonus Feat:</strong> <span th:text="${background.backgroundFeat}"></span></p>
 <p><strong>Ability Scores:</strong>
-    <span th:text="${background.get().backgroundAbilityScore1}"></span>,
-    <span th:text="${background.get().backgroundAbilityScore2}"></span>,
-    <span th:text="${background.get().backgroundAbilityScore3}"></span>
+    <span th:text="${background.backgroundAbilityScore1}"></span>,
+    <span th:text="${background.backgroundAbilityScore2}"></span>,
+    <span th:text="${background.backgroundAbilityScore3}"></span>
 </p>
 <p><strong>Skill Proficiencies:</strong>
-    <span th:text="${background.get().backgroundSkillProficiency1}"></span> and
-    <span th:text="${background.get().backgroundSkillProficiency1}"></span>
+    <span th:text="${background.backgroundSkillProficiency1}"></span> and
+    <span th:text="${background.backgroundSkillProficiency1}"></span>
 </p>
-<p><strong>Tool Proficiency:</strong> <span th:text="${background.get().backgroundToolProficiency}"></span></p>
-<p><strong>Feat:</strong> <span th:text="${background.get().backgroundFeat}"></span></p>
+<p><strong>Tool Proficiency:</strong> <span th:text="${background.backgroundToolProficiency}"></span></p>
+<p><strong>Feat:</strong> <span th:text="${background.backgroundFeat}"></span></p>
+
+<a th:href="@{/choose-background/character/{characterId}(characterId=${characterId})}" class="back">Go Back to the background page</a>
+
+<form id="updateBackgroundNameForm" th:action="@{/update-background-name}" method="post">
+    <input type="hidden" name="_method" value="PATCH">
+    <input type="hidden" id="backgroundName" name="backgroundName" th:value="${background.backgroundName}">
+    <input type="hidden" id="characterId" name="characterId" th:value="${characterId}">
+    <button type="submit">Add Background</button>
+</form>
+
 </body>
 </html>
 

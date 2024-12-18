@@ -42,6 +42,8 @@ public class Character {
     @Column(name = "character_subspecies", length = 50)
     private String characterSubspecies;
 
+    // Setting the backgroundName as characterOrigin
+    @Setter
     @Column(name = "character_origin", length = 50)
     private String characterOrigin;
 
@@ -92,6 +94,15 @@ public class Character {
 
     @Column(name = "character_pic_url")
     private String characterPicUrl;
+
+    @Column(name = "character_proficiency_1")
+    private String characterProficiency1;
+
+    @Column(name = "character_proficiency_2")
+    private String characterProficiency2;
+
+    @Column(name = "chosen_starting_equipment")
+    private String chosenStartingEquipment;
 
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)
@@ -156,6 +167,5 @@ public class Character {
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
-
 
 }

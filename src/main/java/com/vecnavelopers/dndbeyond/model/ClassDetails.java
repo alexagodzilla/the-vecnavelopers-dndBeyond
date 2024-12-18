@@ -14,10 +14,11 @@ public class ClassDetails {
     private Spellcasting spellcasting;
     private String spellcastingAbility;
     private JsonNode spells; // A list of spells
-    private JsonNode proficiencyChoices;
+    private List<String> proficiencyNames;
     private List<Proficiency> proficiencies;
     private List<String> savingThrows;
     private List<StartingEquipment> startingEquipment;
+    private List<StartingEquipmentOption> startingEquipmentOptions;
     private JsonNode subclasses;
 
     private String classTagline;
@@ -80,13 +81,9 @@ public class ClassDetails {
         this.spells = spells;
     }
 
-    public JsonNode getProficiencyChoices() {
-        return proficiencyChoices;
-    }
+    public List<String> getProficiencyNames() { return proficiencyNames; }
 
-    public void setProficiencyChoices(JsonNode proficiencyChoices) {
-        this.proficiencyChoices = proficiencyChoices;
-    }
+    public void setProficiencyNames(List<String> proficiencyNames) { this.proficiencyNames = proficiencyNames; }
 
     public List<Proficiency> getProficiencies() {
         return proficiencies;
@@ -118,6 +115,10 @@ public class ClassDetails {
     public List<StartingEquipment> getStartingEquipment() { return startingEquipment; }
 
     public void setStartingEquipment(List<StartingEquipment> startingEquipment) { this.startingEquipment = startingEquipment; }
+
+    public List<StartingEquipmentOption> getStartingEquipmentOptions() { return startingEquipmentOptions; }
+
+    public void setStartingEquipmentOptions(List<StartingEquipmentOption> startingEquipmentOptions) { this.startingEquipmentOptions = startingEquipmentOptions; }
 
     public JsonNode getSubclasses() {
         return subclasses;
