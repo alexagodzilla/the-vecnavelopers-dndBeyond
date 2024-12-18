@@ -1,9 +1,12 @@
 package com.vecnavelopers.dndbeyond.controller;
 
 import com.vecnavelopers.dndbeyond.model.Character;
+import com.vecnavelopers.dndbeyond.model.ClassSummary;
 import com.vecnavelopers.dndbeyond.model.User;
 import com.vecnavelopers.dndbeyond.repository.CharacterRepository;
 import com.vecnavelopers.dndbeyond.repository.UserRepository;
+import com.vecnavelopers.dndbeyond.service.ClassService;
+import com.vecnavelopers.dndbeyond.service.CurrentUserService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -28,6 +31,16 @@ public class ProfileController {
     private UserRepository userRepository;
     @Autowired
     private CharacterRepository characterRepository;
+    @Autowired
+    private final ClassService classService;
+
+    private final CurrentUserService currentUserService;
+
+    public ProfileController(ClassService classService, CurrentUserService currentUserService, CharacterRepository characterRepository) {
+        this.classService = classService;
+        this.currentUserService = currentUserService;
+        this.characterRepository = characterRepository;
+    }
 
     private String getAuthenticatedUserId() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -173,15 +186,18 @@ public class ProfileController {
         Character character = characterRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Character not found"));
         model.addAttribute("character", character);
-        return "character-details";
+        return "character-sheet";
     }
 
     @GetMapping("/character/edit/{id}")
-    public String editCharacter(@PathVariable Long id, Model model) {
-        Character character = characterRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Character not found"));
-        model.addAttribute("character", character);
-        return "character-creation"; // Return to the character creation/edit form
+    public ModelAndView chooseClass(@PathVariable Long id) {
+        ModelAndView classSelectionPage = new ModelAndView("class-selection");
+        List<ClassSummary> classSummaryList = classService.getAllClasses();
+        Long currentUserId = currentUserService.getCurrentUserId();
+        classSelectionPage.addObject("classSummaryList", classSummaryList);
+        classSelectionPage.addObject("userId", currentUserId);
+        classSelectionPage.addObject("characterId", id);
+        return classSelectionPage;
     }
 
     @GetMapping("/character/copy/{id}")
