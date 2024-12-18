@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Your Characters</title>
+  <link rel="stylesheet" href="/characters.css">
+</head>
+<body>
+<h1>Your Characters</h1>
+
+<div class="character-container">
+  <!-- Loop through the list of characters -->
+  <div th:each="character, iterStat : ${characters}" th:if="${iterStat.index < 6}" class="character-card">
+    <!-- Character Picture -->
+    <div th:if="${character.characterPicUrl != null}">
+      <img th:src="@{${character.characterPicUrl}}" alt="Character Picture">
+    </div>
+    <div th:if="${character.characterPicUrl == null}">
+      <img src="/images/default-character.png" alt="Default Character Picture">
+    </div>
+
+    <!-- Character Details -->
+    <div class="character-details">
+      <h2 th:text="${character.characterName}">Character Name</h2>
+      <p><strong>Level:</strong> <span th:text="${character.characterLevel}">1</span></p>
+      <p><strong>Species:</strong> <span th:text="${character.characterSpecies}">Species</span></p>
+      <p><strong>Class:</strong> <span th:text="${character.characterClass}">Class</span></p>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="button-container">
+      <a th:href="@{/character/{id}(id=${character.id})}" class="button">View</a>
+      <a th:href="@{/character/edit/{id}(id=${character.id})}" class="button">Edit</a>
+      <a th:href="@{/character/copy/{id}(id=${character.id})}" class="button">Copy</a>
+      <a href="javascript:void(0);" class="button button-delete"
+         th:attr="onclick='confirmDelete(' + ${character.id} + ')'">Delete</a>
+    </div>
+  </div>
+</div>
+
+<!-- JavaScript for Delete Confirmation -->
+<script>
+  function confirmDelete(characterId) {
+      if (confirm("Are you sure you want to delete this character? This action cannot be undone.")) {
+          window.location.href = '/character/delete/' + characterId;
+      }
+  }
+</script>
+</body>
+</html>

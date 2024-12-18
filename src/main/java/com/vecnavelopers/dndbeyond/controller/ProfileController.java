@@ -1,7 +1,10 @@
 package com.vecnavelopers.dndbeyond.controller;
 
+import com.vecnavelopers.dndbeyond.model.Character;
 import com.vecnavelopers.dndbeyond.model.User;
+import com.vecnavelopers.dndbeyond.repository.CharacterRepository;
 import com.vecnavelopers.dndbeyond.repository.UserRepository;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -16,11 +19,15 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.List;
+
 @Controller
 public class ProfileController {
 
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private CharacterRepository characterRepository;
 
     private String getAuthenticatedUserId() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -143,7 +150,59 @@ public class ProfileController {
             }
         }
 
+    @GetMapping("/all-characters")
+    public String getUserCharacters(Model model) {
+        String auth0Id = SecurityContextHolder.getContext().getAuthentication().getName();
+
+        User currentUser = userRepository.findByAuth0Id(auth0Id)
+                .orElseThrow(() -> new IllegalStateException("User not found."));
+
+        List<Character> characters = characterRepository.findCharactersByUserId(currentUser.getId());
+
+        model.addAttribute("characters", characters);
+
+        if (characters.isEmpty()) {
+            model.addAttribute("message", "You have no characters yet.");
+        }
+
+        return "user-characters";
     }
+
+    @GetMapping("/character/{id}")
+    public String viewCharacter(@PathVariable Long id, Model model) {
+        Character character = characterRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Character not found"));
+        model.addAttribute("character", character);
+        return "character-details";
+    }
+
+    @GetMapping("/character/edit/{id}")
+    public String editCharacter(@PathVariable Long id, Model model) {
+        Character character = characterRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Character not found"));
+        model.addAttribute("character", character);
+        return "character-creation"; // Return to the character creation/edit form
+    }
+
+    @GetMapping("/character/copy/{id}")
+    public String copyCharacter(@PathVariable Long id) {
+        Character original = characterRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Character not found"));
+        Character copy = new Character();
+        BeanUtils.copyProperties(original, copy, "id", "createdAt", "updatedAt");
+        copy.setCharacterName(original.getCharacterName() + " (Copy)");
+        characterRepository.save(copy);
+        return "redirect:/all-characters";
+    }
+
+    @GetMapping("/character/delete/{id}")
+    public String deleteCharacter(@PathVariable Long id) {
+        characterRepository.deleteById(id);
+        return "redirect:/all-characters";
+    }
+
+}
+
 
 
 

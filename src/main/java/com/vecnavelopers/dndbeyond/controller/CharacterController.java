@@ -124,4 +124,5 @@ public class CharacterController {
         characterService.updateCharacterBackground(characterId, backgroundName);
         return "redirect:/choose-background/character/" + characterId;
     }
+
 }
