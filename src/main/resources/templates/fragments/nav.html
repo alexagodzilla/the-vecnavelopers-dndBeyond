@@ -1,15 +1,16 @@
 <nav th:fragment="navigation" xmlns:th="http://www.thymeleaf.org">
+    <link rel="stylesheet" th:href="@{/navbar.css}" />
     <div class="navbar_left_container">
         <div class="nav_icon_container">
             <a class="clickable nav_logo" href="/">
                 <img id="big-logo"
                      src="/logo-big.svg"
-                     style="width: 300px; height: auto;"/>
+                >
             </a>
         </div>
     </div>
     <div class="navbar_right_container">
-        <div class="clickable nav_icon_container">
+        <span class="clickable nav_icon_container">
             <a id="user-profile-link" href="#">
                 <img id="user-profile-pic"
                      src="/profile-default.svg"
@@ -18,7 +19,7 @@
                 />
             </a>
 
-        </div>
+        </span>
         <a href="/logout">Logout</a>
     </div>
     <script th:inline="none">

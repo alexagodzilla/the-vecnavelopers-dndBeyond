@@ -1,0 +1,17 @@
+nav {
+    display: flex;
+    justify-content: space-between;
+    background-color: #dcab4e;
+    border-bottom: 3px solid #b30404;
+}
+
+#user-profile-pic {
+    width: 45px;
+    height: 45px;
+}
+
+#big-logo {
+    width: 300px;
+    height: auto;
+    margin-left: 20 px;
+}
