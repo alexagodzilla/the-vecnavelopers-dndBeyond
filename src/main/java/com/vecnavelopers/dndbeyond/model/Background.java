@@ -39,6 +39,9 @@ public class Background {
     @Column(name = "background_feat", nullable = false)
     private String backgroundFeat;
 
+    @Column(name = "background_image", nullable = false)
+    private String backgroundImage;
+
     // Getters and Setters
 
     public String getBackgroundName() { return backgroundName; }
@@ -76,4 +79,8 @@ public class Background {
     public String getBackgroundFeat() { return backgroundFeat; }
 
     public void setBackgroundFeat(String backgroundFeat) { this.backgroundFeat = backgroundFeat; }
+
+    public String getBackgroundImage() { return backgroundImage; }
+
+    public void setBackgroundImage(String backgroundImage) { this.backgroundImage = backgroundImage; }
 }

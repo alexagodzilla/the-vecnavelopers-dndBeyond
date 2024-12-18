@@ -6,6 +6,7 @@
     <title>Species Details</title>
 </head>
 <body>
+<img th:src="@{{imageName}(imageName=${speciesDetails.speciesImage})}" alt="Species Image">
 <h1>You've chosen: <span th:text="${speciesDetails.speciesName}"></span></h1>
 
 

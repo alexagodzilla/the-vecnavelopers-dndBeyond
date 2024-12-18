@@ -79,6 +79,7 @@ public class SpeciesService {
             speciesDetails.setSpeciesTagline(extraDetails.getSpeciesTagline());
             speciesDetails.setSpeciesFlavour(extraDetails.getSpeciesFlavour());
             speciesDetails.setSpeciesDescription(extraDetails.getSpeciesDescription());
+            speciesDetails.setSpeciesImage(extraDetails.getSpeciesImage());
         }
 
         return speciesDetails;
