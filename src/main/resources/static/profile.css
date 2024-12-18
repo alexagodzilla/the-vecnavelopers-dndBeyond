@@ -1,18 +1,17 @@
 body {
-    font-family: 'MedievalSharp', serif;
-    background: #651766; /* Purple background */
+    font-family: 'Roboto', sans-serif;
+    background: #fff; /* White background */
     margin: 0;
     padding: 0;
-    color: #fff; /* Default font color set to white */
+    color: #fff;
 }
 
 .container {
     max-width: 800px; /* Larger width */
     margin: 50px auto;
-    background: #000; /* Black background for container */
+    background: rgba(0, 0, 0, 0.85); /* Black background with opacity */
     padding: 30px;
     border-radius: 12px;
-    border: 5px solid #FFD700; /* Gold trim */
     color: #fff; /* White font color */
 }
 
@@ -24,24 +23,24 @@ body {
 
 .header h1 {
     margin: 0;
-    color: #FFD700; /* Gold color for the title */
+    color: #B30404; /* Deep red */
 }
 
 .logout-btn {
     background-color: #B30404; /* Deep red */
     color: #fff;
-    border: 2px solid #FFD700; /* Gold trim */
+    border: none;
     padding: 10px 15px;
     border-radius: 5px;
     text-decoration: none;
-    font-family: 'Cinzel Decorative', serif;
+    font-family: 'Roboto', sans-serif;
     font-size: 14px;
     cursor: pointer;
 }
 
 .logout-btn:hover {
-    background-color: #FFD700; /* Gold background on hover */
-    color: #000; /* Black text on hover */
+    background-color: #ff4d4d; /* Lighter red background on hover */
+    color: #fff; /* Maintain white text */
 }
 
 .profile {
@@ -52,7 +51,7 @@ body {
 .profile-picture img {
     max-width: 150px;
     border-radius: 10px;
-    border: 2px solid #FFD700; /* Gold trim for the picture */
+    border: none; /* Remove border */
 }
 
 .btn-container {
@@ -64,18 +63,18 @@ body {
     display: inline-block;
     background-color: #B30404; /* Deep red */
     color: #fff;
-    border: 2px solid #FFD700; /* Gold trim */
+    border: none;
     padding: 10px 20px;
     border-radius: 5px;
-    font-family: 'Cinzel', serif;
+    font-family: 'Roboto', sans-serif;
     font-size: 16px;
     cursor: pointer;
     text-decoration: none;
 }
 
 .btn:hover {
-    background-color: #FFD700; /* Gold */
-    color: #000; /* Black text on hover */
+    background-color: #ff4d4d; /* Lighter red */
+    color: #fff; /* Maintain white text */
 }
 
 .btn + .btn {
