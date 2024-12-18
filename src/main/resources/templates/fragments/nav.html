@@ -2,16 +2,24 @@
     <div class="navbar_left_container">
         <div class="nav_icon_container">
             <a class="clickable nav_logo" href="/">
-                <img src="/logo-big.svg" />
+                <img id="big-logo"
+                     src="/logo-big.svg"
+                     style="width: 300px; height: auto;"/>
             </a>
         </div>
     </div>
     <div class="navbar_right_container">
         <div class="clickable nav_icon_container">
             <a id="user-profile-link" href="#">
-                <img id="user-profile-pic" src="/profile-default.svg"/>
+                <img id="user-profile-pic"
+                     src="/profile-default.svg"
+                     style="width: 40px; height: 40px; border-radius: 50%;"
+
+                />
             </a>
+
         </div>
+        <a href="/logout">Logout</a>
     </div>
     <script th:inline="none">
 

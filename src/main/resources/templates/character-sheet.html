@@ -6,6 +6,7 @@
   <link rel="stylesheet" href="/character-details.css">
 </head>
 <body>
+<div th:insert="fragments/nav :: navigation"></div>
 <div class="character-details-container">
   <div class="character-image" th:if="${character.characterPicUrl != null}">
     <img th:src="@{${character.characterPicUrl}}" alt="Character Picture">
