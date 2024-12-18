@@ -19,7 +19,7 @@
 <p><strong>Speed:</strong> <span th:text="${speciesDetails.speciesSpeed}"></span> feet</p>
 <p><strong>Size:</strong> <span th:text="${speciesDetails.speciesSizeDescription}"></span></p>
 
-<a th:href="@{/choose-species/character/{characterId}(characterId=${characterId})}" class="back">Go Back to the character page</a>
+<a th:href="@{/choose-species/character/{characterId}(characterId=${characterId})}" class="back">Go Back to the species page</a>
 <form id="updateClassNameForm" th:action="@{/update-species-name}" method="post">
     <input type="hidden" name="_method" value="PATCH">
     <input type="hidden" id="speciesName" name="speciesName" th:value="${speciesDetails.speciesName}">

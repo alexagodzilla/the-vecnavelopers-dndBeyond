@@ -23,6 +23,10 @@
     </div>
 </div>
 <button id="submit" onclick="submit()">Submit</button>
+<form id="back-to-background-form" style="margin-top: 20px;">
+    <input type="hidden" id="characterId" th:value="${characterId}" />
+    <button type="button" id="back-button">Back To Background</button>
+</form>
 <script>
     let currentValues = {
         "strength": 8,
@@ -66,21 +70,38 @@
         updateDisplay();
     }
     function submit() {
-        if (availablePoints != 0) return;
-        fetch("/abilityScores/[[${characterId}]]", {
-            method: 'POST', // HTTP method
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(currentValues)
-        })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-        });
-    }
+    if (availablePoints != 0) return;
+    fetch("/abilityScores/[[${characterId}]]", {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(currentValues)
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json(); // Parse the JSON response
+    })
+    .then(data => {
+        if (data.redirectUrl) {
+            // Perform the redirect using the provided URL
+            window.location.href = data.redirectUrl;
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert("An error occurred while saving the ability scores.");
+    });
+}
+
     updateDisplay();
+
+    document.getElementById("back-button").addEventListener("click", function () {
+        const characterId = document.getElementById("characterId").value;
+        window.location.href = `/choose-background/character/${characterId}`;
+    });
 </script>
 </body>
 </html>

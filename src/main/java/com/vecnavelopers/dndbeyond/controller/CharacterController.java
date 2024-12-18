@@ -113,6 +113,12 @@ public class CharacterController {
         characterService.updateCharacterSpecies(characterId, speciesName);
         return "redirect:/choose-background/character/" + characterId;
     }
+// I thought to erase all the species records when you got to the previous page but as soon as you come back to this page again you can actually re-update it, I believe we should discuss this option
+//    @PatchMapping("/remove-species-name")
+//    public String removeSpeciesName(@RequestParam Long characterId) {
+//        characterService.removeCharacterSpecies(characterId);
+//        return "redirect:/choose-class/character/" + characterId;
+//    }
 
     @GetMapping("/choose-background/character/{id}")
     public ModelAndView chooseBackground(@PathVariable Long id) {
@@ -128,7 +134,7 @@ public class CharacterController {
     @PatchMapping("/update-background-name")
     public String updateBackgroundName(@RequestParam String backgroundName, @RequestParam Long characterId) {
         characterService.updateCharacterBackground(characterId, backgroundName);
-        return "redirect:/choose-background/character/" + characterId;
+        return "redirect:/abilityScores/" + characterId;
     }
 
 }
