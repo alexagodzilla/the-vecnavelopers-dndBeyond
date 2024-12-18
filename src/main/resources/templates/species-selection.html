@@ -58,6 +58,16 @@
     </div>
 </div>
 
+<input type="hidden" id="characterId" th:value="${characterId}" />
+
+<button type="button" id="back-button">Back</button>
+
+<script>
+    document.getElementById("back-button").addEventListener("click", function () {
+        const characterId = document.getElementById("characterId").value;
+        window.location.href = `/choose-class/character/${characterId}`;
+    });
+</script>
 
 
 

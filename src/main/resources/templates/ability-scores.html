@@ -22,6 +22,10 @@
     </div>
 </div>
 <button id="submit" onclick="submit()">Submit</button>
+<form id="back-to-background-form" style="margin-top: 20px;">
+    <input type="hidden" id="characterId" th:value="${characterId}" />
+    <button type="button" id="back-button">Back To Background</button>
+</form>
 <script>
     let currentValues = {
         "strength": 8,
@@ -92,6 +96,11 @@
 }
 
     updateDisplay();
+
+    document.getElementById("back-button").addEventListener("click", function () {
+        const characterId = document.getElementById("characterId").value;
+        window.location.href = `/choose-background/character/${characterId}`;
+    });
 </script>
 </body>
 </html>

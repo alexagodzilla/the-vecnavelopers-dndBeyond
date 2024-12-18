@@ -24,6 +24,8 @@
         <div id="output" style="margin-top: 20px;">
 
         </div>
+
+        <button id="goToAbilityScores">Go to Ability Scores</button>
         <script>
             // Wait for the DOM content to load
             document.addEventListener("DOMContentLoaded", function() {
@@ -33,6 +35,7 @@
                 const picInput = document.getElementById("character-pic-url");
                 const descriptionInput = document.getElementById("character-description");
                 const outputDiv = document.getElementById("output");
+                const characterId = [[${characterId}]];
 
                 // Add event listener to the Save button
                 saveButton.addEventListener("click", function() {
@@ -53,6 +56,9 @@
                         <img src="${picUrl}" alt="${name}" style="max-width: 200px; height: auto;"/>
                         <p>${description}</p>
                     `;
+                });
+                document.getElementById("goToAbilityScores").addEventListener("click", function() {
+                    window.location.href = `/abilityScores/${characterId}`;
                 });
             });
             function submit(details) {

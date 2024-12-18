@@ -45,22 +45,54 @@
 </head>
 <body>
 
-<h1>Select a Background</h1>
+    <h1>Select a Background</h1>
 
-<div th:each="background : ${backgroundList}">
-    <div class="card">
-        <div class="description">
-            <h3 th:text="${background.backgroundName}"></h3>
+    <div th:each="background : ${backgroundList}">
+        <div class="card">
+            <div class="description">
+                <h3 th:text="${background.backgroundName}"></h3>
+            </div>
+            <a th:href="@{/background/{backgroundname}(backgroundname=${#strings.toLowerCase(background.backgroundName)}, characterId=${characterId}, userId=${userId})}" class="details">See Background Details</a>
         </div>
-        <a th:href="@{/background/{backgroundname}(backgroundname=${#strings.toLowerCase(background.backgroundName)}, characterId=${characterId}, userId=${userId})}" class="details">See Background Details</a>
     </div>
-</div>
 
-<form action="/choose-class/character/{{characterId}}" method="POST" th:action="@{/choose-class/character/{id}(id=${characterId})}">
-    <input type="hidden" name="_method" value="DELETE" />
-    <input type="hidden" name="userId" th:value="${userId}" />
-    <button type="submit">Delete Character</button>
-</form>
+<!--    <form id="remove-species-form" style="margin-top: 20px;">-->
+<!--        <input type="hidden" id="characterId" th:value="${characterId}" />-->
+<!--        <button type="button" id="back-button">Back To Species</button>-->
+<!--    </form>-->
 
+<!--    <script>-->
+<!--        document.getElementById("back-button").addEventListener("click", function () {-->
+<!--            const characterId = document.getElementById("characterId").value;-->
+
+<!--            fetch("/remove-species-name", {-->
+<!--                method: "PATCH",-->
+<!--                headers: {-->
+<!--                    "Content-Type": "application/x-www-form-urlencoded",-->
+<!--                },-->
+<!--                body: `characterId=${encodeURIComponent(characterId)}`-->
+<!--            }).then(response => {-->
+<!--                if (response.redirected) {-->
+<!--                    window.location.href = response.url;-->
+<!--                } else {-->
+<!--                    console.error("Failed to remove species");-->
+<!--                }-->
+<!--            }).catch(error => {-->
+<!--                alert("An error occurred: " + error.message);-->
+<!--            });-->
+<!--        });-->
+<!--    </script>-->
+
+    <form id="back-to-species-form" style="margin-top: 20px;">
+        <input type="hidden" id="characterId" th:value="${characterId}" />
+        <button type="button" id="back-button">Back To Species</button>
+    </form>
+
+    <script>
+        document.getElementById("back-button").addEventListener("click", function () {
+            const characterId = document.getElementById("characterId").value;
+            window.location.href = `/choose-species/character/${characterId}`;
+        });
+    </script>
 </body>
 </html>
