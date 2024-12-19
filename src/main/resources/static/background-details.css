@@ -3,21 +3,34 @@ body {
     font-family: 'Roboto', sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #fff; /* White background */
+    background: linear-gradient(to bottom right, #222, #2d0943, #570404); /* Gradient from grey to dark purple to dark red */
     color: #fff; /* White text */
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
 }
 
 /* Main container styling */
 .container {
     max-width: 900px;
-    margin: 30px auto;
+    margin: 30px;
     padding: 20px;
     text-align: center;
+    margin-top: 120px;
+}
+
+img {
+    height: 600px;
+    width: auto;
+    max-width: 100%;
+    border-radius: 12px;
+    margin: 20px auto;
+    display: block;
 }
 
 /* Section container */
 .section-container {
-    background-color: rgba(0, 0, 0, 0.85); /* Black background with opacity */
+    background-color: rgba(0, 0, 0, 0.6); /* Black background with opacity */
     border: 2px solid #B30404; /* Deep red border */
     border-radius: 12px;
     padding: 20px;
@@ -29,7 +42,7 @@ body {
 /* Page title */
 h1 {
     color: #fff; /* White */
-    font-family: 'Cinzel Decorative', serif;
+    font-family: 'Roboto', sans-serif;
     margin-bottom: 20px;
     text-align: center;
 }
