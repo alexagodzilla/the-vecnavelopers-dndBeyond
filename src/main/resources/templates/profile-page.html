@@ -16,12 +16,13 @@
     <h2>Welcome, <span th:text="${user.displayName}">Display Name</span></h2>
     <p>Bio: <span th:text="${user.userBio}"></span></p>
 
-    <div class="profile-picture">
-      <img th:src="@{/uploads/{fileName}(fileName=${user.profilePicture})}"
-           alt="Profile Picture"
-           th:if="${user.profilePicture != null}">
-    </div>
-  </div>
+<!--    <div class="profile-picture">-->
+<!--      <img th:if="${user.profilePicture != null}"-->
+<!--           th:src="@{/uploads/{fileName}(fileName=${user.profilePicture})}"-->
+<!--      <img th:if="${user.profilePicture == null}"-->
+<!--           src="/images/default-profile.png"-->
+<!--    </div>-->
+<!--  </div>-->
 
   <div class="btn-container">
     <a href="/profile/edit" class="btn">Edit Profile</a>
