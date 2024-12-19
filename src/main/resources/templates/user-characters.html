@@ -6,8 +6,15 @@
   <link rel="stylesheet" href="/characters.css">
 </head>
 <body>
-  <div th:insert="fragments/nav :: navigation"></div>
-  <h1>Your Characters</h1>
+<div th:insert="fragments/nav :: navigation"></div>
+<h1>Your Characters</h1>
+
+<div class="btn-container">
+  <form action="/create-character" method="POST" style="display: inline;">
+    <button type="submit" class="btn create-btn">Create a New Character</button>
+  </form>
+  <a th:href="@{/profile/{id}(id=${user.id})}" class="btn back-btn">Back to Profile</a>
+</div>
 
 <div class="character-container">
   <!-- Loop through the list of characters -->
@@ -42,9 +49,9 @@
 <!-- JavaScript for Delete Confirmation -->
 <script>
   function confirmDelete(characterId) {
-      if (confirm("Are you sure you want to delete this character? This action cannot be undone.")) {
-          window.location.href = '/character/delete/' + characterId;
-      }
+    if (confirm("Are you sure you want to delete this character? This action cannot be undone.")) {
+        window.location.href = '/character/delete/' + characterId;
+    }
   }
 </script>
 </body>

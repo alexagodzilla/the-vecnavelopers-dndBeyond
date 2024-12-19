@@ -23,6 +23,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.List;
 import java.util.Optional;
 
@@ -125,9 +129,13 @@ public class ProfileController {
             user.setBio(bio);
 
             if (profilePicture != null && !profilePicture.isEmpty()) {
-                String fileName = profilePicture.getOriginalFilename();
+                String fileName = System.currentTimeMillis() + "_" + profilePicture.getOriginalFilename();
+                Path uploadPath = Paths.get("uploads").toAbsolutePath();
+                Files.createDirectories(uploadPath); // Ensure the directory exists
+                Files.copy(profilePicture.getInputStream(), uploadPath.resolve(fileName),
+                        StandardCopyOption.REPLACE_EXISTING);
+
                 user.setProfilePicture(fileName);
-                System.out.println("Uploaded file: " + fileName);
             }
 
             userRepository.save(user);
@@ -207,6 +215,7 @@ public class ProfileController {
         List<Character> characters = characterRepository.findCharactersByUserId(currentUser.getId());
 
         model.addAttribute("characters", characters);
+        model.addAttribute("user", currentUser); // Pass the user object to the model
 
         if (characters.isEmpty()) {
             model.addAttribute("message", "You have no characters yet.");
@@ -214,6 +223,7 @@ public class ProfileController {
 
         return "user-characters";
     }
+
 
     @GetMapping("/character/{id}")
     public String viewCharacter(@PathVariable Long id, Model model) {

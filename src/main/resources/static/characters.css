@@ -89,3 +89,44 @@ h1 {
 .button-delete:hover {
     background-color: #ff4d4d; /* Lighter red */
 }
+/* Button Container Styling */
+.btn-container {
+    text-align: center;
+    margin: 20px 0;
+    display: flex;
+    justify-content: center;
+    gap: 20px; /* Space between buttons */
+}
+
+/* General Button Styling */
+.btn {
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    font-family: 'Roboto', sans-serif;
+}
+
+/* Create Button Specific Styling */
+.create-btn {
+    background-color: #B30404; /* Deep red */
+    color: #fff;
+    border: none;
+}
+
+.create-btn:hover {
+    background-color: #ff4d4d; /* Lighter red on hover */
+}
+
+/* Back Button Specific Styling */
+.back-btn {
+    background-color: #555; /* Neutral gray */
+    color: #fff;
+    border: none;
+}
+
+.back-btn:hover {
+    background-color: #333; /* Darker gray on hover */
+}
+
