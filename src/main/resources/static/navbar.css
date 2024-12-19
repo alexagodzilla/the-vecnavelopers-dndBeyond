@@ -1,17 +1,76 @@
 nav {
+    width: 100%;
     display: flex;
     justify-content: space-between;
     background-color: #dcab4e;
     border-bottom: 3px solid #b30404;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    position: fixed; /* Keeps navbar at the top */
+    top: 0;
+    left: 0;
+    z-index: 100;
+}
+
+/* Profile Container Styling */
+.profile-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    height: 100%;
+    margin-right: 20px;
 }
 
 #user-profile-pic {
     width: 45px;
     height: 45px;
+    border-radius: 50%;
+}
+
+/* Dropdown Menu Styling */
+.dropdown-menu {
+    position: absolute;
+    top: 50px;
+    right: 0;
+    background-color: #333;
+    border: 1px solid #333;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+    z-index: 101;
+    display: flex;
+    flex-direction: column;
+    width: 150px;
+    padding: 10px 0;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.dropdown-menu:not(.hidden) {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.dropdown-item {
+    padding: 10px 15px;
+    text-align: left;
+    color: #fff;
+    text-decoration: none;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+
+.dropdown-item:hover {
+    background-color: #333;
+}
+
+/* Hide dropdown by default */
+.hidden {
+    display: none;
 }
 
 #big-logo {
     width: 300px;
     height: auto;
-    margin-left: 20 px;
+    margin-left: 20px;
 }
