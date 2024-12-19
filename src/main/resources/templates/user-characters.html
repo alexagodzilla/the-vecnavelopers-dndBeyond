@@ -8,12 +8,12 @@
 <body>
 <div th:insert="fragments/nav :: navigation"></div>
 <h1>Your Characters</h1>
-
+<main>
 <div class="btn-container">
   <form action="/create-character" method="POST" style="display: inline;">
-    <button type="submit" class="btn create-btn">Create a New Character</button>
+    <button type="submit" class="btn create-btn">Create New Character</button>
   </form>
-  <a th:href="@{/profile/{id}(id=${user.id})}" class="btn back-btn">Back to Profile</a>
+  <a th:href="@{/profile/{id}(id=${user.id})}" class="btn back-btn">Back To Profile</a>
 </div>
 
 <div class="character-container">
@@ -54,5 +54,6 @@
     }
   }
 </script>
+</main>
 </body>
 </html>

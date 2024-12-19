@@ -16,27 +16,41 @@
         <div id="availablePoints" class="total-points">27</div>
     </div>
 
-    <!-- Ability Scores Section -->
-    <div th:each="ability: ${abilities}" class="section-container">
-        <h3 th:text="${#strings.capitalize(ability)}"></h3>
-        <div class="score-controls">
-            <button class="control-button minus" th:id="${ability} + 'MinusButton'" th:data-ability="${ability}"
-                    th:onclick="decreaseValue(this.getAttribute('data-ability'))">-</button>
-            <span class="score-display" th:id="${ability} + 'NumberDisplay'">8</span>
-            <button class="control-button plus" th:id="${ability} + 'PlusButton'" th:data-ability="${ability}"
-                    th:onclick="increaseValue(this.getAttribute('data-ability'))">+</button>
+    <!-- Ability Scores Section (Horizontal Layout) -->
+    <div class="ability-scores-container">
+        <div th:each="ability: ${abilities}" class="section-container ability-score">
+            <h3 th:text="${#strings.capitalize(ability)}"></h3>
+            <div class="score-controls">
+                <button class="control-button minus" th:id="${ability} + 'MinusButton'" th:data-ability="${ability}"
+                        th:onclick="decreaseValue(this.getAttribute('data-ability'))">-</button>
+                <span class="score-display" th:id="${ability} + 'NumberDisplay'">8</span>
+                <button class="control-button plus" th:id="${ability} + 'PlusButton'" th:data-ability="${ability}"
+                        th:onclick="increaseValue(this.getAttribute('data-ability'))">+</button>
+            </div>
         </div>
     </div>
 
+    <!-- Descriptive Text Section -->
+    <div class="section-container ability-description-container">
+        <p><strong>STRENGTH</strong> - Physical Might</p>
+        <p><strong>DEXTERITY</strong> - Agility, Reflexes, and Balance</p>
+        <p><strong>CONSTITUTION</strong> - Health and Stamina</p>
+        <p><strong>INTELLIGENCE</strong> - Reasoning and Memory</p>
+        <p><strong>WISDOM</strong> - Perceptiveness and Mental Fortitude</p>
+        <p><strong>CHARISMA</strong> - Confidence, Poise, and Charm</p>
+    </div>
+
+
+
     <!-- Submit Button -->
     <div class="section-container">
-        <button id="submit" class="btn-submit" onclick="submit()">Submit</button>
+        <button id="submit" class="btn-submit" onclick="submit()">Submit Scores</button>
     </div>
 
     <!-- Back Button Section -->
     <form id="back-to-background-form" class="section-container">
         <input type="hidden" id="characterId" th:value="${characterId}" />
-        <button type="button" id="back-button" class="btn-back">Back To Background</button>
+        <button type="button" id="back-button" class="btn-back">Go Back</button>
     </form>
 </div>
 <script>

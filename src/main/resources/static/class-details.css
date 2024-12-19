@@ -128,3 +128,38 @@ img {
     margin-top: 10px;
     text-align: center;
 }
+
+/* Style for checkboxes */
+input[type="checkbox"] {
+    margin-right: 10px;
+    cursor: pointer;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #B30404; /* Deep red border */
+    border-radius: 3px; /* Optional for rounded corners */
+    background-color: transparent;
+    appearance: none; /* Remove default checkbox styling */
+    vertical-align:middle;
+    position: relative;
+}
+
+/* Checkbox checked state */
+input[type="checkbox"]:checked {
+    background-color: #B30404; /* Deep red background */
+    border-color: #B30404; /* Deep red border */
+    color: #fff; /* White checkmark (for contrast) */
+    position: relative;
+}
+
+input[type="checkbox"]:checked::after {
+    content: '✓'; /* Checkmark symbol */
+    display: block;
+    color: #fff; /* White checkmark */
+    font-weight: bold;
+    font-size: 1rem;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
