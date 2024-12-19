@@ -18,7 +18,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 import java.util.Optional;
@@ -72,9 +75,9 @@ public class ProfileController {
             return userOptional.map(user -> "redirect:/profile/" + user.getId()).orElse("redirect:/profile/setup");
 
         } catch (IllegalStateException e) {
+            // Handle unauthenticated access gracefully
             return "redirect:/login";
         }
-
     }
 
 
@@ -88,13 +91,31 @@ public class ProfileController {
             // Redirect to the setup page if no display name is set
             return new ModelAndView("redirect:/profile/setup");
         }
+
+        // If display name is set, return the profile page
+        ModelAndView profilePage = new ModelAndView("profile-page");
+        profilePage.addObject("user", user);
+
+        return profilePage;
+    }
+
+
+    @GetMapping("/profile/setup")
+    public String showProfileSetupPage () {
+        String displayName = getAuthenticatedUserDisplayName();
+        boolean userExists = userRepository.findUserByDisplayName(displayName).isPresent();
+        if (userExists) {
+            User existingUser = userRepository.findUserByDisplayName(displayName).orElseThrow();
+            return "redirect:/profile/" + existingUser.getId();
+        }
         return "profile-setup";
     }
+
     @PostMapping("/profile/setup")
     public String saveProfile (@RequestParam("displayName") String displayName,
-            @RequestParam("bio") String bio,
-            @RequestParam(value = "profilePicture", required = false) MultipartFile profilePicture,
-            Model model){
+                               @RequestParam("bio") String bio,
+                               @RequestParam(value = "profilePicture", required = false) MultipartFile profilePicture,
+                               Model model){
         try {
             String auth0Id = getAuthenticatedUserId();
 
@@ -107,21 +128,6 @@ public class ProfileController {
                 String fileName = profilePicture.getOriginalFilename();
                 user.setProfilePicture(fileName);
                 System.out.println("Uploaded file: " + fileName);
-        // If display name is set, return the profile page
-        ModelAndView profilePage = new ModelAndView("profile-page");
-        profilePage.addObject("user", user);
-
-        return profilePage;
-    }
-
-
-        @GetMapping("/profile/setup")
-        public String showProfileSetupPage () {
-            String displayName = getAuthenticatedUserDisplayName();
-            boolean userExists = userRepository.findUserByDisplayName(displayName).isPresent();
-            if (userExists) {
-                User existingUser = userRepository.findUserByDisplayName(displayName).orElseThrow();
-                return "redirect:/profile/" + existingUser.getId();
             }
 
             userRepository.save(user);
@@ -154,9 +160,9 @@ public class ProfileController {
 
     @PostMapping("/profile/edit")
     public String saveEditedProfile (@RequestParam("displayName") String displayName,
-            @RequestParam("bio") String bio,
-            @RequestParam(value = "profilePicture", required = false) MultipartFile profilePicture,
-            Model model){
+                                     @RequestParam("bio") String bio,
+                                     @RequestParam(value = "profilePicture", required = false) MultipartFile profilePicture,
+                                     Model model){
         try {
             String auth0Id = getAuthenticatedUserId();
 
@@ -246,6 +252,4 @@ public class ProfileController {
     }
 
 }
-
-
 
