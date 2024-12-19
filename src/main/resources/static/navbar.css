@@ -2,7 +2,7 @@ nav {
     width: 100%;
     display: flex;
     justify-content: space-between;
-    background-color: #dcab4e;
+    background: linear-gradient(to bottom right, #a68002, #dcab4e, #a68002);
     border-bottom: 3px solid #b30404;
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
     position: fixed; /* Keeps navbar at the top */
