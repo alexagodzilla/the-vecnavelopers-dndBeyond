@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class ProfileController {
@@ -45,45 +46,50 @@ public class ProfileController {
         if (authentication == null || !authentication.isAuthenticated()) {
             throw new IllegalStateException("User is not authenticated.");
         }
-        return authentication.getName(); // Get the username/ID directly from the principal
+        return authentication.getName();
+    }
+
+    private String getAuthenticatedUserDisplayName() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null || !authentication.isAuthenticated()) {
+            return null;
+        }
+
+        String displayName = authentication.getName();
+        return (displayName != null && !displayName.trim().isEmpty()) ? displayName : null;
     }
 
     @GetMapping("/")
     public String homePageRedirect() {
         try {
-            String auth0Id = getAuthenticatedUserId();
-            // Check if the user exists in the database
-            return userRepository.findByAuth0Id(auth0Id)
-                    .map(user -> "redirect:/profile/" + user.getId()) // Redirect to profile page
-                    .orElse("redirect:/profile/setup"); // Redirect to setup page if user doesn't exist
+            String displayName = getAuthenticatedUserDisplayName();
+            if (displayName == null || displayName.isEmpty()) {
+                return "redirect:/profile/setup";
+            }
+
+            Optional<User> userOptional = userRepository.findUserByDisplayName(displayName);
+
+            return userOptional.map(user -> "redirect:/profile/" + user.getId()).orElse("redirect:/profile/setup");
+
         } catch (IllegalStateException e) {
-            // Handle unauthenticated access gracefully
             return "redirect:/login";
         }
+
     }
 
+
     @GetMapping("/profile/{userId}")
-    public ModelAndView viewProfile (@PathVariable Long userId){
+    public ModelAndView viewProfile(@PathVariable Long userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
-        ModelAndView profilePage = new ModelAndView("profile-page");
-        profilePage.addObject("user", user);
-
-        return profilePage;
-    }
-
-    @GetMapping("/profile/setup")
-    public String showProfileSetupPage () {
-        String auth0Id = getAuthenticatedUserId();
-        boolean userExists = userRepository.findByAuth0Id(auth0Id).isPresent();
-        if (userExists) {
-            User existingUser = userRepository.findByAuth0Id(auth0Id).orElseThrow();
-            return "redirect:/profile/" + existingUser.getId();
+        // Check if the user has a display name
+        if (user.getDisplayName() == null || user.getDisplayName().isEmpty()) {
+            // Redirect to the setup page if no display name is set
+            return new ModelAndView("redirect:/profile/setup");
         }
         return "profile-setup";
     }
-
     @PostMapping("/profile/setup")
     public String saveProfile (@RequestParam("displayName") String displayName,
             @RequestParam("bio") String bio,
@@ -101,6 +107,21 @@ public class ProfileController {
                 String fileName = profilePicture.getOriginalFilename();
                 user.setProfilePicture(fileName);
                 System.out.println("Uploaded file: " + fileName);
+        // If display name is set, return the profile page
+        ModelAndView profilePage = new ModelAndView("profile-page");
+        profilePage.addObject("user", user);
+
+        return profilePage;
+    }
+
+
+        @GetMapping("/profile/setup")
+        public String showProfileSetupPage () {
+            String displayName = getAuthenticatedUserDisplayName();
+            boolean userExists = userRepository.findUserByDisplayName(displayName).isPresent();
+            if (userExists) {
+                User existingUser = userRepository.findUserByDisplayName(displayName).orElseThrow();
+                return "redirect:/profile/" + existingUser.getId();
             }
 
             userRepository.save(user);

@@ -3,34 +3,39 @@
 <head>
   <meta charset="UTF-8">
   <title>User Profile</title>
-  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/profile.css">
 </head>
 <body>
 <div th:insert="fragments/nav :: navigation"></div>
-<h1>User Profile</h1>
+<div class="container">
+  <div class="header">
+    <a href="/logout" class="btn logout-btn">Logout</a>
+  </div>
 
+  <div class="profile">
+    <h2>Welcome, <span th:text="${user.displayName}">Display Name</span></h2>
+    <p>Bio: <span th:text="${user.userBio}"></span></p>
 
-<div class="profile">
-  <h2>Welcome, <span th:text="${user.displayName}">Display Name</span>!</h2>
-  <p>Bio: <span th:text="${user.userBio}"></span>!</p>
+    <div class="profile-picture">
+      <img th:src="@{/uploads/{fileName}(fileName=${user.profilePicture})}"
+           alt="Profile Picture"
+           th:if="${user.profilePicture != null}">
+    </div>
+  </div>
 
-  <div>
-    <img th:src="@{/uploads/{fileName}(fileName=${user.profilePicture})}"
-         alt="Profile Picture" style="max-width: 200px; border-radius: 10px;"
-         th:if="${user.profilePicture != null}">
+  <div class="btn-container">
+    <a href="/profile/edit" class="btn">Edit Profile</a>
+  </div>
+
+  <form action="/create-character" method="POST" class="btn-container">
+    <input type="hidden" name="userId" th:value="${user.id}" />
+    <button type="submit" class="btn">Create a new Character</button>
+  </form>
+
+  <div class="btn-container">
+    <a href="/all-characters" class="btn">See all your characters</a>
+    <a href="/all-campaigns" class="btn">See all your campaigns</a>
   </div>
 </div>
-
-<a href="/profile/edit" class="btn-edit-profile">Edit Profile</a>
-
-<form action="/create-character" method="POST">
-  <input type="hidden" name="userId" th:value="${user.id}" />
-  <button type="submit">Create a new Character</button>
-</form>
-
-<a href="/all-characters" class="btn-my-character">See all your characters</a>
-<a href="/all-campaigns" class="btn-my-campaigns">See all your campaigns</a>
-
-
 </body>
 </html>
