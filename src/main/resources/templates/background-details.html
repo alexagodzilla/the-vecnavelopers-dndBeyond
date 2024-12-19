@@ -13,7 +13,7 @@
     <!-- Background Image Section -->
     <div class="section-container">
         <img th:src="@{{imageName}(imageName=${background.backgroundImage})}" alt="Background Image">
-        <h1>You've chosen: <span th:text="${background.backgroundName}"></span></h1>
+        <h1><span th:text="${background.backgroundName}"></span></h1>
     </div>
 
     <!-- Background Description Section -->
@@ -55,7 +55,7 @@
 
     <!-- Back Link Section -->
     <div class="section-container">
-        <a th:href="@{/choose-background/character/{characterId}(characterId=${characterId})}" class="back">Go Back to the background page</a>
+        <a th:href="@{/choose-background/character/{characterId}(characterId=${characterId})}" class="back">Go Back</a>
     </div>
 
     <!-- Form Section -->
@@ -64,7 +64,7 @@
             <input type="hidden" name="_method" value="PATCH">
             <input type="hidden" id="backgroundName" name="backgroundName" th:value="${background.backgroundName}">
             <input type="hidden" id="characterId" name="characterId" th:value="${characterId}">
-            <button type="submit">Add Background</button>
+            <button type="submit">Choose This Background</button>
         </form>
     </div>
 </div>
