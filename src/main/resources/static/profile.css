@@ -3,16 +3,25 @@ body {
     background: #fff; /* White background */
     margin: 0;
     padding: 0;
+    background: linear-gradient(to bottom right, #222, #2d0943, #570404); /* Gradient from grey to dark purple to dark red */
     color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    background-size: cover;
 }
 
 .container {
-    max-width: 800px; /* Larger width */
+    max-width: 900px; /* Larger width */
+    width: 90%;
     margin: 50px auto;
-    background: rgba(0, 0, 0, 0.85); /* Black background with opacity */
-    padding: 30px;
+    background: rgba(0, 0, 0, 0.6); /* Black background with opacity */
+    padding: 40px;
+    border: 2px solid #B30404; /* Deep red border */
     border-radius: 12px;
     color: #fff; /* White font color */
+    margin-top: 120px;
 }
 
 .header {
@@ -26,26 +35,13 @@ body {
     color: #B30404; /* Deep red */
 }
 
-.logout-btn {
-    background-color: #B30404; /* Deep red */
-    color: #fff;
-    border: none;
-    padding: 10px 15px;
-    border-radius: 5px;
-    text-decoration: none;
-    font-family: 'Roboto', sans-serif;
-    font-size: 14px;
-    cursor: pointer;
-}
-
-.logout-btn:hover {
-    background-color: #ff4d4d; /* Lighter red background on hover */
-    color: #fff; /* Maintain white text */
-}
-
 .profile {
     text-align: center;
-    margin-bottom: 20px;
+    margin-bottom: 60px;
+}
+
+.profile h2 {
+    margin-bottom: 40px;
 }
 
 .profile-picture img {
@@ -54,29 +50,34 @@ body {
     border: none;
 }
 
+/* Ensure all buttons, including links and form buttons, are styled the same */
 .btn-container {
     text-align: center;
     margin: 20px 0;
 }
 
 .btn {
-    display: inline-block;
-    background-color: #B30404; /* Deep red */
+    display: inline-block;          /* Make it inline-block for proper alignment */
+    background-color: #B30404;      /* Deep red */
     color: #fff;
     border: none;
-    padding: 10px 20px;
+    padding: 12px 25px;             /* Consistent padding for all buttons */
     border-radius: 5px;
     font-family: 'Roboto', sans-serif;
     font-size: 16px;
     cursor: pointer;
     text-decoration: none;
+    width: 200px;                   /* Set consistent button width */
+    text-align: center;             /* Ensure text is centered */
+    margin: 5px;                    /* Space between buttons */
+    box-sizing: border-box;         /* Ensure padding doesn't affect width */
 }
 
 .btn:hover {
-    background-color: #ff4d4d; /* Lighter red */
-    color: #fff; /* Maintain white text */
+    background-color: #ff4d4d;      /* Lighter red */
+    color: #fff;                    /* Maintain white text */
 }
 
-.btn + .btn {
-    margin-left: 10px; /* Spacing between buttons */
+.btn-container a.btn {
+    display: inline-block;          /* Make sure anchor tags behave like buttons */
 }

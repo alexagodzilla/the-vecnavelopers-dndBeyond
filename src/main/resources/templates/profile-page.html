@@ -8,13 +8,10 @@
 <body>
 <div th:insert="fragments/nav :: navigation"></div>
 <div class="container">
-  <div class="header">
-    <a href="/logout" class="btn logout-btn">Logout</a>
-  </div>
-
   <div class="profile">
     <h2>Welcome, <span th:text="${user.displayName}">Display Name</span></h2>
-    <p>Bio: <span th:text="${user.userBio}"></span></p>
+    <p><span th:text="${user.userBio}"></span></p>
+  </div>
 
 <!--    <div class="profile-picture">-->
 <!--      <img th:if="${user.profilePicture != null}"-->
@@ -30,13 +27,13 @@
 
   <form action="/create-character" method="POST" class="btn-container">
     <input type="hidden" name="userId" th:value="${user.id}" />
-    <button type="submit" class="btn">Create a new Character</button>
+    <button type="submit" class="btn">Create Character</button>
   </form>
 
   <div class="btn-container">
-    <a href="/all-characters" class="btn">See all your characters</a>
-    <a href="/all-campaigns" class="btn">See all your campaigns</a>
+    <a href="/all-characters" class="btn">My Characters</a>
   </div>
+
 </div>
 </body>
 </html>
