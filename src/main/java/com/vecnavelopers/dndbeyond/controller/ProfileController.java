@@ -196,7 +196,7 @@ public class ProfileController {
         Character character = characterRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Character not found"));
         model.addAttribute("character", character);
-        return "character-details";
+        return "character-sheet";
     }
 
     @GetMapping("/character/edit/{id}")

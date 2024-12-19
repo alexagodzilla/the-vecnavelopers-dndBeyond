@@ -112,29 +112,6 @@ public class Character {
     @Column(name = "updated_at")
     private Timestamp updatedAt;
 
-    @Column(name = "background_name", nullable = false)
-    private String backgroundName;
-
-    @Column(name = "background_skill_proficiency_1", nullable = false)
-    private String backgroundSkillProficiency1;
-
-    @Column(name = "background_skill_proficiency_2", nullable = false)
-    private String backgroundSkillProficiency2;
-
-    @Column(name = "background_ability_score_1", nullable = false)
-    private String backgroundAbilityScore1;
-
-    @Column(name = "background_ability_score_2", nullable = false)
-    private String backgroundAbilityScore2;
-
-    @Column(name = "background_ability_score_3", nullable = false)
-    private String backgroundAbilityScore3;
-
-    @Column(name = "background_tool_proficiency", nullable = false)
-    private String backgroundToolProficiency;
-
-    @Column(name = "background_feat", nullable = false)
-    private String backgroundFeat;
 
 
 
