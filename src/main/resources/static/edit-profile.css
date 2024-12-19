@@ -1,6 +1,6 @@
 body {
     font-family: 'Roboto', sans-serif;
-    background: #fff; /* White background */
+    background: linear-gradient(to bottom right, #222, #2d0943, #570404); /* Gradient from grey to dark purple to dark red */
     margin: 0;
     padding: 0;
     color: #fff;  /* Deep red text */
