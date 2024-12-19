@@ -4,8 +4,12 @@ import com.vecnavelopers.dndbeyond.dto.CharacterDetailsDto;
 import com.vecnavelopers.dndbeyond.model.Character;
 import com.vecnavelopers.dndbeyond.repository.CharacterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 public class CharacterDetailsController {
@@ -29,13 +33,16 @@ public class CharacterDetailsController {
 
     }
 
-    @PostMapping("/characterDetails/{id}")
-    public void saveCharacterDetails(@RequestBody CharacterDetailsDto dto, @PathVariable Long id){
+    @PatchMapping("/characterDetails/{id}")
+    public ResponseEntity saveCharacterDetails(@RequestBody CharacterDetailsDto dto, @PathVariable Long id){
         Character character = characterRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Character not found"));
         character.setCharacterName(dto.getName());
         character.setCharacterPicUrl(dto.getPicUrl());
         character.setCharacterDescription(dto.getDescriprion());
         characterRepository.save(character);
+        Map<String, String> response = new HashMap<>();
+        response.put("redirectUrl", "/all-characters");
+        return ResponseEntity.ok(response);
     }
 }

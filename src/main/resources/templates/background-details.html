@@ -6,6 +6,7 @@
     <title>Background Details</title>
 </head>
 <body>
+<div th:insert="fragments/nav :: navigation"></div>
 <img th:src="@{{imageName}(imageName=${background.backgroundImage})}" alt="Background Image">
 <h1>You've chosen: <span th:text="${background.backgroundName}"></span></h1>
 
