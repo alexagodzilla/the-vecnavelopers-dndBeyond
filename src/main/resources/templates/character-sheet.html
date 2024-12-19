@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Character Details</title>
-  <link rel="stylesheet" href="/character-details.css">
+  <link rel="stylesheet" href="/character-sheet.css">
 </head>
 <body>
 <div th:insert="fragments/nav :: navigation"></div>
@@ -58,9 +58,9 @@
   <div class="character-info">
     <strong>Proficiency Bonus:</strong> <span th:text="${character.characterProficiencyBonus}">Bonus</span>
   </div>
-  <div>
-    <a href="/all-characters" class="button-back">Back to Characters</a>
-  </div>
+    <div class="button-container">
+      <a href="/all-characters" class="button-back">View My Characters</a>
+    </div>
 </div>
 
 

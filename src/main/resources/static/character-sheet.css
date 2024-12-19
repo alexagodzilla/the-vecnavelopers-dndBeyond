@@ -1,0 +1,109 @@
+/* General styling for the entire page */
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(to bottom right, #222, #2d0943, #570404);
+    height: 100vh;
+    min-height: 100vh;
+    background-attachment: fixed; /* Fix gradient to viewport */
+    background-size: cover; /* Cover entire viewport */
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.main-container {
+    width: 90vw;
+    height: 90vh;
+    margin: 30px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.0);
+    border-radius: 12px;
+    color: #fff;
+    margin-top: 120px;
+}
+
+
+/* Main container for character details */
+.character-details-container {
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px 20px;
+    background-color: rgba(0, 0, 0, 0.6);
+    width: 90vw;
+    height: 90vh;
+    padding: 20px;
+    border-radius: 12px;
+    border: 2px solid #B30404;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    overflow: hidden;
+}
+
+/* Character name centered at the top */
+.character-name {
+    grid-column: span 2;
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #fff;
+    margin: 10px 0;
+}
+
+/* Character image centered at the top */
+.character-image {
+    grid-column: span 2;
+}
+
+.character-image img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #B30404;
+}
+
+/* Grid rows for character details */
+.character-info {
+    font-size: 1rem;
+    display: flex;
+    justify-content: space-between;
+    color: #fff;
+    padding: 5px 10px;
+    border-bottom: 2px solid #B30404;
+    margin: 0 20px;
+}
+
+/* Label styling */
+.character-info strong {
+    font-weight: bold;
+    color: #fff;
+}
+
+.button-container {
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    grid-column: span 2;
+    margin-top: 10px;
+}
+
+/* Back button at the bottom */
+    .button-back {
+        padding: 10px 20px;
+        background-color: #B30404;
+        color: white;
+        text-decoration: none;
+        font-size: 1.1rem;
+        border-radius: 6px;
+        transition: background-color 0.3s ease;
+        max-width: 200px;
+    }
+
+.button-back:hover {
+    background-color: #ff4d4d;
+}
