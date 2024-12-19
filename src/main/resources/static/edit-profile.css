@@ -3,21 +3,22 @@ body {
     background: linear-gradient(to bottom right, #222, #2d0943, #570404); /* Gradient from grey to dark purple to dark red */
     margin: 0;
     padding: 0;
-    color: #fff;  /* Deep red text */
+    color: #fff;  /* White text */
 }
 
 .container {
     max-width: 600px;
     margin: 50px auto;
-    background: rgba(0, 0, 0, 0.85); /* Black background with opacity */
+    background: rgba(0, 0, 0, 0.6); /* Black background with opacity */
     padding: 20px;
     border-radius: 8px;
+    margin-top: 120px;
 }
 
 h1 {
     text-align: center;
     color: #fff;
-    font-family: 'Roboto', serif;
+    font-family: 'Roboto', sans-serif;
 }
 
 p {
@@ -59,25 +60,29 @@ input[type="file"] {
 }
 
 .btn {
-    display: inline-block;
-    width: auto;
-    padding: 12px 20px;
-    background-color: #B30404; /* Deep red */
+    display: inline-block;          /* Make it inline-block for proper alignment */
+    background-color: #B30404;      /* Deep red */
     color: #fff;
     border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 18px;
+    padding: 12px 25px;             /* Consistent padding for all buttons */
+    border-radius: 5px;
     font-family: 'Roboto', sans-serif;
-    text-align: center;
+    font-size: 16px;
+    cursor: pointer;
+    text-decoration: none;
+    width: 200px;                   /* Set consistent button width */
+    text-align: center;             /* Ensure text is centered */
+    margin: 5px;                    /* Space between buttons */
+    box-sizing: border-box;         /* Ensure padding doesn't affect width */
 }
 
 .btn:hover {
-    background-color: #ff4d4d; /* Lighter red for hover */
-    color: #fff; /* Maintain white text */
+    background-color: #ff4d4d;      /* Lighter red */
+    color: #fff;                    /* Maintain white text */
 }
 
+/* Ensure all buttons, including links and form buttons, are styled the same */
 .btn-container {
     text-align: center;
-    margin-top: 20px;
+    margin: 20px 0;
 }

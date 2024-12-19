@@ -1,6 +1,6 @@
 /* General styling for the entire page */
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Roboto', sans-serif;
     margin: 0;
     padding: 0;
     background: linear-gradient(to bottom right, #222, #2d0943, #570404); /* Gradient from grey to dark purple to dark red */
@@ -12,6 +12,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-top: 120px;
 }
 
 /* Main container for character details */

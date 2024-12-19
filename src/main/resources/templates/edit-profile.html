@@ -22,9 +22,13 @@
       <label for="profilePicture">Profile Picture:</label>
       <input type="file" id="profilePicture" name="profilePicture" />
     </div>
-    <button type="submit" class="btn">Save Changes</button>
   </form>
-  <a href="/profile/{userId}" th:href="@{/profile/{userId}(userId=${user.id})}" class="btn">Cancel</a>
+  <div class="btn-container">
+    <button type="submit" class="btn">Save Changes</button>
+  </div>
+  <div class="btn-container">
+    <a href="/profile/{userId}" th:href="@{/profile/{userId}(userId=${user.id})}" class="btn">Cancel</a>
+  </div>
 </div>
 </body>
 </html>

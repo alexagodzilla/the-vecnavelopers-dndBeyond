@@ -26,7 +26,7 @@ h1 {
 
 /* Individual character card */
 .character-card {
-    background-color: rgba(0, 0, 0, 0.85); /* Black background with opacity */
+    background-color: rgba(0, 0, 0, 0.6); /* Black background with opacity */
     color: #fff; /* White text */
     border: 2px solid #B30404; /* Deep red border */
     border-radius: 12px;
