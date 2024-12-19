@@ -157,6 +157,21 @@ public class ProfileController {
 
             return "edit-profile";
         }
+  
+    @PostMapping("/profile/edit")
+    public String saveEditedProfile (@RequestParam("displayName") String displayName,
+                                     @RequestParam("bio") String bio,
+                                     @RequestParam(value = "profilePicture", required = false) MultipartFile profilePicture,
+                                     Model model){
+        try {
+            String auth0Id = getAuthenticatedUserId();
+
+            User user = userRepository.findByAuth0Id(auth0Id)
+                    .orElseThrow(() -> new RuntimeException("User not found"));
+            model.addAttribute("user", user);
+
+            return "edit-profile";
+        }
 
         @PostMapping("/profile/edit")
         public String saveEditedProfile (@RequestParam("displayName") String displayName,
@@ -252,8 +267,3 @@ public class ProfileController {
     }
 
 }
-
-
-
-
-

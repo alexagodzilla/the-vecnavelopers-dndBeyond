@@ -15,14 +15,15 @@
   <div class="character-image" th:if="${character.characterPicUrl == null}">
     <img src="/images/default-character.png" alt="Default Character Picture">
   </div>
-
   <div class="character-name" th:text="${character.characterName}">Character Name</div>
-
   <div class="character-info">
     <strong>Level:</strong> <span th:text="${character.characterLevel}">1</span>
   </div>
   <div class="character-info">
     <strong>Species:</strong> <span th:text="${character.characterSpecies}">Species</span>
+  </div>
+  <div class="character-info">
+    <strong>Class:</strong> <span th:text="${character.characterClass}">Class</span>
   </div>
   <div class="character-info">
     <strong>Class:</strong> <span th:text="${character.characterClass}">Class</span>
