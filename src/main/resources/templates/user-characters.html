@@ -2,12 +2,12 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <title>Your Characters</title>
+  <title>My Characters</title>
   <link rel="stylesheet" href="/characters.css">
 </head>
+<div th:insert="fragments/nav :: navigation"></div>
 <body>
-  <div th:insert="fragments/nav :: navigation"></div>
-  <h1>Your Characters</h1>
+  <h1>My Characters</h1>
 
 <div class="character-container">
   <!-- Loop through the list of characters -->

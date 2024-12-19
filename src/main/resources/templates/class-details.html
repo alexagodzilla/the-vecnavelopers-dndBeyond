@@ -4,9 +4,31 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Class Details</title>
+  <style>
+
+    body {
+      margin: 0;
+      padding: 0;
+    }
+
+    .page-content {
+      margin-top: 70px;
+      padding: 20px;
+    }
+
+    img {
+      height: 600px;
+      width: auto;
+    }
+
+  </style>
 </head>
 <body>
+<!-- Navbar -->
 <div th:insert="fragments/nav :: navigation"></div>
+
+<!-- Main Content -->
+<div class="page-content">
 <img th:src="@{{imageName}(imageName=${classDetails.classImage})}" alt="Class Image">
 <h1>You've chosen: <span th:text="${classDetails.className}"></span></h1>
 
@@ -29,6 +51,7 @@
     </div>
   </div>
 </div>
+
 
 <br>
 
@@ -92,7 +115,7 @@
 
 
 <!-- Back Link -->
-<a th:href="@{/choose-class/character/{characterId}(characterId=${characterId})}" class="back">Go Back to the character page</a>
+<a th:href="@{/choose-class/character/{characterId}(characterId=${characterId})}" class="back">Go Back</a>
 
 <!-- Combined Form: Submit Class and Chosen Proficiencies -->
 <form id="updateClassAndProficienciesForm" th:action="@{/update-class-name}" method="post">
@@ -101,7 +124,7 @@
   <input type="hidden" id="characterId" name="characterId" th:value="${characterId}">
 
   <!-- Submit Button -->
-  <button type="submit">Add Class</button>
+  <button type="submit">Confirm Class</button>
 </form>
 
 <script>
@@ -168,7 +191,6 @@
     }
   });
 </script>
-
-
+</div>
 </body>
 </html>

@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <title>Class Selection</title>
   <style>
+
     body {
       display: flex;
       flex-direction: column;
@@ -11,6 +12,7 @@
       justify-content: flex-start;
       text-align: center;
       padding: 20px;
+      margin: 0;
     }
 
     h1 {
@@ -68,6 +70,17 @@
       color: inherit;  /* Ensure the link color doesn't override text color */
     }
 
+    .page-content {
+      margin-top: 80px; /* Adjust based on navbar height */
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      width: 100%;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+
     /* Responsive design for smaller screens */
     @media (max-width: 768px) {
       .class-grid {
@@ -84,28 +97,30 @@
   </style>
 </head>
 <body>
-<div th:insert="fragments/nav :: navigation"></div>
+  <!-- Navbar -->
+  <div th:insert="fragments/nav :: navigation"></div>
 
-
-<h1>Choose a Class</h1>
-<div class="class-grid">
-<div th:each="class : ${classSummaryList}">
-  <a th:href="@{/classes/{classname}(classname=${#strings.toLowerCase(class.className)}, characterId=${characterId}, userId=${userId})}" class="card-link">
-  <div class="card">
-    <img th:src="@{${class.classIcon}}" alt="Class Image">
-    <div class="description">
-      <h3 th:text="${class.className}"></h3>
-      <p th:text="${class.classTagline}"></p>
+  <!-- Main Content -->
+  <div class="page-content">
+    <h1>Choose a Class</h1>
+    <div class="class-grid">
+      <div th:each="class : ${classSummaryList}">
+        <a th:href="@{/classes/{classname}(classname=${#strings.toLowerCase(class.className)}, characterId=${characterId}, userId=${userId})}" class="card-link">
+          <div class="card">
+            <img th:src="@{${class.classIcon}}" alt="Class Image">
+            <div class="description">
+              <h3 th:text="${class.className}"></h3>
+              <p th:text="${class.classTagline}"></p>
+            </div>
+          </div>
+        </a>
+      </div>
     </div>
-  </div>
-  </a>
-</div>
-</div>
 
 <form action="/choose-class/character/{{characterId}}" method="POST" th:action="@{/choose-class/character/{id}(id=${characterId})}">
   <input type="hidden" name="_method" value="DELETE" />
   <input type="hidden" name="userId" th:value="${userId}" />
-  <button type="submit">Back</button>
+  <button type="submit">Go Back</button>
 </form>
 
 </body>

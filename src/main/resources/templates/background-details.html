@@ -4,9 +4,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Background Details</title>
+    <style>
+
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        .page-content {
+            margin-top: 70px;
+            padding: 20px;
+        }
+
+        img {
+            height: 600px;
+            width: auto;
+        }
+
+    </style>
 </head>
 <body>
+<!-- Navbar -->
 <div th:insert="fragments/nav :: navigation"></div>
+
+<!-- main Content -->
+<div class="page-content">
 <img th:src="@{{imageName}(imageName=${background.backgroundImage})}" alt="Background Image">
 <h1>You've chosen: <span th:text="${background.backgroundName}"></span></h1>
 
@@ -24,15 +46,15 @@
 <p><strong>Tool Proficiency:</strong> <span th:text="${background.backgroundToolProficiency}"></span></p>
 <p><strong>Feat:</strong> <span th:text="${background.backgroundFeat}"></span></p>
 
-<a th:href="@{/choose-background/character/{characterId}(characterId=${characterId})}" class="back">Go Back to the background page</a>
+<a th:href="@{/choose-background/character/{characterId}(characterId=${characterId})}" class="back">Go Back</a>
 
 <form id="updateBackgroundNameForm" th:action="@{/update-background-name}" method="post">
     <input type="hidden" name="_method" value="PATCH">
     <input type="hidden" id="backgroundName" name="backgroundName" th:value="${background.backgroundName}">
     <input type="hidden" id="characterId" name="characterId" th:value="${characterId}">
-    <button type="submit">Add Background</button>
+    <button type="submit">Confirm Background</button>
 </form>
-
+</div>
 </body>
 </html>
 

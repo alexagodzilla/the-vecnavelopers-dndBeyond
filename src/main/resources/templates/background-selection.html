@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Class Selection</title>
     <style>
+
         body {
             display: flex;
             flex-direction: column;
@@ -11,6 +12,7 @@
             justify-content: flex-start;
             text-align: center;
             padding: 20px;
+            margin: 0;
         }
 
         h1 {
@@ -47,14 +49,6 @@
             box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);  /* Add a shadow to signify focus */
         }
 
-        /* Image Styling */
-        .card img {
-            width: 80%;
-            height: auto;
-            object-fit: contain;
-            margin: 10px auto;
-        }
-
         .card .description {
             padding: 10px;
             font-size: 14px;
@@ -66,6 +60,17 @@
             display: block;
             text-decoration: none;
             color: inherit;  /* Ensure the link color doesn't override text color */
+        }
+
+        .page-content {
+            margin-top: 80px; /* Adjust based on navbar height */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            width: 100%;
+            padding: 20px;
+            box-sizing: border-box;
         }
 
         /* Responsive design for smaller screens */
@@ -84,22 +89,24 @@
     </style>
 </head>
 <body>
+    <!-- Navbar -->
     <div th:insert="fragments/nav :: navigation"></div>
-    <h1>Select a Background</h1>
 
-
-<h1>Choose a Background</h1>
-<div class="class-grid">
-<div th:each="background : ${backgroundList}">
-    <a th:href="@{/background/{backgroundname}(backgroundname=${#strings.toLowerCase(background.backgroundName)}, characterId=${characterId}, userId=${userId})}" class="card-link">
-    <div class="card">
-        <div class="description">
-            <h3 th:text="${background.backgroundName}"></h3>
+    <!-- Main Content -->
+    <div class="page-content">
+        <h1>Choose a Background</h1>
+        <div class="class-grid">
+            <div th:each="background : ${backgroundList}">
+                <a th:href="@{/background/{backgroundname}(backgroundname=${#strings.toLowerCase(background.backgroundName)}, characterId=${characterId}, userId=${userId})}" class="card-link">
+                    <div class="card">
+                        <div class="description">
+                        <h3 th:text="${background.backgroundName}"></h3>
+                        </div>
+                    </div>
+                </a>
+            </div>
         </div>
     </div>
-    </a>
-  </div>
-</div>
 
 <!--    <form id="remove-species-form" style="margin-top: 20px;">-->
 <!--        <input type="hidden" id="characterId" th:value="${characterId}" />-->
@@ -130,7 +137,7 @@
 
     <form id="back-to-species-form" style="margin-top: 20px;">
         <input type="hidden" id="characterId" th:value="${characterId}" />
-        <button type="button" id="back-button">Back To Species</button>
+        <button type="button" id="back-button">Go Back</button>
     </form>
 
     <script>

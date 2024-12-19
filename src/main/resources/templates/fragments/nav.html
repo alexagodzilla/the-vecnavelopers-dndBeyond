@@ -10,21 +10,22 @@
         </div>
     </div>
     <div class="navbar_right_container">
-        <span class="clickable nav_icon_container">
-            <a id="user-profile-link" href="#">
-                <img id="user-profile-pic"
-                     src="/profile-default.svg"
-                     style="width: 40px; height: 40px; border-radius: 50%;"
-
-                />
-            </a>
-
-        </span>
-        <a href="/logout">Logout</a>
+        <!-- Profile container with dropdown -->
+        <div class="profile-container" onclick="toggleDropdown()">
+            <img id="user-profile-pic"
+                 src="/profile-default.svg"
+                 alt="Profile Picture"
+                 style="width: 40px; height: 40px; border-radius: 50%;"
+            />
+            <div id="dropdown-menu" class="dropdown-menu hidden">
+                <a id="view-profile-link" class="dropdown-item" href="#">View Profile</a>
+                <a id="logout-link" class="dropdown-item" href="/logout">Logout</a>
+            </div>
+        </div>
     </div>
-    <script th:inline="none">
 
-        function getUserDetails(){
+    <script th:inline="none">
+        function getUserDetails() {
             console.log("Get User Details");
             fetch('/loggedUser', {
                 method: 'GET',
@@ -32,22 +33,33 @@
                     'Content-Type': 'application/json'
                 }
             })
-            .then(response => {
-                console.log("Complete");
-                console.log(response);
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                return response.json();
-            })
-            .then(response => {
-                console.log(response);
-                document.getElementById("user-profile-link").setAttribute("href", "/profile/" + response.id);
-                if (response.picUrl) {
-                    document.getElementById("user-profile-pic").setAttribute("src", response.picUrl);
-                }
-            });
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(response => {
+                    document.getElementById("view-profile-link").setAttribute("href", "/profile/" + response.id);
+                    if (response.picUrl) {
+                        document.getElementById("user-profile-pic").setAttribute("src", response.picUrl);
+                    }
+                });
         }
+
+        function toggleDropdown() {
+            const dropdown = document.getElementById('dropdown-menu');
+            dropdown.classList.toggle('hidden');
+        }
+
         getUserDetails();
+
+        document.addEventListener('click', function(event) {
+            const dropdown = document.getElementById('dropdown-menu');
+            const profileContainer = document.querySelector('.profile-container');
+            if (!profileContainer.contains(event.target)) {
+                dropdown.classList.add('hidden');
+            }
+        });
     </script>
 </nav>

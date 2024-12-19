@@ -5,15 +5,11 @@
   <title>User Profile</title>
   <link rel="stylesheet" href="/css/styles.css">
 </head>
-<body>
 <div th:insert="fragments/nav :: navigation"></div>
-<h1>User Profile</h1>
-
-
+<body>
 <div class="profile">
   <h2>Welcome, <span th:text="${user.displayName}">Display Name</span>!</h2>
-  <p>Bio: <span th:text="${user.userBio}"></span>!</p>
-
+  <p>Bio: <span th:text="${user.userBio}"></span></p>
   <div>
     <img th:src="@{/uploads/{fileName}(fileName=${user.profilePicture})}"
          alt="Profile Picture" style="max-width: 200px; border-radius: 10px;"
@@ -25,11 +21,11 @@
 
 <form action="/create-character" method="POST">
   <input type="hidden" name="userId" th:value="${user.id}" />
-  <button type="submit">Create a new Character</button>
+  <button type="submit">Create New Character</button>
 </form>
 
-<a href="/all-characters" class="btn-my-character">See all your characters</a>
-<a href="/all-campaigns" class="btn-my-campaigns">See all your campaigns</a>
+<a href="/all-characters" class="btn-my-character">See My Characters</a>
+<a href="/all-campaigns" class="btn-my-campaigns">See My Campaigns</a>
 
 
 </body>

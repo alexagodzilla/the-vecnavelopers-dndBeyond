@@ -11,6 +11,7 @@
             justify-content: flex-start;
             text-align: center;
             padding: 20px;
+            margin: 0;
         }
 
         h1 {
@@ -21,7 +22,7 @@
         /* Grid container for the class cards */
         .class-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr); /* 3 columns */
+            grid-template-columns: repeat(4, 1fr); /* 4 columns */
             gap: 10px; /* space between cards */
             margin: 10px;
             max-width: 90%;
@@ -47,6 +48,13 @@
             box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);  /* Add a shadow to signify focus */
         }
 
+        /* Image Styling */
+        .card img {
+            width: 80%;
+            height: auto;
+            object-fit: contain;
+            margin: 10px auto;
+        }
 
         .card .description {
             padding: 10px;
@@ -59,6 +67,17 @@
             display: block;
             text-decoration: none;
             color: inherit;  /* Ensure the link color doesn't override text color */
+        }
+
+        .page-content {
+            margin-top: 80px; /* Adjust based on navbar height */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            width: 100%;
+            padding: 20px;
+            box-sizing: border-box;
         }
 
         /* Responsive design for smaller screens */
@@ -77,24 +96,29 @@
     </style>
 </head>
 <body>
-<div th:insert="fragments/nav :: navigation"></div>
-<h1>Choose a Species</h1>
-<div class="class-grid">
-<div th:each="species : ${speciesSummaryList}">
-    <a th:href="@{/species/{speciesname}(speciesname=${#strings.toLowerCase(species.speciesName)}, characterId=${characterId}, userId=${userId})}" class="card-link">
-    <div class="card">
-        <div class="description">
-            <h3 th:text="${species.speciesName}"></h3>
-            <p th:text="${species.speciesTagline}"></p>
+    <!-- Navbar -->
+    <div th:insert="fragments/nav :: navigation"></div>
+
+    <!-- Main Content -->
+    <div class="page-content">
+    <h1>Choose a Species</h1>
+        <div class="class-grid">
+        <div th:each="species : ${speciesSummaryList}">
+            <a th:href="@{/species/{speciesname}(speciesname=${#strings.toLowerCase(species.speciesName)}, characterId=${characterId}, userId=${userId})}" class="card-link">
+                <div class="card">
+                    <div class="description">
+                        <h3 th:text="${species.speciesName}"></h3>
+                        <p th:text="${species.speciesTagline}"></p>
+                    </div>
+                </div>
+            </a>
+        </div>
         </div>
     </div>
-    </a>
-    </div>
-</div>
 
 <input type="hidden" id="characterId" th:value="${characterId}" />
 
-<button type="button" id="back-button">Back</button>
+<button type="button" id="back-button">Go Back</button>
 
 <script>
     document.getElementById("back-button").addEventListener("click", function () {
