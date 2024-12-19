@@ -41,34 +41,27 @@ public class ProfileController {
     private String getAuthenticatedUserDisplayName() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication == null || !authentication.isAuthenticated()) {
-            return null; // User is not authenticated
+            return null;
         }
 
-        // Here, we return the display name or null if it's not set
-        String displayName = authentication.getName(); // Typically, this returns the username (or email, depending on your setup)
-
-        // Return null if display name is not set
+        String displayName = authentication.getName();
         return (displayName != null && !displayName.trim().isEmpty()) ? displayName : null;
     }
 
     @GetMapping("/")
     public String homePageRedirect() {
         try {
-            String displayName = getAuthenticatedUserDisplayName(); // Get the authenticated user's display name
-
-            // If displayName is null or empty, it means the user has not set it yet
+            String displayName = getAuthenticatedUserDisplayName();
             if (displayName == null || displayName.isEmpty()) {
-                return "redirect:/profile/setup"; // Redirect new user to setup page
+                return "redirect:/profile/setup";
             }
 
-            // Check if the user exists with the display name and has completed the setup
             Optional<User> userOptional = userRepository.findUserByDisplayName(displayName);
 
-            // If the user exists, redirect to their profile, otherwise to the setup page
-            return userOptional.map(user -> "redirect:/profile/" + user.getId()).orElse("redirect:/profile/setup"); // Redirect to setup if user is not found
+            return userOptional.map(user -> "redirect:/profile/" + user.getId()).orElse("redirect:/profile/setup");
 
         } catch (IllegalStateException e) {
-            return "redirect:/login"; // If there's an issue with authentication, redirect to login page
+            return "redirect:/login";
         }
 
     }
