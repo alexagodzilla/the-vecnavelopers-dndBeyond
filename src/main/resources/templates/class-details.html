@@ -4,105 +4,120 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Class Details</title>
+  <link rel="stylesheet" href="/class-details.css">
 </head>
 <body>
 <div th:insert="fragments/nav :: navigation"></div>
-<img th:src="@{{imageName}(imageName=${classDetails.classImage})}" alt="Class Image">
-<h1>You've chosen: <span th:text="${classDetails.className}"></span></h1>
 
-<p th:if="${classDetails != null}">
-  <span th:text="${classDetails.classDescription}">Class information not available.</span>
-</p>
-<p><strong>Hit Point Die:</strong> D<span th:text="${classDetails.hitDie}"></span></p>
-<p><strong> Saving Throw Proficiencies:</strong> <span th:text="${classDetails.savingThrowsFormatted}"></span></p>
+<div class="container">
+  <!-- Class Image -->
+  <div class="section-container">
+    <img th:src="@{{imageName}(imageName=${classDetails.classImage})}" alt="Class Image">
+    <h1>You've chosen: <span th:text="${classDetails.className}"></span></h1>
+  </div>
 
-<!-- Display Proficiency Choices -->
-<div class="section-title"><strong>Choose Two Skill Proficiencies:</strong></div>
-<div class="section-content">
-  <div th:each="proficiency : ${classDetails.proficiencyNames}">
-    <!-- Filter to show only skills and remove 'Skill:' from the display -->
-    <div th:if="${proficiency.startsWith('Skill:')}">
-      <label>
-        <input type="checkbox" name="chosenProficiencies" th:value="${proficiency}" onclick="limitCheckboxes(this)">
-        <span th:text="${proficiency.substring(6)}"></span> <!-- Remove "Skill:" -->
-      </label>
+  <!-- Class Description -->
+  <div class="section-container">
+    <p th:if="${classDetails != null}">
+      <span th:text="${classDetails.classDescription}">Class information not available.</span>
+    </p>
+    <p><strong>Hit Point Die:</strong> D<span th:text="${classDetails.hitDie}"></span></p>
+    <p><strong>Saving Throw Proficiencies:</strong> <span th:text="${classDetails.savingThrowsFormatted}"></span></p>
+  </div>
+
+  <!-- Skill Proficiency Choices -->
+  <div class="section-container">
+    <h2 class="section-title">Choose Two Skill Proficiencies:</h2>
+    <div class="section-content">
+      <div th:each="proficiency : ${classDetails.proficiencyNames}">
+        <div th:if="${proficiency.startsWith('Skill:')}">
+          <label>
+            <input type="checkbox" name="chosenProficiencies" th:value="${proficiency}" onclick="limitCheckboxes(this)">
+            <span th:text="${proficiency.substring(6)}"></span> <!-- Remove "Skill:" -->
+          </label>
+        </div>
+      </div>
     </div>
   </div>
+
+  <!-- Weapon and Armour Proficiencies -->
+  <div class="section-container">
+    <h2 class="section-title">Weapon and Armour Proficiencies:</h2>
+    <div class="section-content" th:if="${classDetails.proficiencies != null}">
+      <ul>
+        <li th:each="proficiency : ${classDetails.proficiencies}">
+          <span th:text="${proficiency.name}"></span><br>
+        </li>
+        <li th:if="${#lists.isEmpty(classDetails.proficiencies)}">No proficiencies available.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Cantrips -->
+  <div class="section-container">
+    <h2 class="section-title">Cantrips:</h2>
+    <div class="section-content">
+      <p th:if="${#lists.isEmpty(cantrips)}">This class knows no cantrips.</p>
+      <ul th:unless="${#lists.isEmpty(cantrips)}">
+        <li th:each="spell : ${cantrips}">
+          <span th:text="${spell.name}"></span>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Level 1 Spells -->
+  <div class="section-container">
+    <h2 class="section-title">Spells:</h2>
+    <div class="section-content">
+      <p th:if="${#lists.isEmpty(level1Spells)}">This class knows no spells.</p>
+      <ul th:unless="${#lists.isEmpty(level1Spells)}">
+        <li th:each="spell : ${level1Spells}">
+          <span th:text="${spell.name}"></span>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Starting Equipment -->
+  <div class="section-container">
+    <h2 class="section-title">Starting Equipment:</h2>
+    <div class="section-content" th:if="${classDetails.startingEquipment != null}">
+      <ul>
+        <li th:each="equipment : ${classDetails.startingEquipment}">
+          <span th:text="${equipment.quantity}"></span>
+          x
+          <a th:text="${equipment.name}"></a>
+        </li>
+        <li th:if="${#lists.isEmpty(classDetails.startingEquipment)}">No starting equipment available.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Optional Starting Equipment -->
+  <div class="section-container">
+    <h2 class="section-title">Optional Starting Equipment:</h2>
+    <div th:each="option : ${classDetails.startingEquipmentOptions}">
+      <p th:text="${stringUtils.capitalizeWords(#strings.replace(#strings.replace(option.desc, ', ', ' OR '), ' OR  ', ' OR '))}"></p>
+    </div>
+  </div>
+
+  <!-- Back Link -->
+  <div class="section-container">
+    <a th:href="@{/choose-class/character/{characterId}(characterId=${characterId})}" class="back">Go Back to the character page</a>
+  </div>
+
+  <!-- Combined Form -->
+  <div class="section-container">
+    <form id="updateClassAndProficienciesForm" th:action="@{/update-class-name}" method="post">
+      <input type="hidden" name="_method" value="PATCH">
+      <input type="hidden" id="className" name="className" th:value="${classDetails.className}">
+      <input type="hidden" id="characterId" name="characterId" th:value="${characterId}">
+
+      <button type="submit">Add Class</button>
+    </form>
+  </div>
 </div>
-
-<br>
-
-<!-- Proficiencies Section -->
-<div class="section-title"><strong>Weapon and Armour Proficiencies:</strong></div>
-<div class="section-content" th:if="${classDetails.proficiencies != null}">
-  <ul>
-    <li th:each="proficiency : ${classDetails.proficiencies}">
-      <span th:text="${proficiency.name}"></span><br>
-    </li>
-    <li th:if="${#lists.isEmpty(classDetails.proficiencies)}">No proficiencies available.</li>
-  </ul>
-</div>
-
-<!-- Cantrips Section (Level 0 Spells) -->
-<div class="section-title" th:if="${#lists.isEmpty(cantrips)}"><strong>Cantrips:</strong></div>
-<div class="section-content" th:if="${#lists.isEmpty(cantrips)}">
-  <p>This class knows no cantrips.</p>
-</div>
-<div class="section-title" th:unless="${#lists.isEmpty(cantrips)}"><strong>Cantrips:</strong></div>
-<div class="section-content" th:unless="${#lists.isEmpty(cantrips)}">
-  <ul>
-    <li th:each="spell : ${cantrips}">
-      <span th:text="${spell.name}"></span>
-    </li>
-  </ul>
-</div>
-
-<!-- Spells Section (Level 1 Spells) -->
-<div class="section-title" th:if="${#lists.isEmpty(level1Spells)}"><strong>Spells:</strong></div>
-<div class="section-content" th:if="${#lists.isEmpty(level1Spells)}">
-  <p>This class knows no spells.</p>
-</div>
-<div class="section-title" th:unless="${#lists.isEmpty(level1Spells)}"><strong>Spells:</strong></div>
-<div class="section-content" th:unless="${#lists.isEmpty(level1Spells)}">
-  <ul>
-    <li th:each="spell : ${level1Spells}">
-      <span th:text="${spell.name}"></span>
-    </li>
-  </ul>
-</div>
-
-<!-- Starting Equipment Section -->
-<div class="section-title"><strong>Starting Equipment:</strong></div>
-<div class="section-content" th:if="${classDetails.startingEquipment != null}">
-  <ul>
-    <li th:each="equipment : ${classDetails.startingEquipment}">
-      <span th:text="${equipment.quantity}"></span>
-      x
-      <a th:text="${equipment.name}"></a>
-    </li>
-    <li th:if="${#lists.isEmpty(classDetails.startingEquipment)}">No starting equipment available.</li>
-  </ul>
-</div>
-
-<!-- Optional Starting Equipment Section -->
-<div class="section-title"><strong>Optional Starting Equipment:</strong></div>
-<div th:each="option : ${classDetails.startingEquipmentOptions}">
-  <p th:text="${stringUtils.capitalizeWords(#strings.replace(#strings.replace(option.desc, ', ', ' OR '), ' OR  ', ' OR '))}"></p>
-</div>
-
-
-<!-- Back Link -->
-<a th:href="@{/choose-class/character/{characterId}(characterId=${characterId})}" class="back">Go Back to the character page</a>
-
-<!-- Combined Form: Submit Class and Chosen Proficiencies -->
-<form id="updateClassAndProficienciesForm" th:action="@{/update-class-name}" method="post">
-  <input type="hidden" name="_method" value="PATCH">
-  <input type="hidden" id="className" name="className" th:value="${classDetails.className}">
-  <input type="hidden" id="characterId" name="characterId" th:value="${characterId}">
-
-  <!-- Submit Button -->
-  <button type="submit">Add Class</button>
-</form>
 
 <script>
   // JavaScript to limit the number of checked checkboxes to 2
@@ -168,7 +183,6 @@
     }
   });
 </script>
-
 
 </body>
 </html>

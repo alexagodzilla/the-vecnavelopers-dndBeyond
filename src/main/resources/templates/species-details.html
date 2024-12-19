@@ -4,29 +4,44 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Species Details</title>
+    <link rel="stylesheet" href="/species-details.css">
 </head>
 <body>
 <div th:insert="fragments/nav :: navigation"></div>
-<img th:src="@{{imageName}(imageName=${speciesDetails.speciesImage})}" alt="Species Image">
-<h1>You've chosen: <span th:text="${speciesDetails.speciesName}"></span></h1>
 
+<div class="container">
+    <!-- Species Image Section -->
+    <div class="section-container">
+        <img th:src="@{{imageName}(imageName=${speciesDetails.speciesImage})}" alt="Species Image">
+        <h1>You've chosen: <span th:text="${speciesDetails.speciesName}"></span></h1>
+    </div>
 
-<p th:if="${speciesDetails != null}">
-    <span th:text="${speciesDetails.speciesFlavour}">Species Information is not available.</span>
-</p>
-<p th:if="${speciesDetails != null}">
-    <span th:text="${speciesDetails.speciesDescription}">Species information is not available</span>
-</p>
-<p><strong>Speed:</strong> <span th:text="${speciesDetails.speciesSpeed}"></span> feet</p>
-<p><strong>Size:</strong> <span th:text="${speciesDetails.speciesSizeDescription}"></span></p>
+    <!-- Species Information Section -->
+    <div class="section-container">
+        <p th:if="${speciesDetails != null}">
+            <span th:text="${speciesDetails.speciesFlavour}">Species information is not available.</span>
+        </p>
+        <p th:if="${speciesDetails != null}">
+            <span th:text="${speciesDetails.speciesDescription}">Species information is not available.</span>
+        </p>
+        <p><strong>Speed:</strong> <span th:text="${speciesDetails.speciesSpeed}"></span> feet</p>
+        <p><strong>Size:</strong> <span th:text="${speciesDetails.speciesSizeDescription}"></span></p>
+    </div>
 
-<a th:href="@{/choose-species/character/{characterId}(characterId=${characterId})}" class="back">Go Back to the species page</a>
-<form id="updateClassNameForm" th:action="@{/update-species-name}" method="post">
-    <input type="hidden" name="_method" value="PATCH">
-    <input type="hidden" id="speciesName" name="speciesName" th:value="${speciesDetails.speciesName}">
-    <input type="hidden" id="characterId" name="characterId" th:value="${characterId}">
-    <button type="submit">Add Species</button>
-</form>
+    <!-- Back Link Section -->
+    <div class="section-container">
+        <a th:href="@{/choose-species/character/{characterId}(characterId=${characterId})}" class="back">Go Back to the species page</a>
+    </div>
+
+    <!-- Form Section -->
+    <div class="section-container">
+        <form id="updateSpeciesForm" th:action="@{/update-species-name}" method="post">
+            <input type="hidden" name="_method" value="PATCH">
+            <input type="hidden" id="speciesName" name="speciesName" th:value="${speciesDetails.speciesName}">
+            <input type="hidden" id="characterId" name="characterId" th:value="${characterId}">
+            <button type="submit">Add Species</button>
+        </form>
+    </div>
+</div>
 </body>
 </html>
-
