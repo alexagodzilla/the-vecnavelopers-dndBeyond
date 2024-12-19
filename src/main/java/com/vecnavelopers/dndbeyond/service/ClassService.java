@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -114,6 +115,7 @@ public class ClassService {
             classDetails.setClassFlavour(extraDetails.getClassFlavour());
             classDetails.setClassDescription(extraDetails.getClassDescription());
             classDetails.setClassPrimaryAbility(extraDetails.getClassPrimaryAbility());
+            classDetails.setClassImage(extraDetails.getClassImage());
         } else {
             System.out.println("No extra details found for class: " + className);
         }
@@ -227,6 +229,10 @@ public class ClassService {
     public List<ClassSummary> getAllClasses() {
         // Fetch all classes from the database
         List<ClassExtraDetails> extraDetailsList = classExtraDetailsRepository.findAll();
+
+        // Sort the list alphabetically by className
+        extraDetailsList.sort(Comparator.comparing(ClassExtraDetails::getClassName));
+
 
         // Create a list to hold the Class Summary objects
         List<ClassSummary> classSummaryList = new ArrayList<>();

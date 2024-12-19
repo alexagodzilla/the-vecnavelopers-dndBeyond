@@ -4,59 +4,102 @@
   <meta charset="UTF-8">
   <title>Class Selection</title>
   <style>
-    .card {
-        width: 200px;
-        height: 300px;
-        border: 1px solid #ccc;
-        border-radius: 8px;
-        margin: 10px;
-        position: relative;
-        text-align: center;
-        overflow: hidden;
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;  /* Center everything horizontally */
+      justify-content: flex-start;
+      text-align: center;
+      padding: 20px;
     }
 
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 30px;
+    }
+
+    /* Grid container for the class cards */
+    .class-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr); /* 4 columns */
+      gap: 10px; /* space between cards */
+      margin: 10px;
+      max-width: 90%;
+    }
+
+    /* Individual card styling */
+    .card {
+      width: 200px;
+      height: 300px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      margin: 10px;
+      position: relative;
+      text-align: center;
+      overflow: hidden;
+      background-color: #fff;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    /* Grow card on hover */
+    .card:hover {
+      transform: scale(1.05);  /* Slightly grow the card */
+      box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);  /* Add a shadow to signify focus */
+    }
+
+    /* Image Styling */
     .card img {
-        width: 100%;
-        height: 150px;
-        object-fit: cover;
+      width: 80%;
+      height: auto;
+      object-fit: contain;
+      margin: 10px auto;
     }
 
     .card .description {
-        padding: 10px;
-        font-size: 14px;
-        color: #555;
+      padding: 10px;
+      font-size: 14px;
+      color: #555;
     }
 
-    .card:hover .details {
-        display: block;
+    /* Make the entire card clickable */
+    .card-link {
+      display: block;
+      text-decoration: none;
+      color: inherit;  /* Ensure the link color doesn't override text color */
     }
 
-    .details {
-        display: none;
-        position: absolute;
-        bottom: 10px;
-        left: 10px;
-        background-color: rgba(0, 0, 0, 0.5);
-        color: white;
-        padding: 5px;
-        border-radius: 5px;
+    /* Responsive design for smaller screens */
+    @media (max-width: 768px) {
+      .class-grid {
+        grid-template-columns: repeat(2, 1fr); /* 2 columns on smaller screens */
+      }
     }
+
+    @media (max-width: 480px) {
+      .class-grid {
+        grid-template-columns: 1fr; /* 1 column on mobile screens */
+      }
+    }
+
   </style>
 </head>
 <body>
 <div th:insert="fragments/nav :: navigation"></div>
-<h1>Select a Class</h1>
 
+
+<h1>Choose a Class</h1>
+<div class="class-grid">
 <div th:each="class : ${classSummaryList}">
+  <a th:href="@{/classes/{classname}(classname=${#strings.toLowerCase(class.className)}, characterId=${characterId}, userId=${userId})}" class="card-link">
   <div class="card">
     <img th:src="@{${class.classIcon}}" alt="Class Image">
     <div class="description">
       <h3 th:text="${class.className}"></h3>
       <p th:text="${class.classTagline}"></p>
     </div>
-    <a th:href="@{/classes/{classname}(classname=${#strings.toLowerCase(class.className)}, characterId=${characterId}, userId=${userId})}" class="details">See Class Details</a>
-
   </div>
+  </a>
+</div>
 </div>
 
 <form action="/choose-class/character/{{characterId}}" method="POST" th:action="@{/choose-class/character/{id}(id=${characterId})}">

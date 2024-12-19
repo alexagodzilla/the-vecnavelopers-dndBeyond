@@ -40,4 +40,8 @@ public class SpeciesDetails {
 
     public void setSpeciesDescription(String speciesDescription) { this.speciesDescription = speciesDescription; }
 
+    public String getSpeciesImage() { return speciesImage; }
+
+    public void setSpeciesImage(String speciesImage) { this.speciesImage = speciesImage; }
+
 }
