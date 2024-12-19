@@ -1,16 +1,18 @@
 /* General body styling */
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Roboto', sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f4f4f9;
+    background-color: #fff; /* White background */
     text-align: center;
+    color: #B30404; /* Deep red text */
 }
 
 /* Page title */
 h1 {
     margin: 20px 0;
-    color: #333;
+    color: #B30404; /* Deep red */
+    font-family: 'Cinzel Decorative', serif;
 }
 
 /* Grid container for character cards */
@@ -24,13 +26,12 @@ h1 {
 
 /* Individual character card */
 .character-card {
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    background-color: #fff;
-    width: 200px;
+    background-color: rgba(0, 0, 0, 0.85); /* Black background with opacity */
+    color: #fff; /* White text */
+    border: 2px solid #B30404; /* Deep red border */
+    border-radius: 12px;
     text-align: center;
-    padding: 10px;
+    padding: 15px;
     transition: transform 0.2s ease-in-out;
 }
 
@@ -42,19 +43,20 @@ h1 {
 .character-card img {
     width: 100%;
     height: auto;
-    border-radius: 8px 8px 0 0;
+    border-radius: 12px 12px 0 0;
 }
 
 /* Character details */
 .character-details h2 {
-    font-size: 1.2rem;
+    font-size: 1.5rem;
     margin: 10px 0;
+    color: #fff; /* White text */
 }
 
 .character-details p {
     margin: 5px 0;
-    font-size: 0.9rem;
-    color: #555;
+    font-size: 1rem;
+    color: #fff; /* White text */
 }
 
 /* Buttons container */
@@ -66,24 +68,24 @@ h1 {
 .button {
     display: inline-block;
     margin: 5px 5px;
-    padding: 6px 10px;
-    background-color: #007bff;
-    color: white;
+    padding: 8px 15px;
+    background-color: #B30404; /* Deep red */
+    color: #fff;
     border: none;
-    border-radius: 4px;
+    border-radius: 5px;
     text-decoration: none;
     cursor: pointer;
-    font-size: 0.8rem;
+    font-size: 1rem;
 }
 
 .button:hover {
-    background-color: #0056b3;
+    background-color: #ff4d4d; /* Lighter red for hover */
 }
 
 .button-delete {
-    background-color: #dc3545;
+    background-color: #B30404; /* Deep red */
 }
 
 .button-delete:hover {
-    background-color: #c82333;
+    background-color: #ff4d4d; /* Lighter red */
 }

@@ -114,6 +114,7 @@ public class Character {
 
 
 
+
     public Character() {
         this.characterLevel = 1;
         this.characterStrength = 8;
