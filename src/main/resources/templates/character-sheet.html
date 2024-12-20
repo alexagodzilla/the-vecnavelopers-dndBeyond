@@ -7,15 +7,18 @@
 </head>
 <body>
 <div th:insert="fragments/nav :: navigation"></div>
-<div class="main-container">
+
 <div class="character-details-container">
-  <div class="character-image" th:if="${character.characterPicUrl != null}">
-    <img th:src="@{${character.characterPicUrl}}" alt="Character Picture">
-  </div>
-  <div class="character-image" th:if="${character.characterPicUrl == null}">
-    <img src="/images/default-character.png" alt="Default Character Picture">
+  <div class="character-image">
+    <img th:if="${character.characterPicUrl != null}"
+         th:src="@{/uploads/{fileName}(fileName=${character.characterPicUrl})}"
+         alt="Character Picture" />
+    <img th:if="${character.characterPicUrl == null}"
+         src="/images/default-character.png"
+         alt="Default Character Picture" />
   </div>
   <div class="character-name" th:text="${character.characterName}">Character Name</div>
+  <div class="character-description" th:text="${character.characterDescription}">Character Description</div>
   <div class="character-info">
     <strong>Level:</strong> <span th:text="${character.characterLevel}">1</span>
   </div>
@@ -61,7 +64,6 @@
     <div class="button-container">
       <a href="/all-characters" class="button-back">View My Characters</a>
     </div>
-</div>
 </div>
 </body>
 </html>

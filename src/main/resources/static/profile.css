@@ -22,6 +22,7 @@ body {
     border-radius: 12px;
     color: #fff; /* White font color */
     margin-top: 120px;
+    text-align: center;
 }
 
 .header {
@@ -48,6 +49,7 @@ body {
     max-width: 150px;
     border-radius: 10px;
     border: none;
+    text-align: center;
 }
 
 /* Ensure all buttons, including links and form buttons, are styled the same */

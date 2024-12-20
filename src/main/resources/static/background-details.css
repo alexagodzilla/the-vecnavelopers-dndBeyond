@@ -97,11 +97,3 @@ button:hover, .back:hover {
     background-color: #ff4d4d; /* Lighter red */
 }
 
-/* Background image styling */
-img {
-    max-width: 100%;
-    height: auto;
-    border-radius: 12px;
-    margin: 20px auto;
-    display: block;
-}

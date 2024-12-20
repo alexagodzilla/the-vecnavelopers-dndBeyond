@@ -20,13 +20,14 @@
   <!-- Loop through the list of characters -->
   <div th:each="character, iterStat : ${characters}" th:if="${iterStat.index < 6}" class="character-card">
     <!-- Character Picture -->
-    <div th:if="${character.characterPicUrl != null}">
-      <img th:src="@{${character.characterPicUrl}}" alt="Character Picture">
+    <div class="character-picture">
+      <img th:if="${character.characterPicUrl != null}"
+           th:src="@{/uploads/{fileName}(fileName=${character.characterPicUrl})}"
+           alt="Character Picture" />
+      <img th:if="${character.characterPicUrl == null}"
+           src="/images/default-character.png"
+           alt="Default Character Picture" />
     </div>
-    <div th:if="${character.characterPicUrl == null}">
-      <img src="/images/default-character.png" alt="Default Character Picture">
-    </div>
-
     <!-- Character Details -->
     <div class="character-details">
       <h2 th:text="${character.characterName}">Character Name</h2>
