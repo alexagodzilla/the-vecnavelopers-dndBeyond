@@ -12,11 +12,7 @@
     <div class="navbar_right_container">
         <!-- Profile container with dropdown -->
         <div class="profile-container" onclick="toggleDropdown()">
-            <img th:if="${user.profilePicture != null}"
-                 th:src="@{/uploads/{fileName}(fileName=${user.profilePicture})}"
-                 alt="Profile Picture"
-                 style="width: 40px; height: 40px; border-radius: 50%;" />
-            <img th:if="${user.profilePicture == null}"
+            <img id="user-profile-pic"
                  src="/profile-default.svg"
                  alt="Profile Picture"
                  style="width: 40px; height: 40px; border-radius: 50%;"
@@ -29,27 +25,27 @@
     </div>
 
     <script th:inline="none">
-        function getUserDetails() {
-            console.log("Get User Details");
-            fetch('/loggedUser', {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            })
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! status: ${response.status}`);
-                    }
-                    return response.json();
-                })
-                .then(response => {
-                    document.getElementById("view-profile-link").setAttribute("href", "/profile/" + response.id);
-                    if (response.picUrl) {
-                        document.getElementById("user-profile-pic").setAttribute("src", response.picUrl);
-                    }
-                });
-        }
+        // function getUserDetails() {
+        //     console.log("Get User Details");
+        //     fetch('/loggedUser', {
+        //         method: 'GET',
+        //         headers: {
+        //             'Content-Type': 'application/json'
+        //         }
+        //     })
+        //         .then(response => {
+        //             if (!response.ok) {
+        //                 throw new Error(`HTTP error! status: ${response.status}`);
+        //             }
+        //             return response.json();
+        //         })
+        //         .then(response => {
+        //             document.getElementById("view-profile-link").setAttribute("href", "/profile/" + response.id);
+        //             if (response.picUrl) {
+        //                 document.getElementById("user-profile-pic").setAttribute("src", response.picUrl);
+        //             }
+        //         });
+        // }
 
         function toggleDropdown() {
             const dropdown = document.getElementById('dropdown-menu');
