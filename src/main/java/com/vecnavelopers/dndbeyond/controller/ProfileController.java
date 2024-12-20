@@ -129,12 +129,10 @@ public class ProfileController {
             user.setBio(bio);
 
             if (profilePicture != null && !profilePicture.isEmpty()) {
-                String fileName = System.currentTimeMillis() + "_" + profilePicture.getOriginalFilename();
-                Path uploadPath = Paths.get("uploads").toAbsolutePath();
+                String fileName = profilePicture.getOriginalFilename();
+                Path uploadPath = Paths.get("src/main/resources/static/uploads").toAbsolutePath();
                 Files.createDirectories(uploadPath); // Ensure the directory exists
-                Files.copy(profilePicture.getInputStream(), uploadPath.resolve(fileName),
-                        StandardCopyOption.REPLACE_EXISTING);
-
+                Files.copy(profilePicture.getInputStream(), uploadPath.resolve(fileName), StandardCopyOption.REPLACE_EXISTING);
                 user.setProfilePicture(fileName);
             }
 
@@ -182,8 +180,10 @@ public class ProfileController {
 
             if (profilePicture != null && !profilePicture.isEmpty()) {
                 String fileName = profilePicture.getOriginalFilename();
+                Path uploadPath = Paths.get("src/main/resources/static/uploads").toAbsolutePath();
+                Files.createDirectories(uploadPath); // Ensure the directory exists
+                Files.copy(profilePicture.getInputStream(), uploadPath.resolve(fileName), StandardCopyOption.REPLACE_EXISTING);
                 user.setProfilePicture(fileName);
-                System.out.println("Uploaded new file: " + fileName);
             }
 
             userRepository.save(user);

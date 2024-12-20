@@ -8,32 +8,29 @@
 <body>
 <div th:insert="fragments/nav :: navigation"></div>
 <div class="container">
+  <div class="profile-picture">
+    <img th:if="${user.profilePicture != null}"
+         th:src="@{/uploads/{fileName}(fileName=${user.profilePicture})}"
+         alt="Profile Picture" />
+    <img th:if="${user.profilePicture == null}"
+         src="/images/default-profile.png"
+         alt="Default Profile Picture" />
+  </div>
   <div class="profile">
     <h2>Welcome, <span th:text="${user.displayName}">Display Name</span></h2>
     <p><span th:text="${user.userBio}"></span></p>
   </div>
 
-<!--    <div class="profile-picture">-->
-<!--      <img th:if="${user.profilePicture != null}"-->
-<!--           th:src="@{/uploads/{fileName}(fileName=${user.profilePicture})}"-->
-<!--      <img th:if="${user.profilePicture == null}"-->
-<!--           src="/images/default-profile.png"-->
-<!--    </div>-->
-<!--  </div>-->
-
   <div class="btn-container">
     <a href="/profile/edit" class="btn">Edit Profile</a>
   </div>
-
   <form action="/create-character" method="POST" class="btn-container">
     <input type="hidden" name="userId" th:value="${user.id}" />
     <button type="submit" class="btn">Create Character</button>
   </form>
-
   <div class="btn-container">
     <a href="/all-characters" class="btn">My Characters</a>
   </div>
-
 </div>
 </body>
 </html>
