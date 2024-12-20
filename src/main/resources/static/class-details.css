@@ -28,6 +28,7 @@ img {
     display: block;
 }
 
+
 /* Section container */
 .section-container {
     background-color: rgba(0, 0, 0, 0.6); /* Black background with opacity */
@@ -109,15 +110,6 @@ button, .back {
 
 button:hover, .back:hover {
     background-color: #ff4d4d; /* Lighter red */
-}
-
-/* Class image styling */
-img {
-    max-width: 100%;
-    height: auto;
-    border-radius: 12px;
-    margin: 20px auto;
-    display: block;
 }
 
 /* Alert messages */
