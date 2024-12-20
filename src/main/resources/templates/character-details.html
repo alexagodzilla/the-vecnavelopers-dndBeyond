@@ -95,8 +95,8 @@
     <input type="text" id="character-name" th:value="${characterName}" />
   </div>
   <div class="form-group">
-    <label for="character-pic-url">Add a URL for your Character's picture:</label>
-    <input type="text" id="character-pic-url" th:value="${characterPicUrl}" />
+    <label for="character-pic-url">Upload A Picture:</label>
+    <input type="file" id="character-pic-url" name="characterPicUrl" accept="image/*" />
   </div>
   <div class="form-group">
     <label for="character-description">Character description:</label>
@@ -108,6 +108,7 @@
   </div>
   <div id="output"></div>
 </div>
+
 <script>
   // Wait for the DOM content to load
   document.addEventListener("DOMContentLoaded", function () {
@@ -120,51 +121,47 @@
 
     saveButton.addEventListener("click", function () {
       const name = nameInput.value;
-      const picUrl = picInput.value;
+      const picUrl = picInput.files[0];  // Getting the file from input
       const description = descriptionInput.value;
 
-      submit({
-        name: name,
-        picUrl: picUrl,
-        description: description
-      });
+      const formData = new FormData();
+      formData.append("characterName", name);
+      formData.append("characterDescription", description);
+      if (picUrl) formData.append("characterPicUrl", picUrl);
 
+      // Submit the form data using Fetch API
+      fetch(`/characterDetails/${characterId}`, {
+        method: "PATCH",
+        body: formData
+      })
+              .then((response) => {
+                if (!response.ok) {
+                  throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+              })
+              .then((data) => {
+                if (data.redirectUrl) {
+                  window.location.href = data.redirectUrl;
+                }
+              })
+              .catch((error) => {
+                console.error("Error:", error);
+                alert("An error occurred while saving the data.");
+              });
+
+      // Show the submitted data in the output section (for feedback)
       outputDiv.innerHTML = `
-          <h2>${name}</h2>
-          <img src="${picUrl}" alt="${name}" />
-          <p>${description}</p>
-        `;
+        <h2>${name}</h2>
+        ${picUrl ? `<img src="${URL.createObjectURL(picUrl)}" alt="${name}" />` : ''}
+        <p>${description}</p>
+      `;
     });
 
     document.getElementById("goToAbilityScores").addEventListener("click", function () {
       window.location.href = `/abilityScores/${characterId}`;
     });
   });
-
-  function submit(details) {
-    fetch(`/characterDetails/[[${characterId}]]`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(details)
-    })
-            .then((response) => {
-              if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-              }
-              return response.json();
-            })
-            .then((data) => {
-              if (data.redirectUrl) {
-                window.location.href = data.redirectUrl;
-              }
-            })
-            .catch((error) => {
-              console.error("Error:", error);
-              alert("An error occurred while saving the data.");
-            });
-  }
 </script>
 </body>
 </html>

@@ -11,38 +11,25 @@ body {
     display: flex;
     justify-content: center;
     align-items: flex-start;
+    overflow: hidden;
 }
-
-.main-container {
-    width: 90vw;
-    height: 90vh;
-    margin: 30px;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: rgba(0, 0, 0, 0.0);
-    border-radius: 12px;
-    color: #fff;
-    margin-top: 120px;
-}
-
 
 /* Main container for character details */
 .character-details-container {
     display: grid;
-    grid-template-rows: auto 1fr auto;
+    grid-template-rows: auto auto minmax(0, 1fr);
     grid-template-columns: 1fr 1fr;
     gap: 10px 20px;
     background-color: rgba(0, 0, 0, 0.6);
     width: 90vw;
-    height: 90vh;
+    max-height: 90vh;
     padding: 20px;
     border-radius: 12px;
     border: 2px solid #B30404;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     text-align: center;
-    overflow: hidden;
+    overflow: auto;
+    margin-top: 120px;
 }
 
 /* Character name centered at the top */
@@ -51,7 +38,24 @@ body {
     font-size: 2.5rem;
     font-weight: bold;
     color: #fff;
-    margin: 10px 0;
+    margin: 0;
+    line-height: 1.1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Character name centered at the top */
+.character-description {
+    grid-column: span 2;
+    font-size: 1.5rem;
+    color: #fff;
+    margin: 0;
+    line-height: 1.2;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 /* Character image centered at the top */
